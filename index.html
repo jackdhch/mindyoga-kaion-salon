@@ -10,7 +10,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>MindYoga × KAION Salon</title>
+<title>KAION × Mind Yoga Salon</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,6 +157,7 @@ body.revealed .hero>*:nth-child(4){animation-delay:.18s}body.revealed .hero>*:nt
 .pin small{color:var(--muted);font-weight:500}
 
 /* facts */
+.hero:has(.globe[hidden]){padding-bottom:56px}
 .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:-28px 0 0;position:relative}
 .fact{background:var(--surface);padding:18px 20px;min-width:0}
 .fact dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -271,14 +272,14 @@ footer p{margin:0;max-width:60ch}
   <div class="say" id="s2"></div>
   <div class="say" id="s3"></div>
   <div class="stamp" id="stamp"><span class="pre" data-i18n="i_called"></span><div id="st1"></div><div id="st2"></div>
-    <div class="duo" id="duo"><span class="m-my"></span><span class="x">×</span><span class="ka"><span class="m-ka"></span></span></div></div>
+    <div class="duo" id="duo"><span class="ka"><span class="m-ka"></span></span><span class="x">×</span><span class="m-my"></span></div></div>
   <div class="say" id="s4"></div>
   <button id="skip" type="button" data-i18n="skip"></button>
 </div>
 
 <!-- ============ page ============ -->
 <div class="nav wrap"><div class="pill">
-  <a class="mark" href="#top" aria-label="MindYoga × KAION"><span class="m-bf"></span><i>×</i><span class="m-ka"></span></a>
+  <a class="mark" href="#top" aria-label="KAION × Mind Yoga"><span class="m-ka"></span><i>×</i><span class="m-bf"></span></a>
   <a class="lk hide-s" href="#evening" data-i18n="nav_evening"></a>
   <label class="langsel"><span class="hp">Language</span><select id="lang" aria-label="Language">
     <option value="en">English</option><option value="zh">中文</option><option value="ms">Melayu</option><option value="ta">தமிழ்</option></select></label>
@@ -300,16 +301,16 @@ footer p{margin:0;max-width:60ch}
     <div class="fact"><dt data-i18n="f_date"></dt><dd data-cfg="date"></dd></div>
     <div class="fact"><dt data-i18n="f_time"></dt><dd data-cfg="time"></dd></div>
     <div class="fact"><dt data-i18n="f_where"></dt><dd data-cfg="venue"></dd></div>
-    <div class="fact"><dt data-i18n="f_seats"></dt><dd data-cfg="seats"></dd></div>
+    <div class="fact"><dt data-i18n="f_format"></dt><dd data-cfg="format"></dd></div>
   </dl>
 
   <section class="blk" id="evening">
     <p class="eyebrow" data-i18n="ev_eyebrow"></p>
     <h2 data-i18n="ev_h"></h2>
     <ol class="flow">
-      <li><time data-cfg="t1"></time><h3 data-i18n="p1_h"></h3><p data-i18n="p1_p"></p></li>
-      <li><time data-cfg="t2"></time><h3 data-i18n="p2_h"></h3><p data-i18n="p2_p"></p></li>
-      <li><time data-cfg="t3"></time><h3 data-i18n="p3_h"></h3><p data-i18n="p3_p"></p></li>
+      <li><time data-i18n="pt1"></time><h3 data-i18n="p1_h"></h3><p data-i18n="p1_p"></p></li>
+      <li><time data-i18n="pt2"></time><h3 data-i18n="p2_h"></h3><p data-i18n="p2_p"></p></li>
+      <li><time data-i18n="pt3"></time><h3 data-i18n="p3_h"></h3><p data-i18n="p3_p"></p></li>
     </ol>
   </section>
 
@@ -319,17 +320,6 @@ footer p{margin:0;max-width:60ch}
     <p class="eyebrow" data-i18n="ho_eyebrow"></p>
     <h2 data-i18n="ho_h"></h2>
     <div class="hosts">
-      <article class="host my">
-        <span class="m-my" role="img" aria-label="Mind · Yoga"></span>
-        <p class="slogan" data-i18n="my_slogan"></p>
-        <p data-i18n="my_p"></p>
-        <div class="stats">
-          <div><b>24+</b><span data-i18n="st1"></span></div>
-          <div><b>5</b><span data-i18n="st2"></span></div>
-          <div><b>600+</b><span data-i18n="st3"></span></div>
-          <div><b>11</b><span data-i18n="st4"></span></div>
-        </div>
-      </article>
       <article class="host ka">
         <div class="kalogo"><span class="m-ka" role="img" aria-label="KAION"></span></div>
         <p class="slogan">Build the kind of brain that keeps up with your life.</p>
@@ -341,6 +331,17 @@ footer p{margin:0;max-width:60ch}
             <a class="store" href="https://apps.apple.com/sg/app/kaion/id6752492098" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>App Store</a>
             <a class="store" href="https://play.google.com/store/apps/details?id=ai.kaion" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1zm11.3 11.3 2.4 2.4-11.2 6.4 8.8-8.8zm3.6-3.6 2.8 1.6c.8.5.8 1.3 0 1.8l-2.8 1.6-2.6-2.5 2.6-2.5zM6.1 2.1l11.2 6.4-2.4 2.4-8.8-8.8z"/></svg>Google Play</a>
           </div>
+        </div>
+      </article>
+      <article class="host my">
+        <span class="m-my" role="img" aria-label="Mind · Yoga"></span>
+        <p class="slogan" data-i18n="my_slogan"></p>
+        <p data-i18n="my_p"></p>
+        <div class="stats">
+          <div><b>24+</b><span data-i18n="st1"></span></div>
+          <div><b>5</b><span data-i18n="st2"></span></div>
+          <div><b>600+</b><span data-i18n="st3"></span></div>
+          <div><b>11</b><span data-i18n="st4"></span></div>
         </div>
       </article>
     </div>
@@ -382,7 +383,7 @@ footer p{margin:0;max-width:60ch}
   </section>
 
   <footer>
-    <div class="fmarks"><span class="m-bf"></span><span>×</span><span class="m-ka"></span></div>
+    <div class="fmarks"><span class="m-ka"></span><span>×</span><span class="m-bf"></span></div>
     <p><span data-i18n="foot_org"></span> <span id="privacy"></span></p>
   </footer>
 </main>
@@ -390,34 +391,39 @@ footer p{margin:0;max-width:60ch}
 <script>
 /* ================= 活动信息：改这里就行 ================= */
 const CONFIG = {
-  endpoint: "",                           // 谷歌 Apps Script 网址（/exec 结尾）；留空 = 演示模式，报名只存在本机浏览器
-  closesAt: "2026-11-20T23:59:00+08:00",  // 报名截止（新加坡时间）
-  startAt:  "2026-11-22T19:00:00+08:00",  // 活动开始，用于“加到日历”
-  endAt:    "2026-11-22T21:30:00+08:00",
-  date:  { en: "Sat, 22 Nov 2026", zh: "2026 年 11 月 22 日（周六）", ms: "Sabtu, 22 Nov 2026", ta: "சனி, 22 நவம்பர் 2026" },
-  time:  { en: "7:00 – 9:30 PM", zh: "晚上 7:00 – 9:30", ms: "7:00 – 9:30 malam", ta: "மாலை 7:00 – 9:30" },
-  venue: { en: "Singapore · venue TBC", zh: "新加坡 · 场地待定", ms: "Singapura · lokasi akan diumumkan", ta: "சிங்கப்பூர் · இடம் விரைவில்" },
-  seats: { en: "40 seats", zh: "限 40 位", ms: "40 tempat", ta: "40 இருக்கைகள்" },
-  t1: "7:00 PM", t2: "7:30 PM", t3: "8:45 PM",
-  contact: ""                             // 隐私问题联系邮箱；留空则不显示
+  endpoint: "",          // 谷歌 Apps Script 网址（/exec 结尾）；留空 = 演示模式，报名只存在本机浏览器
+  closesAt: "",          // 报名截止，例如 "2026-11-20T23:59:00+08:00"；留空 = 显示「日期即将公布」
+  startAt:  "",          // 活动开始，例如 "2026-11-22T19:00:00+08:00"；填了才出现「加到谷歌日历」按钮
+  endAt:    "",
+  // 以下按 2026-10-20 会议纪要：日期、时间、场地都还没定
+  date:   { en: "Announcing soon", zh: "即将公布", ms: "Akan diumumkan", ta: "விரைவில் அறிவிப்பு" },
+  time:   { en: "To be confirmed", zh: "待定", ms: "Akan disahkan", ta: "உறுதிசெய்யப்படும்" },
+  venue:  { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சிங்கப்பூர்" },
+  format: { en: "Socratic dialogue · Live podcast", zh: "苏格拉底式对话 · 现场播客", ms: "Dialog Socratic · Podcast langsung", ta: "சாக்ரடீஸ் உரையாடல் · நேரடி பாட்காஸ்ட்" },
+  contact: ""            // 隐私问题联系邮箱；留空则不显示
 };
 const PLACE = { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சிங்கப்பூர்" };
 
 /* ================= 文案（英 / 中 / 马来 / 泰米尔） ================= */
 const T = {
 en:{
+  pt3:"Podcast · 20–30 min",
+  pt2:"Then",
+  pt1:"Opening",
+  f_format:"Programme",
+  chip_soon:"Date announcing soon · register now to hold a seat",
   i1:"Hi, I'm *Qiqi.*", i2:"I host MindYoga salons, small rooms where people talk ~honestly~ about the mind.",
   i3:"This time, a new voice is joining the circle.", i_called:"Introducing…", i4:"Join us in ~Singapore.~", skip:"Skip intro",
   nav_evening:"The evening", nav_join:"Join",
   chip:"Registration closes in", chip_closed:"Registration is closed",
   h1:"What happens when an AI joins the circle?",
-  lede:"One evening in Singapore. MindYoga brings curious people together to talk about how we think and feel, and KAION, a voice AI built around how you think, joins the conversation.",
+  lede:"One evening in Singapore. Two engineers ask who the best prompter is, and the answer is Socrates. Join a Socratic dialogue, meet KAION, a voice AI built around how you think, and stay for a live podcast with Qiqi.",
   cta:"Reserve your seat", joined:"seats taken", just:"just joined",
   f_date:"Date", f_time:"Time", f_where:"Where", f_seats:"Capacity",
   ev_eyebrow:"The evening", ev_h:"Three parts, one conversation",
-  p1_h:"Arrive and settle", p1_p:"Tea, a short breathing practice, and time to meet the people around you.",
-  p2_h:"Talk with KAION", p2_p:"Qiqi opens a question. People speak first, then KAION is invited in to offer a new angle or a counterexample.",
-  p3_h:"Open circle", p3_p:"Your questions, to each other and to the AI. We close with one thing each person takes home.",
+  p1_h:"Who is the best prompter?", p1_p:"Two engineers ask the question. The answer is Socrates. We open with a first Socratic dialogue.",
+  p2_h:"Meet KAION", p2_p:"KAION is introduced, and the conversation carries on with KAION in the room.",
+  p3_h:"Live podcast with Qiqi", p3_p:"A light 20–30 minutes on how KAION differs from other AI, the story of Bozhidar and KAION, and one question: when are we being ourselves, and can KAION help?",
   ho_eyebrow:"The hosts", ho_h:"Two ways of looking at the mind",
   my_slogan:"Answers are easy to find. Thinking is rare.",
   my_p:"MindYoga began with one public philosophical conversation in 2024. It now runs salons, live podcasts and journeys across cities.",
@@ -438,28 +444,33 @@ en:{
   e_phone:"Please enter a Singapore mobile number (8 digits, starting with 8 or 9).", e_phone_int:"Please enter your number with the country code, digits only.",
   e_consent:"Please tick this box so we can hold your seat.", e_net:"We couldn't reach the sign-up sheet. Check your connection and try again.",
   e_full:"Sorry, the evening is full.",
-  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll be in touch before the evening.",
+  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll send the date, venue and a calendar invite once they're confirmed.",
   wait_h:"You're on the waitlist, {n}.", wait_p:"All seats are taken right now. We'll message you if one opens.",
   dup_h:"You're already registered.", dup_p:"This email already has a seat. See you there.",
   cal:"Add to Google Calendar", share:"Share on WhatsApp", again:"Register someone else",
-  share_txt:"I'm going to MindYoga × KAION in Singapore. Join me:",
-  foot_org:"Hosted by MindYoga, with KAION.",
+  share_txt:"I'm going to KAION × Mind Yoga in Singapore. Join me:",
+  foot_org:"Hosted by KAION and Mind Yoga.",
   privacy:"We use your details only to run this event.", privacy_c:"To view or delete your data, email {c}.",
   demo:"Demo · sign-ups stay on this device"
 },
 zh:{
+  pt3:"播客 · 20–30 分钟",
+  pt2:"接着",
+  pt1:"开场",
+  f_format:"形式",
+  chip_soon:"日期即将公布 · 现在报名先占座",
   i1:"你好，我是*齐奇。*", i2:"我在 MindYoga 办小型沙龙，让大家~坦诚地~聊聊自己的心。",
   i3:"这一次，圈子里多了一个新的声音。", i_called:"这一次是……", i4:"我们在~新加坡~见。", skip:"跳过开场",
   nav_evening:"活动流程", nav_join:"报名",
   chip:"报名截止还有", chip_closed:"报名已截止",
   h1:"当 AI 坐进对话圈，\n会发生什么？",
-  lede:"新加坡的一个晚上。MindYoga 邀请一群好奇的人，聊聊我们怎么想、怎么感受；懂你思考方式的语音 AI「KAION」也会加入对话。",
+  lede:"新加坡的一个晚上。两位工程师问：谁是最好的提示词高手？答案是苏格拉底。来参加一场苏格拉底式对话，认识懂你思考方式的语音 AI「KAION」，再听齐奇主持的现场播客。",
   cta:"预留座位", joined:"个座位已被预订", just:"刚刚报名",
   f_date:"日期", f_time:"时间", f_where:"地点", f_seats:"人数",
   ev_eyebrow:"活动流程", ev_h:"三段流程，一场对话",
-  p1_h:"到场、安顿", p1_p:"喝杯茶，做一段简短的呼吸练习，认识身边的人。",
-  p2_h:"与 KAION 对话", p2_p:"齐奇抛出一个问题，大家先说；再请 KAION 加入，补一个新角度或反例。",
-  p3_h:"开放圈", p3_p:"你的问题，可以问彼此，也可以问 AI。最后每人带走一句话。",
+  p1_h:"谁是最好的提示词高手？", p1_p:"两位工程师抛出这个问题，答案是苏格拉底。我们从第一场苏格拉底式对话开始。",
+  p2_h:"认识 KAION", p2_p:"介绍 KAION，然后带着 KAION 把对话继续下去。",
+  p3_h:"齐奇主持的现场播客", p3_p:"轻松的 20–30 分钟：KAION 和其他 AI 有什么不同、Bozhidar 与 KAION 的故事，还有一个问题：我们什么时候才是真正的自己，KAION 能帮上忙吗？",
   ho_eyebrow:"主办方", ho_h:"看见心智的两种方式",
   my_slogan:"答案易得，思考稀缺。",
   my_p:"2024 年，MindYoga 从第一场公开哲学式对话起步；如今在不同城市办沙龙、现场播客和旅程。",
@@ -480,28 +491,33 @@ zh:{
   e_phone:"请填写新加坡手机号（8 位，以 8 或 9 开头）。", e_phone_int:"请填写带国家区号的号码，只写数字。",
   e_consent:"请勾选同意，我们才能为你保留座位。", e_net:"没连上报名表，请检查网络后再试一次。",
   e_full:"抱歉，名额已满。",
-  ok_h:"报名成功，{n}。", ok_p:"座位已为你保留，活动前我们会联系你。",
+  ok_h:"报名成功，{n}。", ok_p:"座位已为你保留。日期和场地确定后，我们会把信息和日历邀请发给你。",
   wait_h:"你在候补名单上，{n}。", wait_p:"目前名额已满，有空位时我们会第一时间通知你。",
   dup_h:"你已经报过名了。", dup_p:"这个邮箱已有座位，到时见。",
   cal:"加到谷歌日历", share:"分享到 WhatsApp", again:"再帮别人报名",
-  share_txt:"我要去新加坡的 MindYoga × KAION 沙龙，一起来：",
-  foot_org:"MindYoga 主办，KAION 合作。",
+  share_txt:"我要去新加坡的 KAION × Mind Yoga 活动，一起来：",
+  foot_org:"KAION 与 Mind Yoga 联合主办。",
   privacy:"你的信息只用于本场活动。", privacy_c:"如需查看或删除个人信息，请发邮件到 {c}。",
   demo:"演示版 · 报名只存在这台设备上"
 },
 ms:{
+  pt3:"Podcast · 20–30 minit",
+  pt2:"Seterusnya",
+  pt1:"Pembukaan",
+  f_format:"Program",
+  chip_soon:"Tarikh akan diumumkan · daftar sekarang untuk tempah tempat",
   i1:"Hai, saya *Qiqi.*", i2:"Saya menganjurkan salon MindYoga, ruang kecil tempat orang berbual dengan ~jujur~ tentang minda.",
   i3:"Kali ini, satu suara baharu menyertai bulatan kami.", i_called:"Memperkenalkan…", i4:"Jumpa kami di ~Singapura.~", skip:"Langkau",
   nav_evening:"Acara", nav_join:"Sertai",
   chip:"Pendaftaran ditutup dalam", chip_closed:"Pendaftaran telah ditutup",
   h1:"Apa yang berlaku apabila AI menyertai bulatan kita?",
-  lede:"Satu malam di Singapura. MindYoga menghimpunkan orang yang ingin tahu untuk berbual tentang cara kita berfikir dan merasa, dan KAION, AI suara yang dibina mengikut cara anda berfikir, turut serta dalam perbualan.",
+  lede:"Satu malam di Singapura. Dua jurutera bertanya siapa pemberi arahan (prompter) terbaik, dan jawapannya ialah Socrates. Sertai dialog Socratic, kenali KAION, AI suara yang dibina mengikut cara anda berfikir, dan nikmati podcast langsung bersama Qiqi.",
   cta:"Tempah tempat anda", joined:"tempat telah ditempah", just:"baru mendaftar",
   f_date:"Tarikh", f_time:"Masa", f_where:"Lokasi", f_seats:"Kapasiti",
   ev_eyebrow:"Acara malam", ev_h:"Tiga bahagian, satu perbualan",
-  p1_h:"Tiba dan bertenang", p1_p:"Teh, latihan pernafasan ringkas, dan masa untuk berkenalan dengan orang di sekeliling anda.",
-  p2_h:"Berbual dengan KAION", p2_p:"Qiqi membuka satu soalan. Peserta bercakap dahulu, kemudian KAION dijemput untuk memberi sudut baharu atau contoh balas.",
-  p3_h:"Bulatan terbuka", p3_p:"Soalan anda, kepada satu sama lain dan kepada AI. Kami menutup dengan satu perkara yang dibawa pulang oleh setiap orang.",
+  p1_h:"Siapa prompter terbaik?", p1_p:"Dua jurutera bertanya soalan ini. Jawapannya: Socrates. Kami bermula dengan dialog Socratic yang pertama.",
+  p2_h:"Kenali KAION", p2_p:"KAION diperkenalkan, dan perbualan diteruskan bersama KAION.",
+  p3_h:"Podcast langsung bersama Qiqi", p3_p:"20–30 minit santai tentang perbezaan KAION dengan AI lain, kisah Bozhidar dan KAION, dan satu soalan: bilakah kita menjadi diri sendiri, dan bolehkah KAION membantu?",
   ho_eyebrow:"Penganjur", ho_h:"Dua cara melihat minda",
   my_slogan:"Jawapan mudah didapati. Pemikiran jarang ditemui.",
   my_p:"MindYoga bermula dengan satu perbualan falsafah terbuka pada 2024. Kini ia menganjurkan salon, podcast langsung dan perjalanan di pelbagai bandar.",
@@ -522,28 +538,33 @@ ms:{
   e_phone:"Sila masukkan nombor telefon bimbit Singapura (8 digit, bermula dengan 8 atau 9).", e_phone_int:"Sila masukkan nombor anda dengan kod negara, digit sahaja.",
   e_consent:"Sila tandakan kotak ini supaya kami boleh menyimpan tempat anda.", e_net:"Kami tidak dapat menghubungi helaian pendaftaran. Semak sambungan anda dan cuba lagi.",
   e_full:"Maaf, acara ini sudah penuh.",
-  ok_h:"Anda sudah berdaftar, {n}.", ok_p:"Tempat anda telah disimpan. Kami akan menghubungi anda sebelum acara.",
+  ok_h:"Anda sudah berdaftar, {n}.", ok_p:"Tempat anda telah disimpan. Kami akan menghantar tarikh, lokasi dan jemputan kalendar sebaik sahaja disahkan.",
   wait_h:"Anda dalam senarai menunggu, {n}.", wait_p:"Semua tempat telah penuh buat masa ini. Kami akan menghantar mesej jika ada tempat kosong.",
   dup_h:"Anda sudah berdaftar.", dup_p:"E-mel ini sudah mempunyai tempat. Jumpa di sana.",
   cal:"Tambah ke Kalendar Google", share:"Kongsi di WhatsApp", again:"Daftarkan orang lain",
-  share_txt:"Saya akan ke MindYoga × KAION di Singapura. Jom sertai saya:",
-  foot_org:"Dianjurkan oleh MindYoga, bersama KAION.",
+  share_txt:"Saya akan ke KAION × Mind Yoga di Singapura. Jom sertai saya:",
+  foot_org:"Dianjurkan oleh KAION dan Mind Yoga.",
   privacy:"Kami menggunakan maklumat anda hanya untuk acara ini.", privacy_c:"Untuk melihat atau memadam data anda, e-mel {c}.",
   demo:"Demo · pendaftaran hanya disimpan pada peranti ini"
 },
 ta:{
+  pt3:"பாட்காஸ்ட் · 20–30 நிமி",
+  pt2:"அடுத்து",
+  pt1:"தொடக்கம்",
+  f_format:"நிகழ்ச்சி",
+  chip_soon:"தேதி விரைவில் அறிவிக்கப்படும் · இப்போதே பதிவு செய்யுங்கள்",
   i1:"வணக்கம், நான் *Qiqi.*", i2:"நான் MindYoga உரையாடல் அமர்வுகளை நடத்துகிறேன்; மனதைப் பற்றி மக்கள் ~நேர்மையாகப்~ பேசும் சிறிய அறைகள்.",
   i3:"இந்த முறை, எங்கள் வட்டத்தில் ஒரு புதிய குரல் இணைகிறது.", i_called:"அறிமுகம்…", i4:"~சிங்கப்பூரில்~ சந்திப்போம்.", skip:"தவிர்",
   nav_evening:"நிகழ்ச்சி", nav_join:"பதிவு",
   chip:"பதிவு முடிய இன்னும்", chip_closed:"பதிவு முடிந்தது",
   h1:"நம் உரையாடல் வட்டத்தில் AI இணைந்தால் என்ன நடக்கும்?",
-  lede:"சிங்கப்பூரில் ஒரு மாலை. நாம் எப்படிச் சிந்திக்கிறோம், எப்படி உணர்கிறோம் என்று பேச MindYoga ஆர்வமுள்ளவர்களை ஒன்றிணைக்கிறது. நீங்கள் சிந்திக்கும் விதத்தைச் சுற்றி உருவாக்கப்பட்ட குரல் AI ஆன KAION-உம் உரையாடலில் இணைகிறது.",
+  lede:"சிங்கப்பூரில் ஒரு மாலை. சிறந்த ப்ராம்ப்டர் யார் என்று இரண்டு பொறியாளர்கள் கேட்கிறார்கள்; பதில் சாக்ரடீஸ். ஒரு சாக்ரடீஸ் உரையாடலில் பங்கேற்று, நீங்கள் சிந்திக்கும் விதத்தைச் சுற்றி உருவாக்கப்பட்ட குரல் AI ஆன KAION-ஐச் சந்தித்து, Qiqi நடத்தும் நேரடி பாட்காஸ்ட்டையும் கேளுங்கள்.",
   cta:"இருக்கையை முன்பதிவு செய்யுங்கள்", joined:"இருக்கைகள் முன்பதிவு", just:"இப்போது பதிவு செய்தவர்கள்",
   f_date:"தேதி", f_time:"நேரம்", f_where:"இடம்", f_seats:"இருக்கைகள்",
   ev_eyebrow:"மாலை நிகழ்ச்சி", ev_h:"மூன்று பகுதிகள், ஒரே உரையாடல்",
-  p1_h:"வந்து அமருங்கள்", p1_p:"தேநீர், ஒரு சிறிய மூச்சுப் பயிற்சி, அருகில் இருப்பவர்களைச் சந்திக்க நேரம்.",
-  p2_h:"KAION உடன் உரையாடல்", p2_p:"Qiqi ஒரு கேள்வியைத் தொடங்குகிறார். முதலில் மக்கள் பேசுவார்கள்; பிறகு புதிய கோணம் அல்லது மாற்று உதாரணம் தர KAION அழைக்கப்படும்.",
-  p3_h:"திறந்த வட்டம்", p3_p:"உங்கள் கேள்விகளை ஒருவருக்கொருவரும் AI-யிடமும் கேளுங்கள். ஒவ்வொருவரும் ஒரு எண்ணத்தை வீட்டுக்கு எடுத்துச் செல்வதுடன் நிறைவு செய்கிறோம்.",
+  p1_h:"சிறந்த ப்ராம்ப்டர் யார்?", p1_p:"இரண்டு பொறியாளர்கள் இந்தக் கேள்வியைக் கேட்கிறார்கள். பதில்: சாக்ரடீஸ். முதல் சாக்ரடீஸ் உரையாடலுடன் தொடங்குகிறோம்.",
+  p2_h:"KAION-ஐச் சந்தியுங்கள்", p2_p:"KAION அறிமுகப்படுத்தப்படுகிறது; பிறகு KAION-உடன் உரையாடல் தொடர்கிறது.",
+  p3_h:"Qiqi உடன் நேரடி பாட்காஸ்ட்", p3_p:"20–30 நிமிட இலகுவான உரையாடல்: மற்ற AI-களிலிருந்து KAION எப்படி வேறுபடுகிறது, Bozhidar மற்றும் KAION-இன் கதை, ஒரு கேள்வி: நாம் எப்போது நாமாக இருக்கிறோம், KAION உதவ முடியுமா?",
   ho_eyebrow:"ஏற்பாட்டாளர்கள்", ho_h:"மனதைப் பார்க்கும் இரண்டு வழிகள்",
   my_slogan:"பதில்கள் எளிதில் கிடைக்கும். சிந்தனை அரிது.",
   my_p:"2024-இல் ஒரு பொது தத்துவ உரையாடலுடன் தொடங்கிய MindYoga, இன்று பல நகரங்களில் உரையாடல் அமர்வுகள், நேரடி பாட்காஸ்ட்கள், பயணங்களை நடத்துகிறது.",
@@ -564,12 +585,12 @@ ta:{
   e_phone:"சிங்கப்பூர் கைபேசி எண்ணை உள்ளிடுங்கள் (8 இலக்கங்கள், 8 அல்லது 9 இல் தொடங்கும்).", e_phone_int:"நாட்டுக் குறியீட்டுடன் உங்கள் எண்ணை இலக்கங்களாக மட்டும் உள்ளிடுங்கள்.",
   e_consent:"உங்கள் இருக்கையை வைத்திருக்க இந்தப் பெட்டியைத் தேர்வு செய்யுங்கள்.", e_net:"பதிவுத் தாளை அடைய முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயலுங்கள்.",
   e_full:"மன்னிக்கவும், இருக்கைகள் நிரம்பிவிட்டன.",
-  ok_h:"பதிவு உறுதியானது, {n}.", ok_p:"உங்கள் இருக்கை சேமிக்கப்பட்டது. நிகழ்ச்சிக்கு முன் தொடர்புகொள்வோம்.",
+  ok_h:"பதிவு உறுதியானது, {n}.", ok_p:"உங்கள் இருக்கை சேமிக்கப்பட்டது. தேதி, இடம் உறுதியானதும் அவற்றையும் காலண்டர் அழைப்பையும் அனுப்புவோம்.",
   wait_h:"நீங்கள் காத்திருப்புப் பட்டியலில் உள்ளீர்கள், {n}.", wait_p:"தற்போது இருக்கைகள் நிரம்பிவிட்டன. இடம் கிடைத்தால் உங்களுக்குச் செய்தி அனுப்புவோம்.",
   dup_h:"நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்.", dup_p:"இந்த மின்னஞ்சலுக்கு ஏற்கனவே இருக்கை உள்ளது. அங்கே சந்திப்போம்.",
   cal:"Google Calendar-இல் சேர்", share:"WhatsApp-இல் பகிர்", again:"வேறொருவரைப் பதிவு செய்",
-  share_txt:"சிங்கப்பூரில் நடக்கும் MindYoga × KAION நிகழ்ச்சிக்குப் போகிறேன். நீங்களும் வாருங்கள்:",
-  foot_org:"MindYoga ஏற்பாடு, KAION உடன் இணைந்து.",
+  share_txt:"சிங்கப்பூரில் நடக்கும் KAION × Mind Yoga நிகழ்ச்சிக்குப் போகிறேன். நீங்களும் வாருங்கள்:",
+  foot_org:"KAION மற்றும் Mind Yoga இணைந்து நடத்துகின்றன.",
   privacy:"உங்கள் விவரங்கள் இந்த நிகழ்ச்சிக்காக மட்டுமே பயன்படுத்தப்படும்.", privacy_c:"உங்கள் தரவைப் பார்க்க அல்லது நீக்க {c} க்கு மின்னஞ்சல் அனுப்புங்கள்.",
   demo:"டெமோ · பதிவுகள் இந்தச் சாதனத்தில் மட்டுமே சேமிக்கப்படும்"
 }};
@@ -602,6 +623,7 @@ $("#lang").onchange = e => { L = e.target.value; store.set("my_lang", L); applyL
 
 /* countdown */
 function tick(){
+  if (!CONFIG.closesAt) { $("#chip").textContent = t("chip_soon"); return; }
   const ms = new Date(CONFIG.closesAt) - Date.now();
   if (ms <= 0) { $("#chip").textContent = t("chip_closed"); return; }
   const d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24, m = Math.floor(ms/6e4)%60, s = Math.floor(ms/1e3)%60;
@@ -656,7 +678,7 @@ async function intro(){
     await say("#s3", "i3", 85, 700); if (skipped) return;
     $("#stack").style.opacity = 0;
     $("#stamp .pre").style.opacity = 1;
-    const a = stampLine($("#st1"), "MindYoga"), b = stampLine($("#st2"), "× Kaion");
+    const a = stampLine($("#st1"), "Kaion ×"), b = stampLine($("#st2"), "Mind Yoga");
     for (const c of [...a, ...b]) { if (skipped) return; c.classList.add("on"); await sleep(70); }
     $("#duo").classList.add("on");
     await sleep(1500); if (skipped) return;
@@ -788,7 +810,7 @@ async function send(data){
 
 function calLink(){
   const f = s => new Date(s).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
-  const q = new URLSearchParams({ action: "TEMPLATE", text: "MindYoga × KAION Salon", dates: `${f(CONFIG.startAt)}/${f(CONFIG.endAt)}`,
+  const q = new URLSearchParams({ action: "TEMPLATE", text: "KAION × Mind Yoga", dates: `${f(CONFIG.startAt)}/${f(CONFIG.endAt)}`,
     details: location.href.split("#")[0], location: CONFIG.venue.en, ctz: "Asia/Singapore" });
   return "https://calendar.google.com/calendar/render?" + q;
 }
@@ -804,7 +826,7 @@ function showDone(r){
   box.querySelector("p").textContent = t(key + "_p");
   const dts = box.querySelectorAll("dt"), dds = box.querySelectorAll("dd");
   dts[0].textContent = t("f_date"); dds[0].textContent = v("date"); dts[1].textContent = t("f_time"); dds[1].textContent = v("time");
-  $("#calA").href = calLink(); $("#calA").textContent = t("cal");
+  $("#calA").href = CONFIG.startAt ? calLink() : "#"; $("#calA").textContent = t("cal"); $("#calA").hidden = !CONFIG.startAt;
   $("#shareA").href = share; $("#shareA").textContent = t("share");
   $("#again").textContent = t("again");
   $("#again").onclick = () => { lastResult = null; box.innerHTML = ""; box.append(form); form.reset(); applyLang(); $("#name").focus(); };
