@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="MindYoga × KAION salon in Singapore. Reserve your seat.">
+<meta property="og:title" content="MindYoga × KAION Salon">
+<meta property="og:description" content="What happens when an AI joins the circle? One evening in Singapore.">
+<meta property="og:image" content="img/salon-2.jpg">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>MindYoga × KAION Salon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Sans+Tamil:wght@400;600;800&display=swap">
+<style>
+/* Layout: one centred column, phone first. KAION's warm sand and halo meet MindYoga's ink green, gold and butterfly. */
+:root{
+  --bg:#F2EBE4;          /* KAION sand */
+  --surface:#FBF8F4;
+  --fg:#1C2420;
+  --muted:#6E6760;
+  --line:#E2D8CD;
+  --brand:#2C3E36;       /* MindYoga ink green */
+  --brand-fg:#F6F1EA;
+  --gold:#B08C52;        /* MindYoga gold, small accents only */
+  --signal:#D9472B;      /* live dot */
+  --halo:rgba(255,255,255,.95);
+  --globe-base:#EDE6DE;
+  --nav-bg:#1C2420;
+  --nav-fg:#F2EBE4;
+  --display:"Archivo","Noto Sans SC","Noto Sans Tamil",system-ui,sans-serif;
+  --body:"Instrument Sans","Noto Sans SC","Noto Sans Tamil",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Cormorant Garamond","Noto Serif SC",Georgia,serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121915;--surface:#1A231E;--fg:#EFE9E1;--muted:#A79F95;--line:#2B3630;
+  --brand:#D9BC8C;--brand-fg:#121915;--gold:#D9BC8C;--signal:#F06A4E;--halo:rgba(255,246,232,.32);--globe-base:#25302A;--nav-bg:#EFE9E1;--nav-fg:#121915;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121915;--surface:#1A231E;--fg:#EFE9E1;--muted:#A79F95;--line:#2B3630;
+  --brand:#D9BC8C;--brand-fg:#121915;--gold:#D9BC8C;--signal:#F06A4E;--halo:rgba(255,246,232,.32);--globe-base:#25302A;--nav-bg:#EFE9E1;--nav-fg:#121915;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* brand marks drawn as masks so they follow the theme colour */
+.m-bf{display:inline-block;background:currentColor;-webkit-mask:url(img/mindyoga-butterfly.png) center/contain no-repeat;mask:url(img/mindyoga-butterfly.png) center/contain no-repeat;aspect-ratio:480/435}
+.m-my{display:inline-block;background:currentColor;-webkit-mask:url(img/mindyoga-logo.png) center/contain no-repeat;mask:url(img/mindyoga-logo.png) center/contain no-repeat;aspect-ratio:436/480}
+.m-ka{display:inline-block;background:currentColor;-webkit-mask:url(img/kaion-wordmark.png) center/contain no-repeat;mask:url(img/kaion-wordmark.png) center/contain no-repeat;aspect-ratio:1624/396}
+
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;overflow:hidden;
+  transition:transform .95s cubic-bezier(.75,0,.2,1),border-radius .95s;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#intro.leave{transform:translateY(-104%);border-radius:0 0 40px 40px}
+.say{position:absolute;max-width:min(560px,88vw);text-align:center;font-family:var(--display);font-weight:700;
+  font-size:clamp(22px,4.4vw,34px);line-height:1.22;letter-spacing:-.02em;text-wrap:balance;transition:opacity .45s,transform .45s}
+:root[lang="ta"] .say{font-size:clamp(19px,3.6vw,28px);letter-spacing:0}
+.say.out{opacity:0;transform:translateY(-10px)}
+.w{opacity:.13;transition:opacity .4s}
+.w.on{opacity:1}
+.w.hl{color:var(--gold)}
+.w.ul{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--gold)}
+.stack{position:absolute;width:min(230px,54vw);aspect-ratio:4/4.2;transition:transform .9s cubic-bezier(.6,0,.2,1),opacity .4s}
+.stack.dock{transform:translateY(min(36vh,320px)) scale(.34)}
+.pol{position:absolute;inset:0;background:#fff;padding:8px 8px 30px;border-radius:3px;box-shadow:0 18px 40px rgba(40,30,20,.22),0 2px 6px rgba(40,30,20,.12);
+  opacity:0;transform:translateY(-40px) scale(1.25) rotate(var(--r))}
+.pol img{width:100%;height:100%;object-fit:cover;display:block;border-radius:1px}
+.pol.in{animation:drop .55s cubic-bezier(.2,.9,.25,1.15) forwards}
+@keyframes drop{to{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}}
+.stamp{position:absolute;text-align:center;font-family:var(--display);font-weight:900;font-stretch:125%;line-height:.86;letter-spacing:-.01em;
+  font-size:clamp(44px,11vw,112px);text-transform:uppercase;transition:opacity .4s}
+.stamp .pre{opacity:0;transition:opacity .3s;display:block;font-weight:700;font-stretch:100%;font-size:clamp(18px,3vw,24px);letter-spacing:-.01em;text-transform:none;margin-bottom:.5em}
+.stamp .ch{display:inline-block;opacity:0;transform:scale(1.8) translateY(-6px)}
+.stamp .ch.on{animation:stampin .32s cubic-bezier(.2,.9,.2,1.2) forwards}
+.stamp .x{color:var(--gold)}
+@keyframes stampin{to{opacity:1;transform:none}}
+.duo{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,26px);margin-top:.5em;font-size:16px;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}
+.duo.on{opacity:1;transform:none}
+.duo .m-my{height:clamp(64px,10vw,92px);color:var(--brand)}
+.duo .x{font:500 22px var(--body);color:var(--gold)}
+.duo .ka{position:relative;display:grid;place-items:center;width:clamp(110px,16vw,150px);aspect-ratio:1}
+.duo .ka::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 52%,var(--halo) 60%,transparent 72%);filter:blur(6px)}
+.duo .ka .m-ka{position:relative;width:76%;color:var(--fg)}
+#skip{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));font:500 14px var(--body);
+  background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:9px 16px;cursor:pointer}
+#skip:hover{color:var(--fg)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:calc(12px + env(safe-area-inset-top,0px));z-index:30;display:flex;justify-content:center;pointer-events:none;margin-top:14px}
+.pill{pointer-events:auto;display:flex;align-items:center;gap:4px;background:var(--nav-bg);color:var(--nav-fg);border-radius:999px;padding:6px 6px 6px 14px;
+  box-shadow:0 10px 30px rgba(30,20,10,.18);max-width:100%}
+.mark{display:flex;align-items:center;gap:7px;margin-right:6px;text-decoration:none}
+.mark .m-bf{height:22px}.mark .m-ka{height:11px}.mark i{font-style:normal;opacity:.6;font-size:12px}
+.pill .lk{font:500 14px var(--body);color:inherit;text-decoration:none;opacity:.78;padding:8px 10px;border-radius:999px}
+.pill .lk:hover{opacity:1}
+.langsel{position:relative;display:flex;align-items:center}
+.langsel select{appearance:none;-webkit-appearance:none;font:500 14px var(--body);color:var(--nav-fg);background:transparent;border:1px solid color-mix(in srgb,var(--nav-fg) 25%,transparent);
+  border-radius:999px;padding:7px 26px 7px 12px;cursor:pointer;max-width:110px}
+.langsel select option{color:#1C2420;background:#fff}
+.langsel::after{content:"";position:absolute;right:11px;top:50%;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;opacity:.7}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--body);background:var(--brand);color:var(--brand-fg);border:0;border-radius:999px;padding:12px 22px;
+  text-decoration:none;cursor:pointer;transition:transform .15s,filter .15s;text-align:center}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn.sm{padding:9px 15px;font-size:14px}
+.pill .btn{background:#2C3E36;color:#F6F1EA;margin-left:4px}
+.arrow{transition:transform .2s}.btn:hover .arrow{transform:translateX(3px)}
+
+/* ---------- hero ---------- */
+.hero{text-align:center;padding-block:52px 0;display:flex;flex-direction:column;align-items:center;gap:18px}
+.chip{font:500 13px var(--body);font-variant-numeric:tabular-nums;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 13px}
+.h1wrap{position:relative;display:inline-block}
+h1{white-space:pre-line;font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(38px,7.4vw,76px);line-height:1.0;letter-spacing:-.035em;margin:0;max-width:13ch;text-wrap:balance}
+:root[lang="zh-Hans"] h1{font-size:clamp(34px,6.4vw,68px);line-height:1.12;letter-spacing:-.01em;max-width:none}
+:root[lang="ta"] h1{font-size:clamp(27px,5vw,52px);line-height:1.25;letter-spacing:0;max-width:20ch}
+:root[lang="ms"] h1{font-size:clamp(34px,6.4vw,66px);max-width:15ch}
+.hero .flyer{position:absolute;right:-.55em;top:-.62em;width:.95em;color:var(--gold);font-size:clamp(38px,7.4vw,76px);pointer-events:none}
+.flyer .m-bf{width:100%;transform-origin:50% 60%;animation:flap 2.8s ease-in-out infinite}
+@keyframes flap{0%,100%{transform:rotateY(0) rotate(-4deg)}45%{transform:rotateY(52deg) rotate(2deg)}55%{transform:rotateY(48deg) rotate(2deg)}}
+body.revealed .flyer{animation:flyin 1.6s cubic-bezier(.3,.7,.2,1) .3s both}
+@keyframes flyin{0%{opacity:0;transform:translate(-60vw,30vh) rotate(-30deg) scale(.6)}60%{opacity:1}100%{transform:none}}
+.lede{color:var(--muted);font-size:clamp(16px,2vw,18px);max-width:54ch;margin:0;text-wrap:pretty}
+.live{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);flex-wrap:wrap;justify-content:center}
+.live b{color:var(--fg);font-variant-numeric:tabular-nums}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:ping 1.8s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 55%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
+.lbl{font-weight:700;color:var(--fg);letter-spacing:.04em;font-size:12.5px}
+.avs{display:flex}
+.av{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--body);color:var(--brand-fg);background:var(--brand);border:2px solid var(--bg);margin-left:-6px}
+.av:first-child{margin-left:0}
+body.revealed .hero>*:not(.globe){animation:up .7s cubic-bezier(.2,.8,.2,1) both}
+body.revealed .hero>*:nth-child(2){animation-delay:.06s}body.revealed .hero>*:nth-child(3){animation-delay:.12s}
+body.revealed .hero>*:nth-child(4){animation-delay:.18s}body.revealed .hero>*:nth-child(5){animation-delay:.24s}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+
+/* globe with KAION halo */
+.globe{position:relative;width:min(640px,100%);aspect-ratio:1/.8;overflow:hidden;margin-top:6px;touch-action:pan-y;
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 98%);mask-image:linear-gradient(to bottom,#000 72%,transparent 98%)}
+.globe .halo{position:absolute;left:0;top:0;width:100%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 37%,var(--halo) 41.5%,transparent 52%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.03);opacity:.8}}
+.globe canvas{position:relative;width:100%;aspect-ratio:1;display:block;cursor:grab;opacity:0;transition:opacity 1s}
+.globe canvas.ready{opacity:1}
+.globe canvas:active{cursor:grabbing}
+.pin{position:absolute;left:50%;top:72%;transform:translate(-14px,-50%);display:flex;align-items:center;gap:6px;background:var(--surface);color:var(--fg);
+  border:1px solid var(--line);border-radius:999px;padding:4px 11px 4px 5px;font:600 13px var(--body);box-shadow:0 6px 18px rgba(30,20,10,.14);
+  opacity:0;transition:opacity .5s;pointer-events:none;white-space:nowrap}
+.pin.on{opacity:1}
+.pin i{width:18px;height:18px;border-radius:50%;background:var(--signal);color:#fff;display:grid;place-items:center}
+.pin i .m-bf{width:12px;color:#fff}
+.pin small{color:var(--muted);font-weight:500}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:-28px 0 0;position:relative}
+.fact{background:var(--surface);padding:18px 20px;min-width:0}
+.fact dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.fact dd{margin:4px 0 0;font-weight:600;font-size:17px;line-height:1.3}
+@media (max-width:720px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.fact{padding:14px 16px}.fact dd{font-size:15.5px}}
+
+/* sections */
+section.blk{padding-block:88px 0}
+.band+section.blk{padding-top:96px}
+@media (max-width:600px){section.blk{padding-block:64px 0}}
+.eyebrow{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 10px}
+h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(28px,4.6vw,46px);letter-spacing:-.03em;line-height:1.06;margin:0 0 28px;text-wrap:balance}
+:root[lang="ta"] h2{font-size:clamp(23px,3.6vw,36px);letter-spacing:0;line-height:1.3}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.flow li{border-top:2px solid var(--fg);padding-top:14px;min-width:0}
+.flow time{font:600 14px var(--body);font-variant-numeric:tabular-nums;color:var(--muted)}
+.flow h3{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.015em;margin:6px 0 6px}
+.flow p{margin:0;color:var(--muted)}
+@media (max-width:720px){.flow{grid-template-columns:1fr;gap:22px}}
+
+/* slogan band */
+.band{width:100vw;margin:88px 0 0 calc(50% - 50vw);background:#2C3E36;color:#F1E9DC;overflow:hidden;padding-block:22px;transform:rotate(-1.2deg)}
+.track{display:flex;width:max-content;gap:28px;align-items:center;animation:marq 38s linear infinite;white-space:nowrap}
+.track span{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(24px,3.4vw,36px)}
+.track span.k{font-family:var(--display);font-style:normal;font-weight:600;font-size:clamp(19px,2.6vw,27px);letter-spacing:-.01em}
+.track .m-bf{width:34px;color:#D9BC8C;flex:0 0 auto}
+@keyframes marq{to{transform:translateX(-50%)}}
+/* hosts */
+.hosts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.hosts{grid-template-columns:1fr}}
+.host{border-radius:22px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:14px;min-width:0;position:relative;overflow:hidden}
+.host.my{background:#2C3E36;color:#F1E9DC}
+.host.my .m-my{height:96px;color:#D9BC8C;align-self:flex-start}
+.host.my .slogan{font-family:var(--serif);font-weight:500;font-style:italic;font-size:clamp(24px,3vw,30px);line-height:1.15;color:#D9BC8C;margin:0}
+.host.my p{margin:0;color:rgba(241,233,220,.78)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:6px;padding-top:16px;border-top:1px solid rgba(217,188,140,.3)}
+.stats b{display:block;font-family:var(--display);font-size:26px;font-weight:800;color:#F1E9DC;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stats span{font-size:12.5px;color:rgba(241,233,220,.7);line-height:1.3;display:block}
+@media (max-width:420px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.host.ka{background:#EFE4DA;color:#1D2233}
+.host.ka .kalogo{position:relative;width:150px;aspect-ratio:1;display:grid;place-items:center;align-self:flex-start;margin:-18px 0 -14px -18px}
+.host.ka .kalogo::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 50%,rgba(255,255,255,.98) 58%,transparent 72%);filter:blur(5px);animation:breathe 6s ease-in-out infinite}
+.host.ka .m-ka{position:relative;width:70%;color:#1D2233}
+.host.ka .slogan{font-family:var(--display);font-weight:600;font-size:clamp(21px,2.6vw,26px);line-height:1.2;letter-spacing:-.015em;margin:0}
+.host.ka p{margin:0;color:#4E4A55}
+.stores{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.store{display:inline-flex;align-items:center;gap:8px;background:#1D2233;color:#EFE4DA;text-decoration:none;border-radius:10px;padding:8px 14px;font:600 14px var(--body)}
+.store svg{width:16px;height:16px;fill:currentColor}
+.host .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.65}
+.waves{display:flex;align-items:center;gap:3px;height:22px}
+.waves span{width:3px;border-radius:2px;background:#1D2233;opacity:.55;animation:wv 1.2s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.35)}}
+
+/* form */
+.formgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:48px;align-items:start}
+@media (max-width:820px){.formgrid{grid-template-columns:1fr;gap:20px}}
+.side p{color:var(--muted);margin:0 0 14px;max-width:40ch}
+.side .polmini{display:flex;margin-top:22px}
+.side .polmini img{width:92px;height:92px;object-fit:cover;border:5px solid #fff;border-bottom-width:16px;border-radius:2px;box-shadow:0 8px 20px rgba(30,20,10,.16);margin-right:-18px}
+.side .polmini img:nth-child(1){transform:rotate(-6deg)}.side .polmini img:nth-child(2){transform:rotate(4deg) translateY(6px)}.side .polmini img:nth-child(3){transform:rotate(-2deg)}
+@media (max-width:820px){.side .polmini{display:none}}
+form{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,30px);display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
+.f{display:grid;gap:6px;min-width:0}
+.f>label,.f>.lg{font-weight:600;font-size:14.5px}
+.f .opt{font-weight:500;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],textarea,select.inp{width:100%;font:16px var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 13px;transition:border-color .15s,background .15s}
+input:focus,textarea:focus,select.inp:focus{outline:none;border-color:var(--brand);background:var(--surface)}
+textarea{min-height:84px;resize:vertical}
+.tel{display:flex;gap:8px}.tel select{width:auto;flex:0 0 auto}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:14.5px;cursor:pointer;background:var(--bg);transition:all .15s}
+.seg input:checked+span{background:var(--brand);color:var(--brand-fg);border-color:var(--brand)}
+.seg input:focus-visible+span{outline:2px solid var(--brand);outline-offset:2px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);cursor:pointer}
+.chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand);flex:0 0 auto}
+.err{color:var(--signal);font-size:13px}
+.err:empty{display:none}
+.invalid{border-color:var(--signal)!important}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+form .btn{justify-self:start;padding:14px 26px;font-size:16px}
+@media (max-width:560px){form .btn{justify-self:stretch;justify-content:center}}
+form .btn[disabled]{opacity:.6;cursor:progress}
+.demo{font-size:13px;color:var(--muted);margin:-6px 0 0}
+.done{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,4vw,36px);display:grid;gap:14px}
+.done h3{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,36px);letter-spacing:-.03em;margin:0;line-height:1.1}
+.done p{margin:0;color:var(--muted)}
+.done .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.done .facts{margin:6px 0 0;grid-template-columns:repeat(2,minmax(0,1fr))}
+.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.tick{width:48px;height:48px;border-radius:50%;background:var(--brand);color:var(--brand-fg);display:grid;place-items:center}
+.tick .m-bf{width:28px}
+
+footer{padding-block:40px;color:var(--muted);font-size:13.5px;display:flex;flex-wrap:wrap;gap:14px 24px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:96px}
+footer p{margin:0;max-width:60ch}
+.fmarks{display:flex;align-items:center;gap:10px;color:var(--fg)}
+.fmarks .m-bf{height:24px}.fmarks .m-ka{height:12px}
+@media (max-width:600px){.pill .hide-s{display:none}.pill{padding-left:12px}.langsel select{max-width:92px;padding-left:10px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<!-- ============ intro ============ -->
+<div id="intro" aria-hidden="true">
+  <div class="say" id="s1"></div>
+  <div class="stack" id="stack">
+    <div class="pol" style="--r:3deg"><img src="img/qiqi.jpg" alt=""></div>
+    <div class="pol" style="--r:-5deg"><img src="img/salon-3.jpg" alt=""></div>
+  </div>
+  <div class="say" id="s2"></div>
+  <div class="say" id="s3"></div>
+  <div class="stamp" id="stamp"><span class="pre" data-i18n="i_called"></span><div id="st1"></div><div id="st2"></div>
+    <div class="duo" id="duo"><span class="m-my"></span><span class="x">×</span><span class="ka"><span class="m-ka"></span></span></div></div>
+  <div class="say" id="s4"></div>
+  <button id="skip" type="button" data-i18n="skip"></button>
+</div>
+
+<!-- ============ page ============ -->
+<div class="nav wrap"><div class="pill">
+  <a class="mark" href="#top" aria-label="MindYoga × KAION"><span class="m-bf"></span><i>×</i><span class="m-ka"></span></a>
+  <a class="lk hide-s" href="#evening" data-i18n="nav_evening"></a>
+  <label class="langsel"><span class="hp">Language</span><select id="lang" aria-label="Language">
+    <option value="en">English</option><option value="zh">中文</option><option value="ms">Melayu</option><option value="ta">தமிழ்</option></select></label>
+  <a class="btn sm" href="#join"><span data-i18n="nav_join"></span><span class="arrow">→</span></a>
+</div></div>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <div class="chip" id="chip"></div>
+    <div class="h1wrap"><h1 data-i18n="h1"></h1><span class="flyer" aria-hidden="true"><span class="m-bf"></span></span></div>
+    <p class="lede" data-i18n="lede"></p>
+    <a class="btn" href="#join"><span data-i18n="cta"></span><span class="arrow">→</span></a>
+    <div class="live" id="live"><span class="dot"></span><span class="lbl">LIVE</span>·<span><b id="count">0</b> <span data-i18n="joined"></span></span><span id="recentWrap" hidden>· <span data-i18n="just"></span></span><span class="avs" id="avs"></span></div>
+    <div class="globe" id="globe"><div class="halo"></div><canvas id="cv" width="1200" height="1200" aria-label="Globe turning to Singapore"></canvas>
+      <div class="pin" id="pin"><i><span class="m-bf"></span></i><span id="pinName">Singapore</span></div></div>
+  </header>
+
+  <dl class="facts" id="facts">
+    <div class="fact"><dt data-i18n="f_date"></dt><dd data-cfg="date"></dd></div>
+    <div class="fact"><dt data-i18n="f_time"></dt><dd data-cfg="time"></dd></div>
+    <div class="fact"><dt data-i18n="f_where"></dt><dd data-cfg="venue"></dd></div>
+    <div class="fact"><dt data-i18n="f_seats"></dt><dd data-cfg="seats"></dd></div>
+  </dl>
+
+  <section class="blk" id="evening">
+    <p class="eyebrow" data-i18n="ev_eyebrow"></p>
+    <h2 data-i18n="ev_h"></h2>
+    <ol class="flow">
+      <li><time data-cfg="t1"></time><h3 data-i18n="p1_h"></h3><p data-i18n="p1_p"></p></li>
+      <li><time data-cfg="t2"></time><h3 data-i18n="p2_h"></h3><p data-i18n="p2_p"></p></li>
+      <li><time data-cfg="t3"></time><h3 data-i18n="p3_h"></h3><p data-i18n="p3_p"></p></li>
+    </ol>
+  </section>
+
+  <div class="band" aria-hidden="true"><div class="track" id="track"></div></div>
+
+  <section class="blk" id="hosts">
+    <p class="eyebrow" data-i18n="ho_eyebrow"></p>
+    <h2 data-i18n="ho_h"></h2>
+    <div class="hosts">
+      <article class="host my">
+        <span class="m-my" role="img" aria-label="Mind · Yoga"></span>
+        <p class="slogan" data-i18n="my_slogan"></p>
+        <p data-i18n="my_p"></p>
+        <div class="stats">
+          <div><b>24+</b><span data-i18n="st1"></span></div>
+          <div><b>5</b><span data-i18n="st2"></span></div>
+          <div><b>600+</b><span data-i18n="st3"></span></div>
+          <div><b>11</b><span data-i18n="st4"></span></div>
+        </div>
+      </article>
+      <article class="host ka">
+        <div class="kalogo"><span class="m-ka" role="img" aria-label="KAION"></span></div>
+        <p class="slogan">Build the kind of brain that keeps up with your life.</p>
+        <p data-i18n="ka_p"></p>
+        <div class="waves" aria-hidden="true"></div>
+        <div>
+          <span class="tag" data-i18n="ka_try"></span>
+          <div class="stores">
+            <a class="store" href="https://apps.apple.com/sg/app/kaion/id6752492098" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>App Store</a>
+            <a class="store" href="https://play.google.com/store/apps/details?id=ai.kaion" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1zm11.3 11.3 2.4 2.4-11.2 6.4 8.8-8.8zm3.6-3.6 2.8 1.6c.8.5.8 1.3 0 1.8l-2.8 1.6-2.6-2.5 2.6-2.5zM6.1 2.1l11.2 6.4-2.4 2.4-8.8-8.8z"/></svg>Google Play</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="blk" id="join">
+    <div class="formgrid">
+      <div class="side">
+        <p class="eyebrow" data-i18n="j_eyebrow"></p>
+        <h2 data-i18n="j_h"></h2>
+        <p data-i18n="j_p"></p>
+        <div class="polmini"><img src="img/salon-4.jpg" alt=""><img src="img/salon-2.jpg" alt=""><img src="img/salon-1.jpg" alt=""></div>
+      </div>
+      <div id="formBox">
+        <form id="form" novalidate>
+          <div class="row">
+            <div class="f"><label for="name" data-i18n="l_name"></label><input id="name" name="name" type="text" autocomplete="name" required maxlength="80"><div class="err" id="e_name"></div></div>
+            <div class="f"><label for="email" data-i18n="l_email"></label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" required maxlength="120"><div class="err" id="e_email"></div></div>
+          </div>
+          <div class="f"><label for="phone"><span data-i18n="l_phone"></span></label>
+            <div class="tel"><select class="inp" id="cc" name="cc" aria-label="Country code"><option value="+65">🇸🇬 +65</option><option value="+60">🇲🇾 +60</option><option value="+62">🇮🇩 +62</option><option value="+86">🇨🇳 +86</option><option value="+852">🇭🇰 +852</option><option value="+91">🇮🇳 +91</option><option value="other" data-i18n="cc_other"></option></select>
+            <input id="phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required maxlength="20" placeholder="8123 4567"></div><div class="err" id="e_phone"></div></div>
+          <div class="f"><span class="lg" data-i18n="l_seats"></span>
+            <div class="seg" role="radiogroup"><label><input type="radio" name="seats" id="seats1" value="1" checked><span data-i18n="s_1"></span></label><label><input type="radio" name="seats" id="seats2" value="2"><span data-i18n="s_2"></span></label></div></div>
+          <div class="f"><span class="lg"><span data-i18n="l_kaion"></span> <span class="opt" data-i18n="optional"></span></span>
+            <div class="seg"><label><input type="radio" name="kaion" id="k1" value="Use it"><span data-i18n="k_1"></span></label><label><input type="radio" name="kaion" id="k2" value="Tried once"><span data-i18n="k_2"></span></label><label><input type="radio" name="kaion" id="k3" value="New to it"><span data-i18n="k_3"></span></label></div></div>
+          <div class="f"><label for="question"><span data-i18n="l_q"></span> <span class="opt" data-i18n="optional"></span></label><textarea id="question" name="question" maxlength="400" data-i18n-ph="q_ph"></textarea></div>
+          <div class="f"><label for="heard"><span data-i18n="l_heard"></span> <span class="opt" data-i18n="optional"></span></label>
+            <select class="inp" id="heard" name="heard"><option value="" data-i18n="choose"></option><option value="Flyer" data-i18n="h_flyer"></option><option value="Instagram">Instagram</option><option value="Friend" data-i18n="h_friend"></option><option value="MindYoga community" data-i18n="h_my"></option><option value="KAION">KAION</option><option value="Other" data-i18n="h_other"></option></select></div>
+          <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <div class="f"><label class="chk"><input type="checkbox" id="consent" name="consent" required><span data-i18n="consent"></span></label><div class="err" id="e_consent"></div>
+            <label class="chk"><input type="checkbox" id="updates" name="updates"><span data-i18n="updates"></span></label></div>
+          <div class="err" id="e_form"></div>
+          <button class="btn" id="submit" type="submit"><span data-i18n="submit"></span><span class="arrow">→</span></button>
+          <p class="demo" id="demoTag" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fmarks"><span class="m-bf"></span><span>×</span><span class="m-ka"></span></div>
+    <p><span data-i18n="foot_org"></span> <span id="privacy"></span></p>
+  </footer>
+</main>
+
+<script>
+/* ================= 活动信息：改这里就行 ================= */
+const CONFIG = {
+  endpoint: "",                           // 谷歌 Apps Script 网址（/exec 结尾）；留空 = 演示模式，报名只存在本机浏览器
+  closesAt: "2026-11-20T23:59:00+08:00",  // 报名截止（新加坡时间）
+  startAt:  "2026-11-22T19:00:00+08:00",  // 活动开始，用于“加到日历”
+  endAt:    "2026-11-22T21:30:00+08:00",
+  date:  { en: "Sat, 22 Nov 2026", zh: "2026 年 11 月 22 日（周六）", ms: "Sabtu, 22 Nov 2026", ta: "சனி, 22 நவம்பர் 2026" },
+  time:  { en: "7:00 – 9:30 PM", zh: "晚上 7:00 – 9:30", ms: "7:00 – 9:30 malam", ta: "மாலை 7:00 – 9:30" },
+  venue: { en: "Singapore · venue TBC", zh: "新加坡 · 场地待定", ms: "Singapura · lokasi akan diumumkan", ta: "சிங்கப்பூர் · இடம் விரைவில்" },
+  seats: { en: "40 seats", zh: "限 40 位", ms: "40 tempat", ta: "40 இருக்கைகள்" },
+  t1: "7:00 PM", t2: "7:30 PM", t3: "8:45 PM",
+  contact: ""                             // 隐私问题联系邮箱；留空则不显示
+};
+const PLACE = { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சிங்கப்பூர்" };
+
+/* ================= 文案（英 / 中 / 马来 / 泰米尔） ================= */
+const T = {
+en:{
+  i1:"Hi, I'm *Qiqi.*", i2:"I host MindYoga salons, small rooms where people talk ~honestly~ about the mind.",
+  i3:"This time, a new voice is joining the circle.", i_called:"Introducing…", i4:"Join us in ~Singapore.~", skip:"Skip intro",
+  nav_evening:"The evening", nav_join:"Join",
+  chip:"Registration closes in", chip_closed:"Registration is closed",
+  h1:"What happens when an AI joins the circle?",
+  lede:"One evening in Singapore. MindYoga brings curious people together to talk about how we think and feel, and KAION, a voice AI built around how you think, joins the conversation.",
+  cta:"Reserve your seat", joined:"seats taken", just:"just joined",
+  f_date:"Date", f_time:"Time", f_where:"Where", f_seats:"Capacity",
+  ev_eyebrow:"The evening", ev_h:"Three parts, one conversation",
+  p1_h:"Arrive and settle", p1_p:"Tea, a short breathing practice, and time to meet the people around you.",
+  p2_h:"Talk with KAION", p2_p:"Qiqi opens a question. People speak first, then KAION is invited in to offer a new angle or a counterexample.",
+  p3_h:"Open circle", p3_p:"Your questions, to each other and to the AI. We close with one thing each person takes home.",
+  ho_eyebrow:"The hosts", ho_h:"Two ways of looking at the mind",
+  my_slogan:"Answers are easy to find. Thinking is rare.",
+  my_p:"MindYoga began with one public philosophical conversation in 2024. It now runs salons, live podcasts and journeys across cities.",
+  st1:"salons and events", st2:"journeys", st3:"core participants", st4:"places in 3 countries",
+  ka_p:"KAION is a neurotech app based on you, not just your data. It engages through natural, real-time conversations.",
+  ka_try:"Try KAION before the evening",
+  j_eyebrow:"Registration", j_h:"Reserve your seat",
+  j_p:"It takes about a minute. We'll confirm by WhatsApp or email before the evening.",
+  l_name:"Full name", l_email:"Email", l_phone:"Mobile (WhatsApp)", cc_other:"Other",
+  l_seats:"How many seats?", s_1:"Just me", s_2:"Me + 1 friend",
+  l_kaion:"Have you used KAION?", k_1:"I use it", k_2:"Tried it once", k_3:"New to it", optional:"(optional)",
+  l_q:"A question you'd like to bring", q_ph:"e.g. Can a machine understand loneliness?",
+  l_heard:"How did you hear about us?", choose:"Choose one", h_flyer:"Flyer", h_friend:"A friend", h_my:"MindYoga community", h_other:"Other",
+  consent:"I agree that MindYoga and KAION may use these details to manage my registration and contact me about this event.",
+  updates:"Keep me posted about future MindYoga events.",
+  submit:"Reserve my seat", sending:"Saving…",
+  e_name:"Please enter your name.", e_email:"Please enter a valid email, like name@example.com.",
+  e_phone:"Please enter a Singapore mobile number (8 digits, starting with 8 or 9).", e_phone_int:"Please enter your number with the country code, digits only.",
+  e_consent:"Please tick this box so we can hold your seat.", e_net:"We couldn't reach the sign-up sheet. Check your connection and try again.",
+  e_full:"Sorry, the evening is full.",
+  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll be in touch before the evening.",
+  wait_h:"You're on the waitlist, {n}.", wait_p:"All seats are taken right now. We'll message you if one opens.",
+  dup_h:"You're already registered.", dup_p:"This email already has a seat. See you there.",
+  cal:"Add to Google Calendar", share:"Share on WhatsApp", again:"Register someone else",
+  share_txt:"I'm going to MindYoga × KAION in Singapore. Join me:",
+  foot_org:"Hosted by MindYoga, with KAION.",
+  privacy:"We use your details only to run this event.", privacy_c:"To view or delete your data, email {c}.",
+  demo:"Demo · sign-ups stay on this device"
+},
+zh:{
+  i1:"你好，我是*齐奇。*", i2:"我在 MindYoga 办小型沙龙，让大家~坦诚地~聊聊自己的心。",
+  i3:"这一次，圈子里多了一个新的声音。", i_called:"这一次是……", i4:"我们在~新加坡~见。", skip:"跳过开场",
+  nav_evening:"活动流程", nav_join:"报名",
+  chip:"报名截止还有", chip_closed:"报名已截止",
+  h1:"当 AI 坐进对话圈，\n会发生什么？",
+  lede:"新加坡的一个晚上。MindYoga 邀请一群好奇的人，聊聊我们怎么想、怎么感受；懂你思考方式的语音 AI「KAION」也会加入对话。",
+  cta:"预留座位", joined:"个座位已被预订", just:"刚刚报名",
+  f_date:"日期", f_time:"时间", f_where:"地点", f_seats:"人数",
+  ev_eyebrow:"活动流程", ev_h:"三段流程，一场对话",
+  p1_h:"到场、安顿", p1_p:"喝杯茶，做一段简短的呼吸练习，认识身边的人。",
+  p2_h:"与 KAION 对话", p2_p:"齐奇抛出一个问题，大家先说；再请 KAION 加入，补一个新角度或反例。",
+  p3_h:"开放圈", p3_p:"你的问题，可以问彼此，也可以问 AI。最后每人带走一句话。",
+  ho_eyebrow:"主办方", ho_h:"看见心智的两种方式",
+  my_slogan:"答案易得，思考稀缺。",
+  my_p:"2024 年，MindYoga 从第一场公开哲学式对话起步；如今在不同城市办沙龙、现场播客和旅程。",
+  st1:"场线下活动", st2:"次心灵齐旅", st3:"位核心深度参与者", st4:"个地方 · 3 个国家",
+  ka_p:"KAION 是一款以「你」为核心、而不只看数据的脑科学应用，通过自然的实时对话和你互动。",
+  ka_try:"活动前先试试 KAION",
+  j_eyebrow:"报名", j_h:"预留你的座位",
+  j_p:"大约一分钟填完。活动前我们会通过 WhatsApp 或邮件和你确认。",
+  l_name:"姓名", l_email:"邮箱", l_phone:"手机（WhatsApp）", cc_other:"其他",
+  l_seats:"几位参加？", s_1:"只有我", s_2:"我 + 1 位朋友",
+  l_kaion:"用过 KAION 吗？", k_1:"在用", k_2:"试过一次", k_3:"还没用过", optional:"（选填）",
+  l_q:"你想带来的一个问题", q_ph:"例如：机器能理解孤独吗？",
+  l_heard:"从哪里知道这场活动？", choose:"请选择", h_flyer:"宣传单", h_friend:"朋友介绍", h_my:"MindYoga 社群", h_other:"其他",
+  consent:"我同意 MindYoga 和 KAION 使用以上信息处理我的报名，并就本场活动联系我。",
+  updates:"以后有 MindYoga 活动也请通知我。",
+  submit:"确认报名", sending:"提交中…",
+  e_name:"请填写姓名。", e_email:"请填写有效邮箱，例如 name@example.com。",
+  e_phone:"请填写新加坡手机号（8 位，以 8 或 9 开头）。", e_phone_int:"请填写带国家区号的号码，只写数字。",
+  e_consent:"请勾选同意，我们才能为你保留座位。", e_net:"没连上报名表，请检查网络后再试一次。",
+  e_full:"抱歉，名额已满。",
+  ok_h:"报名成功，{n}。", ok_p:"座位已为你保留，活动前我们会联系你。",
+  wait_h:"你在候补名单上，{n}。", wait_p:"目前名额已满，有空位时我们会第一时间通知你。",
+  dup_h:"你已经报过名了。", dup_p:"这个邮箱已有座位，到时见。",
+  cal:"加到谷歌日历", share:"分享到 WhatsApp", again:"再帮别人报名",
+  share_txt:"我要去新加坡的 MindYoga × KAION 沙龙，一起来：",
+  foot_org:"MindYoga 主办，KAION 合作。",
+  privacy:"你的信息只用于本场活动。", privacy_c:"如需查看或删除个人信息，请发邮件到 {c}。",
+  demo:"演示版 · 报名只存在这台设备上"
+},
+ms:{
+  i1:"Hai, saya *Qiqi.*", i2:"Saya menganjurkan salon MindYoga, ruang kecil tempat orang berbual dengan ~jujur~ tentang minda.",
+  i3:"Kali ini, satu suara baharu menyertai bulatan kami.", i_called:"Memperkenalkan…", i4:"Jumpa kami di ~Singapura.~", skip:"Langkau",
+  nav_evening:"Acara", nav_join:"Sertai",
+  chip:"Pendaftaran ditutup dalam", chip_closed:"Pendaftaran telah ditutup",
+  h1:"Apa yang berlaku apabila AI menyertai bulatan kita?",
+  lede:"Satu malam di Singapura. MindYoga menghimpunkan orang yang ingin tahu untuk berbual tentang cara kita berfikir dan merasa, dan KAION, AI suara yang dibina mengikut cara anda berfikir, turut serta dalam perbualan.",
+  cta:"Tempah tempat anda", joined:"tempat telah ditempah", just:"baru mendaftar",
+  f_date:"Tarikh", f_time:"Masa", f_where:"Lokasi", f_seats:"Kapasiti",
+  ev_eyebrow:"Acara malam", ev_h:"Tiga bahagian, satu perbualan",
+  p1_h:"Tiba dan bertenang", p1_p:"Teh, latihan pernafasan ringkas, dan masa untuk berkenalan dengan orang di sekeliling anda.",
+  p2_h:"Berbual dengan KAION", p2_p:"Qiqi membuka satu soalan. Peserta bercakap dahulu, kemudian KAION dijemput untuk memberi sudut baharu atau contoh balas.",
+  p3_h:"Bulatan terbuka", p3_p:"Soalan anda, kepada satu sama lain dan kepada AI. Kami menutup dengan satu perkara yang dibawa pulang oleh setiap orang.",
+  ho_eyebrow:"Penganjur", ho_h:"Dua cara melihat minda",
+  my_slogan:"Jawapan mudah didapati. Pemikiran jarang ditemui.",
+  my_p:"MindYoga bermula dengan satu perbualan falsafah terbuka pada 2024. Kini ia menganjurkan salon, podcast langsung dan perjalanan di pelbagai bandar.",
+  st1:"salon dan acara", st2:"perjalanan", st3:"peserta teras", st4:"lokasi di 3 negara",
+  ka_p:"KAION ialah aplikasi neuroteknologi yang berasaskan diri anda, bukan sekadar data anda. Ia berinteraksi melalui perbualan semula jadi secara masa nyata.",
+  ka_try:"Cuba KAION sebelum acara",
+  j_eyebrow:"Pendaftaran", j_h:"Tempah tempat anda",
+  j_p:"Hanya kira-kira seminit. Kami akan mengesahkan melalui WhatsApp atau e-mel sebelum acara.",
+  l_name:"Nama penuh", l_email:"E-mel", l_phone:"Telefon bimbit (WhatsApp)", cc_other:"Lain-lain",
+  l_seats:"Berapa tempat?", s_1:"Saya seorang", s_2:"Saya + 1 rakan",
+  l_kaion:"Pernah guna KAION?", k_1:"Saya menggunakannya", k_2:"Pernah cuba sekali", k_3:"Belum pernah", optional:"(pilihan)",
+  l_q:"Satu soalan yang ingin anda bawa", q_ph:"cth. Bolehkah mesin memahami kesunyian?",
+  l_heard:"Di mana anda tahu tentang acara ini?", choose:"Pilih satu", h_flyer:"Risalah", h_friend:"Rakan", h_my:"Komuniti MindYoga", h_other:"Lain-lain",
+  consent:"Saya bersetuju MindYoga dan KAION boleh menggunakan maklumat ini untuk menguruskan pendaftaran saya dan menghubungi saya tentang acara ini.",
+  updates:"Maklumkan saya tentang acara MindYoga akan datang.",
+  submit:"Tempah tempat saya", sending:"Menyimpan…",
+  e_name:"Sila masukkan nama anda.", e_email:"Sila masukkan e-mel yang sah, contohnya name@example.com.",
+  e_phone:"Sila masukkan nombor telefon bimbit Singapura (8 digit, bermula dengan 8 atau 9).", e_phone_int:"Sila masukkan nombor anda dengan kod negara, digit sahaja.",
+  e_consent:"Sila tandakan kotak ini supaya kami boleh menyimpan tempat anda.", e_net:"Kami tidak dapat menghubungi helaian pendaftaran. Semak sambungan anda dan cuba lagi.",
+  e_full:"Maaf, acara ini sudah penuh.",
+  ok_h:"Anda sudah berdaftar, {n}.", ok_p:"Tempat anda telah disimpan. Kami akan menghubungi anda sebelum acara.",
+  wait_h:"Anda dalam senarai menunggu, {n}.", wait_p:"Semua tempat telah penuh buat masa ini. Kami akan menghantar mesej jika ada tempat kosong.",
+  dup_h:"Anda sudah berdaftar.", dup_p:"E-mel ini sudah mempunyai tempat. Jumpa di sana.",
+  cal:"Tambah ke Kalendar Google", share:"Kongsi di WhatsApp", again:"Daftarkan orang lain",
+  share_txt:"Saya akan ke MindYoga × KAION di Singapura. Jom sertai saya:",
+  foot_org:"Dianjurkan oleh MindYoga, bersama KAION.",
+  privacy:"Kami menggunakan maklumat anda hanya untuk acara ini.", privacy_c:"Untuk melihat atau memadam data anda, e-mel {c}.",
+  demo:"Demo · pendaftaran hanya disimpan pada peranti ini"
+},
+ta:{
+  i1:"வணக்கம், நான் *Qiqi.*", i2:"நான் MindYoga உரையாடல் அமர்வுகளை நடத்துகிறேன்; மனதைப் பற்றி மக்கள் ~நேர்மையாகப்~ பேசும் சிறிய அறைகள்.",
+  i3:"இந்த முறை, எங்கள் வட்டத்தில் ஒரு புதிய குரல் இணைகிறது.", i_called:"அறிமுகம்…", i4:"~சிங்கப்பூரில்~ சந்திப்போம்.", skip:"தவிர்",
+  nav_evening:"நிகழ்ச்சி", nav_join:"பதிவு",
+  chip:"பதிவு முடிய இன்னும்", chip_closed:"பதிவு முடிந்தது",
+  h1:"நம் உரையாடல் வட்டத்தில் AI இணைந்தால் என்ன நடக்கும்?",
+  lede:"சிங்கப்பூரில் ஒரு மாலை. நாம் எப்படிச் சிந்திக்கிறோம், எப்படி உணர்கிறோம் என்று பேச MindYoga ஆர்வமுள்ளவர்களை ஒன்றிணைக்கிறது. நீங்கள் சிந்திக்கும் விதத்தைச் சுற்றி உருவாக்கப்பட்ட குரல் AI ஆன KAION-உம் உரையாடலில் இணைகிறது.",
+  cta:"இருக்கையை முன்பதிவு செய்யுங்கள்", joined:"இருக்கைகள் முன்பதிவு", just:"இப்போது பதிவு செய்தவர்கள்",
+  f_date:"தேதி", f_time:"நேரம்", f_where:"இடம்", f_seats:"இருக்கைகள்",
+  ev_eyebrow:"மாலை நிகழ்ச்சி", ev_h:"மூன்று பகுதிகள், ஒரே உரையாடல்",
+  p1_h:"வந்து அமருங்கள்", p1_p:"தேநீர், ஒரு சிறிய மூச்சுப் பயிற்சி, அருகில் இருப்பவர்களைச் சந்திக்க நேரம்.",
+  p2_h:"KAION உடன் உரையாடல்", p2_p:"Qiqi ஒரு கேள்வியைத் தொடங்குகிறார். முதலில் மக்கள் பேசுவார்கள்; பிறகு புதிய கோணம் அல்லது மாற்று உதாரணம் தர KAION அழைக்கப்படும்.",
+  p3_h:"திறந்த வட்டம்", p3_p:"உங்கள் கேள்விகளை ஒருவருக்கொருவரும் AI-யிடமும் கேளுங்கள். ஒவ்வொருவரும் ஒரு எண்ணத்தை வீட்டுக்கு எடுத்துச் செல்வதுடன் நிறைவு செய்கிறோம்.",
+  ho_eyebrow:"ஏற்பாட்டாளர்கள்", ho_h:"மனதைப் பார்க்கும் இரண்டு வழிகள்",
+  my_slogan:"பதில்கள் எளிதில் கிடைக்கும். சிந்தனை அரிது.",
+  my_p:"2024-இல் ஒரு பொது தத்துவ உரையாடலுடன் தொடங்கிய MindYoga, இன்று பல நகரங்களில் உரையாடல் அமர்வுகள், நேரடி பாட்காஸ்ட்கள், பயணங்களை நடத்துகிறது.",
+  st1:"நிகழ்ச்சிகள்", st2:"பயணங்கள்", st3:"முக்கிய பங்கேற்பாளர்கள்", st4:"இடங்கள், 3 நாடுகள்",
+  ka_p:"KAION என்பது உங்கள் தரவை மட்டுமல்ல, உங்களையே அடிப்படையாகக் கொண்ட நரம்பியல் தொழில்நுட்பச் செயலி. இயல்பான, நேரடி உரையாடல்கள் மூலம் அது உங்களுடன் ஈடுபடுகிறது.",
+  ka_try:"நிகழ்ச்சிக்கு முன் KAION-ஐ முயன்று பாருங்கள்",
+  j_eyebrow:"பதிவு", j_h:"இருக்கையை முன்பதிவு செய்யுங்கள்",
+  j_p:"சுமார் ஒரு நிமிடம் ஆகும். நிகழ்ச்சிக்கு முன் WhatsApp அல்லது மின்னஞ்சல் மூலம் உறுதிப்படுத்துவோம்.",
+  l_name:"முழுப் பெயர்", l_email:"மின்னஞ்சல்", l_phone:"கைபேசி (WhatsApp)", cc_other:"மற்றவை",
+  l_seats:"எத்தனை இருக்கைகள்?", s_1:"நான் மட்டும்", s_2:"நான் + 1 நண்பர்",
+  l_kaion:"KAION பயன்படுத்தியிருக்கிறீர்களா?", k_1:"பயன்படுத்துகிறேன்", k_2:"ஒருமுறை முயன்றேன்", k_3:"இதுவரை இல்லை", optional:"(விருப்பம்)",
+  l_q:"நீங்கள் கொண்டு வர விரும்பும் ஒரு கேள்வி", q_ph:"எ.கா. ஓர் இயந்திரத்தால் தனிமையைப் புரிந்துகொள்ள முடியுமா?",
+  l_heard:"இந்த நிகழ்ச்சியைப் பற்றி எப்படித் தெரிந்துகொண்டீர்கள்?", choose:"ஒன்றைத் தேர்வு செய்யுங்கள்", h_flyer:"துண்டுப்பிரசுரம்", h_friend:"நண்பர்", h_my:"MindYoga சமூகம்", h_other:"மற்றவை",
+  consent:"என் பதிவை நிர்வகிக்கவும் இந்த நிகழ்ச்சி தொடர்பாக என்னைத் தொடர்புகொள்ளவும் MindYoga மற்றும் KAION இந்த விவரங்களைப் பயன்படுத்த ஒப்புக்கொள்கிறேன்.",
+  updates:"எதிர்கால MindYoga நிகழ்ச்சிகள் பற்றி எனக்குத் தெரிவியுங்கள்.",
+  submit:"என் இருக்கையை முன்பதிவு செய்", sending:"சேமிக்கிறது…",
+  e_name:"உங்கள் பெயரை உள்ளிடுங்கள்.", e_email:"சரியான மின்னஞ்சலை உள்ளிடுங்கள், எ.கா. name@example.com.",
+  e_phone:"சிங்கப்பூர் கைபேசி எண்ணை உள்ளிடுங்கள் (8 இலக்கங்கள், 8 அல்லது 9 இல் தொடங்கும்).", e_phone_int:"நாட்டுக் குறியீட்டுடன் உங்கள் எண்ணை இலக்கங்களாக மட்டும் உள்ளிடுங்கள்.",
+  e_consent:"உங்கள் இருக்கையை வைத்திருக்க இந்தப் பெட்டியைத் தேர்வு செய்யுங்கள்.", e_net:"பதிவுத் தாளை அடைய முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயலுங்கள்.",
+  e_full:"மன்னிக்கவும், இருக்கைகள் நிரம்பிவிட்டன.",
+  ok_h:"பதிவு உறுதியானது, {n}.", ok_p:"உங்கள் இருக்கை சேமிக்கப்பட்டது. நிகழ்ச்சிக்கு முன் தொடர்புகொள்வோம்.",
+  wait_h:"நீங்கள் காத்திருப்புப் பட்டியலில் உள்ளீர்கள், {n}.", wait_p:"தற்போது இருக்கைகள் நிரம்பிவிட்டன. இடம் கிடைத்தால் உங்களுக்குச் செய்தி அனுப்புவோம்.",
+  dup_h:"நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்.", dup_p:"இந்த மின்னஞ்சலுக்கு ஏற்கனவே இருக்கை உள்ளது. அங்கே சந்திப்போம்.",
+  cal:"Google Calendar-இல் சேர்", share:"WhatsApp-இல் பகிர்", again:"வேறொருவரைப் பதிவு செய்",
+  share_txt:"சிங்கப்பூரில் நடக்கும் MindYoga × KAION நிகழ்ச்சிக்குப் போகிறேன். நீங்களும் வாருங்கள்:",
+  foot_org:"MindYoga ஏற்பாடு, KAION உடன் இணைந்து.",
+  privacy:"உங்கள் விவரங்கள் இந்த நிகழ்ச்சிக்காக மட்டுமே பயன்படுத்தப்படும்.", privacy_c:"உங்கள் தரவைப் பார்க்க அல்லது நீக்க {c} க்கு மின்னஞ்சல் அனுப்புங்கள்.",
+  demo:"டெமோ · பதிவுகள் இந்தச் சாதனத்தில் மட்டுமே சேமிக்கப்படும்"
+}};
+
+/* ================= helpers ================= */
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const sstore = {get(k){try{return sessionStorage.getItem(k)}catch(e){return null}}, set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
+const params = new URLSearchParams(location.search);
+let L = params.get("lang") || store.get("my_lang") || "en";      // 默认英语
+if (!T[L]) L = "en";
+const t = k => (T[L][k] || T.en[k] || "");
+const SRC = params.get("src") || "";
+
+function applyLang(){
+  document.documentElement.lang = L === "zh" ? "zh-Hans" : L;
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  document.querySelectorAll("[data-cfg]").forEach(el => { const v = CONFIG[el.dataset.cfg]; el.textContent = typeof v === "object" ? (v[L] || v.en) : v; });
+  fillBand();
+  $("#lang").value = L;
+  $("#pinName").textContent = PLACE[L];
+  $("#privacy").textContent = t("privacy") + (CONFIG.contact ? " " + t("privacy_c").replace("{c}", CONFIG.contact) : "");
+  $("#demoTag").textContent = t("demo");
+  tick();
+  if (lastResult) showDone(lastResult);
+}
+$("#lang").onchange = e => { L = e.target.value; store.set("my_lang", L); applyLang(); };
+
+/* countdown */
+function tick(){
+  const ms = new Date(CONFIG.closesAt) - Date.now();
+  if (ms <= 0) { $("#chip").textContent = t("chip_closed"); return; }
+  const d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24, m = Math.floor(ms/6e4)%60, s = Math.floor(ms/1e3)%60;
+  const p = n => String(n).padStart(2,"0");
+  $("#chip").textContent = `${t("chip")} ${d}d ${p(h)}h ${p(m)}m ${p(s)}s`;
+}
+setInterval(tick, 1000);
+
+/* slogan band: both brands' own lines, repeated so the loop is seamless */
+function fillBand(){
+  const tr = $("#track"); if (!tr) return; tr.innerHTML = "";
+  const items = [[t("my_slogan"), ""], ["Build the kind of brain that keeps up with your life.", "k"], [L === "en" ? "Join us in Singapore." : PLACE[L] + " · " + t("cta"), ""], ["As you talk to KAION, you improve brain plasticity.", "k"]];
+  for (let r = 0; r < 4; r++) items.forEach(([txt, cls]) => { const s = document.createElement("span"); s.textContent = txt; s.className = cls; const b = document.createElement("i"); b.className = "m-bf"; tr.append(s, b); });
+}
+
+/* voice waves in the KAION card */
+(() => { const w = document.querySelector(".waves"); for (let i = 0; i < 28; i++) { const s = document.createElement("span"); s.style.height = (6 + Math.round(16 * Math.abs(Math.sin(i * 0.9)))) + "px"; s.style.animationDelay = (i * 0.06) + "s"; w.append(s); } })();
+
+/* ================= intro ================= */
+// *word* = gold, ~word~ = underline. Chinese reveals by character, other languages by word.
+function words(el, text){
+  el.innerHTML = "";
+  const out = [];
+  const marked = text.replace(/\*([^*]+)\*/g, (m,g) => "\u0001" + g + "\u0002").replace(/~([^~]+)~/g, (m,g) => "\u0003" + g + "\u0004");
+  let hl = false, ul = false;
+  const tokens = L === "zh" ? marked.match(/[\u0001-\u0004]|[A-Za-z]+|\s+|./gu) : marked.match(/[\u0001-\u0004]|\s+|[^\s\u0001-\u0004]+/gu);
+  for (const tk of tokens || []) {
+    if (tk === "\u0001") { hl = true; continue; } if (tk === "\u0002") { hl = false; continue; }
+    if (tk === "\u0003") { ul = true; continue; } if (tk === "\u0004") { ul = false; continue; }
+    if (/^\s+$/.test(tk)) { el.append(" "); continue; }
+    const s = document.createElement("span"); s.className = "w" + (hl ? " hl" : "") + (ul ? " ul" : ""); s.textContent = tk; el.append(s); out.push(s);
+  }
+  return out;
+}
+let skipped = false;
+async function say(id, key, step = 85, hold = 900){
+  const el = $(id); el.classList.remove("out");
+  const ws = words(el, t(key));
+  for (const w of ws) { if (skipped) return; w.classList.add("on"); await sleep(L === "zh" ? step * .5 : step); }
+  await sleep(hold); if (skipped) return;
+  el.classList.add("out"); await sleep(380);
+}
+function stampLine(el, text){ el.innerHTML = ""; return [...text].map(c => { const s = document.createElement("span"); s.className = "ch" + (c === "×" ? " x" : ""); s.textContent = c === " " ? " " : c; el.append(s); return s; }); }
+async function intro(){
+  const pols = [...document.querySelectorAll(".pol")];
+  const run = async () => {
+    await sleep(300);
+    await say("#s1", "i1", 150, 1200); if (skipped) return;
+    for (const p of pols) { if (skipped) return; p.classList.add("in"); await sleep(340); }
+    await sleep(450); $("#stack").classList.add("dock"); await sleep(900); if (skipped) return;
+    await say("#s2", "i2", 80, 900); if (skipped) return;
+    await say("#s3", "i3", 85, 700); if (skipped) return;
+    $("#stack").style.opacity = 0;
+    $("#stamp .pre").style.opacity = 1;
+    const a = stampLine($("#st1"), "MindYoga"), b = stampLine($("#st2"), "× Kaion");
+    for (const c of [...a, ...b]) { if (skipped) return; c.classList.add("on"); await sleep(70); }
+    $("#duo").classList.add("on");
+    await sleep(1500); if (skipped) return;
+    $("#stamp").style.opacity = 0; await sleep(380);
+    await say("#s4", "i4", 120, 700);
+  };
+  await Promise.race([run(), new Promise(r => $("#skip").onclick = () => { skipped = true; r(); })]);
+  finishIntro();
+}
+function finishIntro(){
+  sstore.set("my_intro_seen", "1");
+  const el = $("#intro"); el.classList.add("leave");
+  document.body.classList.remove("locked"); document.body.classList.add("revealed");
+  setTimeout(() => el.remove(), 1000);
+  startGlobe();
+}
+
+/* ================= globe ================= */
+let globeStarted = false;
+async function startGlobe(){
+  if (globeStarted) return; globeStarted = true;
+  const cv = $("#cv");
+  let createGlobe;
+  try { ({ default: createGlobe } = await import("https://cdn.jsdelivr.net/npm/cobe@0.6.3/+esm")); }
+  catch (e) { $("#globe").hidden = true; return; }
+  const SG = [1.3521, 103.8198];
+  const target = Math.PI - (SG[1] * Math.PI / 180 - Math.PI / 2);   // cobe: longitude → phi
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let phi = reduce ? target : target - 2.6, drag = null, settled = false;
+  const theta = 0.22, t0 = performance.now();
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const rgb = v => { const c = css(v).replace("#",""); return [0,2,4].map(i => parseInt(c.slice(i,i+2),16)/255); };
+  const isDark = () => { const c = css("--bg").replace("#",""); return parseInt(c.slice(0,2),16) < 100; };
+  let size = cv.offsetWidth, dark = isDark();
+  const opts = () => ({ dark: dark ? 1 : 0, mapBrightness: dark ? 4.5 : 5.2, baseColor: rgb("--globe-base"), glowColor: dark ? [0.2,0.24,0.21] : [0.98,0.95,0.92] });
+  createGlobe(cv, {
+    devicePixelRatio: 2, width: size * 2, height: size * 2, phi, theta, diffuse: 1.15, mapSamples: 18000,
+    markerColor: [0.85,0.28,0.17], markers: [{ location: SG, size: 0.07 }], ...opts(),
+    onRender(s) {
+      if (!drag) phi += (target - phi) * (reduce ? 1 : 0.035);
+      if (!settled && Math.abs(target - phi) < 0.02) { settled = true; $("#pin").classList.add("on"); }
+      const el = (performance.now() - t0) / 1000;
+      s.phi = phi; s.theta = theta; s.width = size * 2; s.height = size * 2;
+      s.markers = [{ location: SG, size: 0.06 + 0.025 * (1 + Math.sin(el * 3)) / 2 }];
+      if (dark !== isDark()) { dark = isDark(); Object.assign(s, opts()); }
+    }
+  });
+  requestAnimationFrame(() => cv.classList.add("ready"));
+  addEventListener("resize", () => size = cv.offsetWidth);
+  cv.addEventListener("pointerdown", e => { drag = { x: e.clientX, p: phi }; cv.setPointerCapture(e.pointerId); $("#pin").classList.remove("on"); settled = false; });
+  cv.addEventListener("pointermove", e => { if (drag) phi = drag.p + (e.clientX - drag.x) / 160; });
+  const up = () => { drag = null; };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+}
+
+/* ================= live count ================= */
+const DEMO = !CONFIG.endpoint;
+function demoRows(){ try { return JSON.parse(store.get("my_demo_rows") || "[]"); } catch(e) { return []; } }
+function renderLive(count, recent){
+  $("#count").textContent = count;
+  const avs = $("#avs"); avs.innerHTML = "";
+  (recent || []).slice(-3).forEach(i => { const s = document.createElement("span"); s.className = "av"; s.textContent = i; avs.append(s); });
+  $("#recentWrap").hidden = !(recent && recent.length);
+}
+async function refreshCount(){
+  if (DEMO) { const r = demoRows(); renderLive(r.reduce((a,x) => a + +x.seats, 0), r.map(x => [...x.name.trim()][0].toUpperCase())); return; }
+  try { const r = await (await fetch(CONFIG.endpoint + "?action=count")).json(); if (r.ok) renderLive(r.count, r.recent); } catch(e) {}
+}
+
+/* ================= form ================= */
+const form = $("#form");
+let lastResult = null;
+function setErr(id, key){ $("#e_"+id).textContent = key ? t(key) : ""; const inp = $("#"+id); if (inp) inp.classList.toggle("invalid", !!key); }
+function validate(){
+  let ok = true;
+  const name = $("#name").value.trim(), email = $("#email").value.trim(), cc = $("#cc").value, ph = $("#phone").value.replace(/[\s()-]/g,"");
+  setErr("name", name.length >= 2 ? "" : (ok = false, "e_name"));
+  setErr("email", /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "" : (ok = false, "e_email"));
+  const phOK = cc === "+65" ? /^[89]\d{7}$/.test(ph.replace(/^\+?65/,"")) : /^\+?\d{6,15}$/.test(ph);
+  setErr("phone", phOK ? "" : (ok = false, cc === "+65" ? "e_phone" : "e_phone_int"));
+  $("#e_consent").textContent = $("#consent").checked ? "" : (ok = false, t("e_consent"));
+  return ok;
+}
+["name","email","phone"].forEach(id => $("#"+id).addEventListener("blur", () => { if ($("#"+id).value) validate(); }));
+
+form.addEventListener("submit", async e => {
+  e.preventDefault(); $("#e_form").textContent = "";
+  if (!validate()) { const f = form.querySelector(".invalid") || $("#consent"); f.focus(); return; }
+  const cc = $("#cc").value, ph = $("#phone").value.replace(/[\s()-]/g,"");
+  const data = {
+    name: $("#name").value.trim(), email: $("#email").value.trim().toLowerCase(),
+    phone: cc === "other" ? ph : cc + " " + (cc === "+65" ? ph.replace(/^\+?65/,"") : ph),
+    seats: form.seats.value, kaion: form.kaion.value || "", question: $("#question").value.trim(),
+    heard: $("#heard").value, source: SRC, updates: $("#updates").checked ? "Yes" : "No",
+    lang: L, consent: "Yes", website: $("#website").value
+  };
+  const btn = $("#submit"); btn.disabled = true; btn.firstElementChild.textContent = t("sending");
+  try {
+    const res = await send(data);
+    lastResult = { ...res, first: data.name };
+    showDone(lastResult); refreshCount();
+    $("#join").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    $("#e_form").textContent = err.message === "full" ? t("e_full") : t("e_net");
+  } finally { btn.disabled = false; btn.firstElementChild.textContent = t("submit"); }
+});
+
+async function send(data){
+  if (DEMO) {
+    await sleep(600);
+    const rows = demoRows();
+    if (rows.some(r => r.email === data.email)) return { ok: true, duplicate: true };
+    rows.push({ ...data, at: new Date().toISOString() }); store.set("my_demo_rows", JSON.stringify(rows));
+    return { ok: true };
+  }
+  let r;
+  try {
+    // a plain string body is sent as text/plain, so Apps Script answers without a CORS preflight
+    r = await fetch(CONFIG.endpoint, { method: "POST", body: JSON.stringify(data) });
+  } catch (e) {
+    // if the browser refuses to read the reply, send once more without reading it; the sheet still gets the row
+    await fetch(CONFIG.endpoint, { method: "POST", mode: "no-cors", body: JSON.stringify(data) });
+    return { ok: true };
+  }
+  const j = await r.json();
+  if (!j.ok) throw new Error(j.error || "net");
+  return j;
+}
+
+function calLink(){
+  const f = s => new Date(s).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
+  const q = new URLSearchParams({ action: "TEMPLATE", text: "MindYoga × KAION Salon", dates: `${f(CONFIG.startAt)}/${f(CONFIG.endAt)}`,
+    details: location.href.split("#")[0], location: CONFIG.venue.en, ctz: "Asia/Singapore" });
+  return "https://calendar.google.com/calendar/render?" + q;
+}
+function showDone(r){
+  const box = $("#formBox");
+  const key = r.duplicate ? "dup" : r.waitlist ? "wait" : "ok";
+  const share = "https://wa.me/?text=" + encodeURIComponent(t("share_txt") + " " + location.href.split("#")[0].split("?")[0]);
+  const v = k => CONFIG[k][L] || CONFIG[k].en;
+  box.innerHTML = `<div class="done" role="status"><div class="tick"><span class="m-bf"></span></div><h3></h3><p></p>
+    <dl class="facts"><div class="fact"><dt></dt><dd></dd></div><div class="fact"><dt></dt><dd></dd></div></dl>
+    <div class="acts"><a class="btn sm" target="_blank" rel="noopener" id="calA"></a><a class="btn sm ghost" target="_blank" rel="noopener" id="shareA"></a><button class="btn sm ghost" type="button" id="again"></button></div></div>`;
+  box.querySelector("h3").textContent = t(key + "_h").replace("{n}", r.first);
+  box.querySelector("p").textContent = t(key + "_p");
+  const dts = box.querySelectorAll("dt"), dds = box.querySelectorAll("dd");
+  dts[0].textContent = t("f_date"); dds[0].textContent = v("date"); dts[1].textContent = t("f_time"); dds[1].textContent = v("time");
+  $("#calA").href = calLink(); $("#calA").textContent = t("cal");
+  $("#shareA").href = share; $("#shareA").textContent = t("share");
+  $("#again").textContent = t("again");
+  $("#again").onclick = () => { lastResult = null; box.innerHTML = ""; box.append(form); form.reset(); applyLang(); $("#name").focus(); };
+}
+
+/* ================= boot ================= */
+applyLang(); refreshCount(); setInterval(refreshCount, 30000);
+$("#demoTag").hidden = !DEMO;
+{ const hv = { flyer: "Flyer", ig: "Instagram", instagram: "Instagram" }[SRC.toLowerCase()]; if (hv) $("#heard").value = hv; }
+if (sstore.get("my_intro_seen") || matchMedia("(prefers-reduced-motion: reduce)").matches || params.has("nointro")) {
+  $("#intro").remove(); startGlobe();
+} else { document.body.classList.add("locked"); intro(); }
+</script>
+
+</body>
+</html>
