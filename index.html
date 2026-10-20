@@ -80,6 +80,7 @@ a{color:inherit}
 .stamp .ch{display:inline-block;opacity:0;transform:scale(1.8) translateY(-6px)}
 .stamp .ch.on{animation:stampin .32s cubic-bezier(.2,.9,.2,1.2) forwards}
 .stamp .x{color:var(--gold)}
+#stx{margin:.1em 0 .14em}
 @keyframes stampin{to{opacity:1;transform:none}}
 .duo{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,26px);margin-top:.5em;font-size:16px;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}
 .duo.on{opacity:1;transform:none}
@@ -271,7 +272,7 @@ footer p{margin:0;max-width:60ch}
   </div>
   <div class="say" id="s2"></div>
   <div class="say" id="s3"></div>
-  <div class="stamp" id="stamp"><span class="pre" data-i18n="i_called"></span><div id="st1"></div><div id="st2"></div>
+  <div class="stamp" id="stamp"><span class="pre" data-i18n="i_called"></span><div id="st1"></div><div id="stx"></div><div id="st2"></div>
     <div class="duo" id="duo"><span class="ka"><span class="m-ka"></span></span><span class="x">×</span><span class="m-my"></span></div></div>
   <div class="say" id="s4"></div>
   <button id="skip" type="button" data-i18n="skip"></button>
@@ -678,8 +679,8 @@ async function intro(){
     await say("#s3", "i3", 85, 700); if (skipped) return;
     $("#stack").style.opacity = 0;
     $("#stamp .pre").style.opacity = 1;
-    const a = stampLine($("#st1"), "Kaion ×"), b = stampLine($("#st2"), "Mind Yoga");
-    for (const c of [...a, ...b]) { if (skipped) return; c.classList.add("on"); await sleep(70); }
+    const a = stampLine($("#st1"), "Kaion"), x = stampLine($("#stx"), "×"), b = stampLine($("#st2"), "Mind Yoga");
+    for (const c of [...a, ...x, ...b]) { if (skipped) return; c.classList.add("on"); await sleep(70); }
     $("#duo").classList.add("on");
     await sleep(1500); if (skipped) return;
     $("#stamp").style.opacity = 0; await sleep(380);
