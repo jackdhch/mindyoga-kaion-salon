@@ -601,7 +601,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const sstore = {get(k){try{return sessionStorage.getItem(k)}catch(e){return null}}, set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
 const params = new URLSearchParams(location.search);
-let L = params.get("lang") || store.get("my_lang") || "en";      // 默认英语
+let L = params.get("lang") || sstore.get("kmy_lang") || "en";   // 默认英语；切换的语言只在这次打开期间有效，重新扫码一律英文
 if (!T[L]) L = "en";
 const t = k => (T[L][k] || T.en[k] || "");
 const SRC = params.get("src") || "";
@@ -619,7 +619,7 @@ function applyLang(){
   tick();
   if (lastResult) showDone(lastResult);
 }
-$("#lang").onchange = e => { L = e.target.value; store.set("my_lang", L); applyLang(); };
+$("#lang").onchange = e => { L = e.target.value; sstore.set("kmy_lang", L); applyLang(); };
 
 /* countdown */
 function tick(){
@@ -689,7 +689,7 @@ async function intro(){
   finishIntro();
 }
 function finishIntro(){
-  sstore.set("my_intro_seen", "1");
+  sstore.set("kmy_intro_seen", "1");
   const el = $("#intro"); el.classList.add("leave");
   document.body.classList.remove("locked"); document.body.classList.add("revealed");
   setTimeout(() => el.remove(), 1000);
@@ -736,7 +736,7 @@ async function startGlobe(){
 
 /* ================= live count ================= */
 const DEMO = !CONFIG.endpoint;
-function demoRows(){ try { return JSON.parse(store.get("my_demo_rows") || "[]"); } catch(e) { return []; } }
+function demoRows(){ try { return JSON.parse(store.get("kmy_demo_rows") || "[]"); } catch(e) { return []; } }
 function renderLive(count, recent){
   $("#count").textContent = count;
   const avs = $("#avs"); avs.innerHTML = "";
@@ -791,7 +791,7 @@ async function send(data){
     await sleep(600);
     const rows = demoRows();
     if (rows.some(r => r.email === data.email)) return { ok: true, duplicate: true };
-    rows.push({ ...data, at: new Date().toISOString() }); store.set("my_demo_rows", JSON.stringify(rows));
+    rows.push({ ...data, at: new Date().toISOString() }); store.set("kmy_demo_rows", JSON.stringify(rows));
     return { ok: true };
   }
   let r;
@@ -836,7 +836,7 @@ function showDone(r){
 applyLang(); refreshCount(); setInterval(refreshCount, 30000);
 $("#demoTag").hidden = !DEMO;
 { const hv = { flyer: "Flyer", ig: "Instagram", instagram: "Instagram" }[SRC.toLowerCase()]; if (hv) $("#heard").value = hv; }
-if (sstore.get("my_intro_seen") || matchMedia("(prefers-reduced-motion: reduce)").matches || params.has("nointro")) {
+if (sstore.get("kmy_intro_seen") || matchMedia("(prefers-reduced-motion: reduce)").matches || params.has("nointro")) {
   $("#intro").remove(); startGlobe();
 } else { document.body.classList.add("locked"); intro(); }
 </script>
