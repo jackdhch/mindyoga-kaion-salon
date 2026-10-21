@@ -846,14 +846,14 @@ function words(el, text){
 }
 let skipped = false;
 /* 开场每句的节奏按字数算：英/马来/泰米尔按词，中文按字。
-   step = 每个词（字）出现的间隔；read = 每个词（字）留给读者的阅读时间。
-   整句出完后停留 600 毫秒 + 词数 × read，且不少于 minHold。 */
-const PACE = { en: { step: 115, read: 240 }, ms: { step: 115, read: 260 }, ta: { step: 140, read: 330 }, zh: { step: 75, read: 110 } };
-async function say(id, key, minHold = 1000){
+   基准是客户 10-20 认可的第二句（「Where I host… 可以多0.5秒」）：逐词出现每词 80 毫秒，出完后停 1.4 秒。
+   停留 = 500 毫秒 + 词数 × read；read 按各语言第二句的词数反推，让每种语言的第二句都停 1.4 秒，其余句子按字数同比例。 */
+const PACE = { en: { step: 80, read: 64 }, ms: { step: 80, read: 60 }, ta: { step: 80, read: 82 }, zh: { step: 40, read: 27 } };
+async function say(id, key, minHold = 0){
   const el = $(id); el.classList.remove("out");
   const ws = words(el, t(key)), pc = PACE[L] || PACE.en;
   for (const w of ws) { if (skipped) return; w.classList.add("on"); await sleep(pc.step); }
-  await sleep(Math.max(minHold, 600 + ws.length * pc.read)); if (skipped) return;
+  await sleep(Math.max(minHold, 500 + ws.length * pc.read)); if (skipped) return;
   el.classList.add("out"); await sleep(380);
 }
 function stampLine(el, text){ el.innerHTML = ""; return [...text].map(c => { const s = document.createElement("span"); s.className = "ch" + (c === "×" ? " x" : ""); s.textContent = c === " " ? " " : c; el.append(s); return s; }); }
@@ -864,8 +864,8 @@ async function intro(){
     await say("#s1", "i1", 1200); if (skipped) return;
     for (const p of pols) { if (skipped) return; p.classList.add("in"); await sleep(340); }
     await sleep(450); $("#stack").classList.add("dock"); await sleep(900); if (skipped) return;
-    await say("#s2", "i2", 1400); if (skipped) return;
-    await say("#s3", "i3", 1000); if (skipped) return;
+    await say("#s2", "i2"); if (skipped) return;
+    await say("#s3", "i3"); if (skipped) return;
     $("#stack").style.opacity = 0;
     $("#stamp .pre").style.opacity = 1;
     const a = stampLine($("#st1"), "Kaion"), x = stampLine($("#stx"), "×"), b = stampLine($("#st2"), "MindYoga");
@@ -873,7 +873,7 @@ async function intro(){
     $("#duo").classList.add("on");
     await sleep(1500); if (skipped) return;
     $("#stamp").style.opacity = 0; await sleep(380);
-    await say("#s4", "i4", 1000);
+    await say("#s4", "i4");
   };
   await Promise.race([run(), new Promise(r => $("#skip").onclick = () => { skipped = true; r(); })]);
   finishIntro();
