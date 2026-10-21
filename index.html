@@ -195,10 +195,12 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 .host.my .m-my{height:96px;color:#D9BC8C;align-self:flex-start}
 .host.my .slogan{font-family:var(--serif);font-weight:500;font-style:italic;font-size:clamp(24px,3vw,30px);line-height:1.15;color:#D9BC8C;margin:0}
 .host.my p{margin:0;color:rgba(241,233,220,.78)}
-.hostp{display:flex;align-items:center;gap:12px;margin-top:4px}
-.hostp img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid rgba(217,188,140,.5)}
-.hostp b{display:block;font-family:var(--display);font-weight:700;font-size:17px;color:#F1E9DC}
-.hostp span{font-size:13px;color:rgba(241,233,220,.72);line-height:1.35}
+.people{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:14px}
+.person{display:flex;align-items:center;gap:11px;min-width:0}
+.person img,.person .ph{width:50px;height:50px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid var(--line);flex:0 0 auto}
+.person .ph{display:grid;place-items:center;background:#1D2233;color:#EFE4DA;font-family:var(--display);font-weight:700;font-size:20px}
+.person b{display:block;font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-.01em}
+.person span{font-size:13px;color:var(--muted);line-height:1.3;display:block}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:6px;padding-top:16px;border-top:1px solid rgba(217,188,140,.3)}
 .stats b{display:block;font-family:var(--display);font-size:26px;font-weight:800;color:#F1E9DC;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .stats span{font-size:12.5px;color:rgba(241,233,220,.7);line-height:1.3;display:block}
@@ -213,6 +215,9 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 .store{display:inline-flex;align-items:center;gap:8px;background:#1D2233;color:#EFE4DA;text-decoration:none;border-radius:10px;padding:8px 14px;font:600 14px var(--body)}
 .store svg{width:16px;height:16px;fill:currentColor}
 .host .free,.done .free{display:inline-block;margin:6px 0 2px;font:600 12.5px var(--body);color:#1D2233;background:rgba(255,255,255,.7);border:1px solid rgba(29,34,51,.15);border-radius:999px;padding:4px 10px}
+.host.my .tag{color:rgba(241,233,220,.75);opacity:1}
+.social .store{background:transparent;color:#F1E9DC;border:1px solid rgba(217,188,140,.55)}
+.social .store b{font-weight:600;color:#D9BC8C}
 .host .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.65}
 .waves{display:flex;align-items:center;gap:3px;height:22px}
 .film{position:relative;display:block;aspect-ratio:16/9;max-width:100%;border-radius:14px;overflow:hidden;background:#1D2233;color:#fff;text-decoration:none}
@@ -330,7 +335,11 @@ footer p{margin:0;max-width:60ch}
     <ol class="flow">
       <li><time data-i18n="pt1"></time><h3 data-i18n="p1_h"></h3><p data-i18n="p1_p"></p></li>
       <li><time data-i18n="pt2"></time><h3 data-i18n="p2_h"></h3><p data-i18n="p2_p"></p></li>
-      <li><time data-i18n="pt3"></time><h3 data-i18n="p3_h"></h3><p data-i18n="p3_p"></p></li>
+      <li><time data-i18n="pt3"></time><h3 data-i18n="p3_h"></h3><p data-i18n="p3_p"></p>
+        <div class="people">
+          <div class="person"><img src="img/qiqi.jpg" alt="Qiqi"><div><b>Qiqi</b><span data-i18n="role_qiqi"></span></div></div>
+          <div class="person"><span class="ph" id="bzAvatar">B</span><div><b>Bozhidar Dimitrov</b><span data-i18n="role_bz"></span></div></div>
+        </div></li>
     </ol>
   </section>
 
@@ -359,12 +368,18 @@ footer p{margin:0;max-width:60ch}
         <span class="m-my" role="img" aria-label="Mind · Yoga"></span>
         <p class="slogan" data-i18n="my_slogan"></p>
         <p data-i18n="my_p"></p>
-        <div class="hostp"><img src="img/qiqi.jpg" alt="Qiqi"><div><b>Qiqi</b><span data-i18n="qiqi_role"></span></div></div>
         <div class="stats">
           <div><b>24+</b><span data-i18n="st1"></span></div>
           <div><b>5</b><span data-i18n="st2"></span></div>
           <div><b>600+</b><span data-i18n="st3"></span></div>
           <div><b>11</b><span data-i18n="st4"></span></div>
+        </div>
+        <div>
+          <span class="tag" data-i18n="my_follow"></span>
+          <div class="stores social">
+            <a class="store" href="https://www.xiaohongshu.com/user/profile/606817ec000000000100a6a5" target="_blank" rel="noopener"><b>小红书</b>RedNote</a>
+            <a class="store" href="https://www.douyin.com/user/MS4wLjABAAAAjQj9f1_0WwG5i2ZQ7dVRDYwfuNAkQhnKkcs59g2ckzdBE8hTAWDcKpoByieeJPvg" target="_blank" rel="noopener"><b>抖音</b>Douyin</a>
+          </div>
         </div>
       </article>
     </div>
@@ -440,17 +455,17 @@ en:{
   nav_evening:"The evening", nav_join:"Join",
   chip:"Registration closes in", chip_closed:"Registration is closed",
   h1:"Who is the best prompter?", h1_sub:"The answer is Socrates.",
-  lede:"One evening in Singapore. Two engineers put the question to the room, and an AI joins the circle. Expect a Socratic dialogue, a first meeting with KAION, a voice-based neurotech app that tracks how your brain changes, and stay for a live podcast with Qiqi.",
+  lede:"One evening in Singapore: a Socratic dialogue, a first meeting with KAION, the voice-based neurotech app, and a live podcast with Qiqi.",
   cta:"Reserve your seat", joined:"seats taken", just:"just joined",
   f_date:"Date", f_time:"Time", f_where:"Where", f_seats:"Capacity",
   ev_eyebrow:"The evening", ev_h:"Three parts, one conversation",
   p1_h:"Who is the best prompter?", p1_p:"Two engineers ask the question. The answer is Socrates. We open with a first Socratic dialogue.",
   p2_h:"Meet KAION", p2_p:"KAION is introduced, then joins the dialogue as a third voice in the room.",
-  p3_h:"Live podcast with Qiqi", p3_p:"A light 20–30 minutes on how KAION differs from other AI, the story behind KAION, and one question: when are we being ourselves, and can KAION help?",
+  p3_h:"Live podcast with Qiqi", p3_p:"A light 20–30 minutes on how KAION differs from other AI, the story of Bozhidar and KAION, and one question: when are we being ourselves, and can KAION help?",
   ho_eyebrow:"The hosts", ho_h:"Two ways of looking at the mind",
   my_slogan:"Answers are easy to find. Thinking is rare.",
   my_p:"MindYoga began with one public philosophical conversation in 2024. It now runs salons, live podcasts and journeys across cities.",
-  qiqi_role:"MindYoga salon host · your podcast host for the evening", st1:"salons and events", st2:"journeys", st3:"core participants", st4:"places in 3 countries",
+  role_qiqi:"Founder of MindYoga · podcast host", role_bz:"Chief Technology Officer, KAION", my_follow:"Follow MindYoga", st1:"salons and events", st2:"journeys", st3:"core participants", st4:"places in 3 countries",
   ka_p:"Your brain isn't fixed; every experience reshapes it. KAION is the first voice-based neurotech app built to track that change: you talk, KAION listens.",
   ka_try:"Try KAION before the evening", ka_film:"Watch the film · 1:42", ka_free:"14 days free, full features included", ok_try:"While you wait, start a conversation with KAION.",
   j_eyebrow:"Registration", j_h:"Reserve your seat",
@@ -487,17 +502,17 @@ zh:{
   nav_evening:"活动流程", nav_join:"报名",
   chip:"报名截止还有", chip_closed:"报名已截止",
   h1:"谁是最好的\n提示词高手？", h1_sub:"答案是苏格拉底。",
-  lede:"新加坡的一个晚上。两位工程师把这个问题抛给全场，一个 AI 也坐进了对话圈。你会经历一场苏格拉底式对话，认识 KAION（一款用语音对话追踪大脑变化的脑科学应用），再听齐奇主持的现场播客。",
+  lede:"新加坡的一个晚上：一场苏格拉底式对话，初次认识语音脑科学应用 KAION，再听齐奇主持的现场播客。",
   cta:"预留座位", joined:"个座位已被预订", just:"刚刚报名",
   f_date:"日期", f_time:"时间", f_where:"地点", f_seats:"人数",
   ev_eyebrow:"活动流程", ev_h:"三段流程，一场对话",
   p1_h:"谁是最好的提示词高手？", p1_p:"两位工程师抛出这个问题，答案是苏格拉底。我们从第一场苏格拉底式对话开始。",
   p2_h:"认识 KAION", p2_p:"介绍 KAION，然后它作为第三个声音加入对话。",
-  p3_h:"齐奇主持的现场播客", p3_p:"轻松的 20–30 分钟：KAION 和其他 AI 有什么不同、KAION 背后的故事，还有一个问题：我们什么时候才是真正的自己，KAION 能帮上忙吗？",
+  p3_h:"齐奇主持的现场播客", p3_p:"轻松的 20–30 分钟：KAION 和其他 AI 有什么不同、Bozhidar 与 KAION 的故事，还有一个问题：我们什么时候才是真正的自己，KAION 能帮上忙吗？",
   ho_eyebrow:"主办方", ho_h:"看见心智的两种方式",
   my_slogan:"答案易得，思考稀缺。",
   my_p:"2024 年，MindYoga 从第一场公开哲学式对话起步；如今在不同城市办沙龙、现场播客和旅程。",
-  qiqi_role:"MindYoga 沙龙主持人 · 当晚播客主持", st1:"场线下活动", st2:"次心灵齐旅", st3:"位核心深度参与者", st4:"个地方 · 3 个国家",
+  role_qiqi:"MindYoga 创始人 · 播客主持", role_bz:"KAION 首席技术官", my_follow:"关注 MindYoga", st1:"场线下活动", st2:"次心灵齐旅", st3:"位核心深度参与者", st4:"个地方 · 3 个国家",
   ka_p:"大脑不是固定不变的，每一次经历都在重塑它。KAION 是第一款用语音对话追踪这种变化的脑科学应用：你说，KAION 听。",
   ka_try:"活动前先试试 KAION", ka_film:"看宣传片 · 1:42", ka_free:"14 天免费，功能不打折", ok_try:"等待期间，先和 KAION 聊一聊。",
   j_eyebrow:"报名", j_h:"预留你的座位",
@@ -534,17 +549,17 @@ ms:{
   nav_evening:"Acara", nav_join:"Sertai",
   chip:"Pendaftaran ditutup dalam", chip_closed:"Pendaftaran telah ditutup",
   h1:"Siapa pemberi arahan terbaik?", h1_sub:"Jawapannya: Socrates.",
-  lede:"Satu malam di Singapura. Dua jurutera mengemukakan soalan itu kepada semua, dan sebuah AI menyertai bulatan kita. Sertai dialog Socratic, kenali KAION, aplikasi neuroteknologi berasaskan suara yang menjejaki bagaimana otak anda berubah, dan nikmati podcast langsung bersama Qiqi.",
+  lede:"Satu malam di Singapura: dialog Socratic, pertemuan pertama dengan KAION, aplikasi neuroteknologi berasaskan suara, dan podcast langsung bersama Qiqi.",
   cta:"Tempah tempat anda", joined:"tempat telah ditempah", just:"baru mendaftar",
   f_date:"Tarikh", f_time:"Masa", f_where:"Lokasi", f_seats:"Kapasiti",
   ev_eyebrow:"Acara malam", ev_h:"Tiga bahagian, satu perbualan",
   p1_h:"Siapa prompter terbaik?", p1_p:"Dua jurutera bertanya soalan ini. Jawapannya: Socrates. Kami bermula dengan dialog Socratic yang pertama.",
   p2_h:"Kenali KAION", p2_p:"KAION diperkenalkan, kemudian menyertai dialog sebagai suara ketiga.",
-  p3_h:"Podcast langsung bersama Qiqi", p3_p:"20–30 minit santai tentang perbezaan KAION dengan AI lain, kisah di sebalik KAION, dan satu soalan: bilakah kita menjadi diri sendiri, dan bolehkah KAION membantu?",
+  p3_h:"Podcast langsung bersama Qiqi", p3_p:"20–30 minit santai tentang perbezaan KAION dengan AI lain, kisah Bozhidar dan KAION, dan satu soalan: bilakah kita menjadi diri sendiri, dan bolehkah KAION membantu?",
   ho_eyebrow:"Penganjur", ho_h:"Dua cara melihat minda",
   my_slogan:"Jawapan mudah didapati. Pemikiran jarang ditemui.",
   my_p:"MindYoga bermula dengan satu perbualan falsafah terbuka pada 2024. Kini ia menganjurkan salon, podcast langsung dan perjalanan di pelbagai bandar.",
-  qiqi_role:"Hos salon MindYoga · hos podcast malam ini", st1:"salon dan acara", st2:"perjalanan", st3:"peserta teras", st4:"lokasi di 3 negara",
+  role_qiqi:"Pengasas MindYoga · hos podcast", role_bz:"Ketua Pegawai Teknologi, KAION", my_follow:"Ikuti MindYoga", st1:"salon dan acara", st2:"perjalanan", st3:"peserta teras", st4:"lokasi di 3 negara",
   ka_p:"Otak anda tidak tetap; setiap pengalaman membentuknya semula. KAION ialah aplikasi neuroteknologi berasaskan suara yang pertama untuk menjejaki perubahan itu: anda bercakap, KAION mendengar.",
   ka_try:"Cuba KAION sebelum acara", ka_film:"Tonton filem · 1:42", ka_free:"Percuma 14 hari, semua ciri termasuk", ok_try:"Sementara menunggu, mulakan perbualan dengan KAION.",
   j_eyebrow:"Pendaftaran", j_h:"Tempah tempat anda",
@@ -581,17 +596,17 @@ ta:{
   nav_evening:"நிகழ்ச்சி", nav_join:"பதிவு",
   chip:"பதிவு முடிய இன்னும்", chip_closed:"பதிவு முடிந்தது",
   h1:"சிறந்த ப்ராம்ப்டர் யார்?", h1_sub:"பதில்: சாக்ரடீஸ்.",
-  lede:"சிங்கப்பூரில் ஒரு மாலை. இரண்டு பொறியாளர்கள் இந்தக் கேள்வியை அரங்கில் வைக்கிறார்கள்; ஒரு AI-யும் நம் வட்டத்தில் இணைகிறது. ஒரு சாக்ரடீஸ் உரையாடலில் பங்கேற்று, உங்கள் மூளை எப்படி மாறுகிறது என்பதைக் குரல் உரையாடல் மூலம் கண்காணிக்கும் நரம்பியல் தொழில்நுட்பச் செயலியான KAION-ஐச் சந்தித்து, Qiqi நடத்தும் நேரடி பாட்காஸ்ட்டையும் கேளுங்கள்.",
+  lede:"சிங்கப்பூரில் ஒரு மாலை: ஒரு சாக்ரடீஸ் உரையாடல், குரல் அடிப்படையிலான நரம்பியல் தொழில்நுட்பச் செயலியான KAION-உடன் முதல் சந்திப்பு, Qiqi நடத்தும் நேரடி பாட்காஸ்ட்.",
   cta:"இருக்கையை முன்பதிவு செய்யுங்கள்", joined:"இருக்கைகள் முன்பதிவு", just:"இப்போது பதிவு செய்தவர்கள்",
   f_date:"தேதி", f_time:"நேரம்", f_where:"இடம்", f_seats:"இருக்கைகள்",
   ev_eyebrow:"மாலை நிகழ்ச்சி", ev_h:"மூன்று பகுதிகள், ஒரே உரையாடல்",
   p1_h:"சிறந்த ப்ராம்ப்டர் யார்?", p1_p:"இரண்டு பொறியாளர்கள் இந்தக் கேள்வியைக் கேட்கிறார்கள். பதில்: சாக்ரடீஸ். முதல் சாக்ரடீஸ் உரையாடலுடன் தொடங்குகிறோம்.",
   p2_h:"KAION-ஐச் சந்தியுங்கள்", p2_p:"KAION அறிமுகப்படுத்தப்படுகிறது; பிறகு மூன்றாவது குரலாக உரையாடலில் இணைகிறது.",
-  p3_h:"Qiqi உடன் நேரடி பாட்காஸ்ட்", p3_p:"20–30 நிமிட இலகுவான உரையாடல்: மற்ற AI-களிலிருந்து KAION எப்படி வேறுபடுகிறது, KAION-இன் பின்னணிக் கதை, ஒரு கேள்வி: நாம் எப்போது நாமாக இருக்கிறோம், KAION உதவ முடியுமா?",
+  p3_h:"Qiqi உடன் நேரடி பாட்காஸ்ட்", p3_p:"20–30 நிமிட இலகுவான உரையாடல்: மற்ற AI-களிலிருந்து KAION எப்படி வேறுபடுகிறது, Bozhidar மற்றும் KAION-இன் கதை, ஒரு கேள்வி: நாம் எப்போது நாமாக இருக்கிறோம், KAION உதவ முடியுமா?",
   ho_eyebrow:"ஏற்பாட்டாளர்கள்", ho_h:"மனதைப் பார்க்கும் இரண்டு வழிகள்",
   my_slogan:"பதில்கள் எளிதில் கிடைக்கும். சிந்தனை அரிது.",
   my_p:"2024-இல் ஒரு பொது தத்துவ உரையாடலுடன் தொடங்கிய MindYoga, இன்று பல நகரங்களில் உரையாடல் அமர்வுகள், நேரடி பாட்காஸ்ட்கள், பயணங்களை நடத்துகிறது.",
-  qiqi_role:"MindYoga உரையாடல் அமர்வுகளின் தொகுப்பாளர் · அன்றைய பாட்காஸ்ட் தொகுப்பாளர்", st1:"நிகழ்ச்சிகள்", st2:"பயணங்கள்", st3:"முக்கிய பங்கேற்பாளர்கள்", st4:"இடங்கள், 3 நாடுகள்",
+  role_qiqi:"MindYoga நிறுவனர் · பாட்காஸ்ட் தொகுப்பாளர்", role_bz:"KAION தலைமைத் தொழில்நுட்ப அதிகாரி", my_follow:"MindYoga-வைப் பின்தொடருங்கள்", st1:"நிகழ்ச்சிகள்", st2:"பயணங்கள்", st3:"முக்கிய பங்கேற்பாளர்கள்", st4:"இடங்கள், 3 நாடுகள்",
   ka_p:"உங்கள் மூளை நிலையானது அல்ல; ஒவ்வொரு அனுபவமும் அதை மறுவடிவமைக்கிறது. அந்த மாற்றத்தைக் கண்காணிக்கும் முதல் குரல் அடிப்படையிலான நரம்பியல் தொழில்நுட்பச் செயலி KAION: நீங்கள் பேசுங்கள், KAION கேட்கிறது.",
   ka_try:"நிகழ்ச்சிக்கு முன் KAION-ஐ முயன்று பாருங்கள்", ka_film:"படத்தைப் பாருங்கள் · 1:42", ka_free:"14 நாள் இலவசம், எல்லா அம்சங்களும்", ok_try:"காத்திருக்கும்போது, KAION-உடன் ஒரு உரையாடலைத் தொடங்குங்கள்.",
   j_eyebrow:"பதிவு", j_h:"இருக்கையை முன்பதிவு செய்யுங்கள்",
