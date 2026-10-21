@@ -129,7 +129,7 @@ body.revealed .flyer{animation:flyin 1.6s cubic-bezier(.3,.7,.2,1) .3s both}
 .h1sub{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(22px,3.2vw,30px);line-height:1.2;color:var(--gold);margin:0;text-wrap:balance}
 .lede{color:var(--muted);font-size:clamp(16px,2vw,18px);max-width:54ch;margin:0;text-wrap:pretty}
 .hero .heroeb{margin:0;letter-spacing:.16em}
-.topic{font-family:var(--display);font-weight:600;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.01em;margin:0;text-wrap:balance}
+.topic{font-family:var(--display);font-weight:600;font-style:italic;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.01em;margin:0;text-wrap:balance}
 .when{font-size:14px;color:var(--muted);margin:-4px 0 0;letter-spacing:.02em}
 .live{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);flex-wrap:wrap;justify-content:center}
 .live b{color:var(--fg);font-variant-numeric:tabular-nums}
@@ -179,7 +179,8 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 .flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 28px}
 .flow li{border-top:2px solid var(--fg);padding-top:14px;min-width:0}
 .flow time{font:600 14px var(--body);font-variant-numeric:tabular-nums;color:var(--muted)}
-.flow h3{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.015em;margin:6px 0 6px}
+.flow h3{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.015em;margin:0 0 6px}
+.flow h3 .no{font-variant-numeric:tabular-nums}
 .flow p{margin:0;color:var(--muted)}
 .flow p.sub{font-family:var(--serif);font-style:italic;font-weight:500;font-size:19px;line-height:1.25;color:var(--gold);margin:0 0 8px}
 @media (max-width:720px){.flow{grid-template-columns:1fr;gap:22px}}
@@ -198,7 +199,7 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 .host.my{background:#2C3E36;color:#F1E9DC}
 .host.my .m-my{height:96px;color:#D9BC8C;align-self:flex-start}
 .host .hh{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.2vw,32px);letter-spacing:-.025em;line-height:1.08;margin:0}
-.host.my .slogan{font-family:var(--serif);font-weight:500;font-style:italic;font-size:clamp(24px,3vw,30px);line-height:1.15;color:#D9BC8C;margin:0}
+.host.my .slogan{font-family:var(--display);font-weight:700;font-size:clamp(21px,2.6vw,26px);line-height:1.2;letter-spacing:-.015em;color:#D9BC8C;margin:0}
 .host.my p{margin:0;color:rgba(241,233,220,.78)}
 .people{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:14px}
 .person{display:flex;align-items:center;gap:11px;min-width:0}
@@ -353,16 +354,16 @@ footer p{margin:0;max-width:60ch}
     <p class="eyebrow" data-i18n="ev_eyebrow"></p>
     <h2 data-i18n="ev_h"></h2>
     <ol class="flow">
-      <li><time>01</time><h3 data-i18n="s1_h"></h3><p class="sub" data-i18n="s1_sub"></p><p data-i18n="s1_p"></p>
+      <li><h3><span class="no">01 — </span><span data-i18n="s1_h"></span></h3><p class="sub" data-i18n="s1_sub"></p><p data-i18n="s1_p"></p>
         <div class="people">
           <div class="person"><img src="img/qiqi.jpg" alt="Qiqi"><div><b>Qiqi</b><span data-i18n="role_qiqi"></span></div></div>
           <div class="person"><img src="img/bozhidar.jpg" alt="Bozhidar Dimitrov" loading="lazy"><div><b>Bozhidar Dimitrov</b><span data-i18n="role_bz"></span></div></div>
         </div></li>
-      <li><time>02</time><h3 data-i18n="s2_h"></h3><p class="sub" data-i18n="s2_sub"></p><p data-i18n="s2_p"></p></li>
-      <li><time>03</time><h3 data-i18n="s3_h"></h3><p class="sub" data-i18n="s3_sub"></p><p data-i18n="s3_p"></p></li>
-      <li><time>04</time><h3 data-i18n="s4_h"></h3><p class="sub" data-i18n="s4_sub"></p><p data-i18n="s4_p"></p></li>
-      <li><time>05</time><h3 data-i18n="s5_h"></h3><p class="sub" data-i18n="s5_sub"></p><p data-i18n="s5_p"></p></li>
-      <li><time>06</time><h3 data-i18n="s6_h"></h3><p class="sub" data-i18n="s6_sub"></p><p data-i18n="s6_p"></p></li>
+      <li><h3><span class="no">02 — </span><span data-i18n="s2_h"></span></h3><p class="sub" data-i18n="s2_sub"></p><p data-i18n="s2_p"></p></li>
+      <li><h3><span class="no">03 — </span><span data-i18n="s3_h"></span></h3><p class="sub" data-i18n="s3_sub"></p><p data-i18n="s3_p"></p></li>
+      <li><h3><span class="no">04 — </span><span data-i18n="s4_h"></span></h3><p class="sub" data-i18n="s4_sub"></p><p data-i18n="s4_p"></p></li>
+      <li><h3><span class="no">05 — </span><span data-i18n="s5_h"></span></h3><p class="sub" data-i18n="s5_sub"></p><p data-i18n="s5_p"></p></li>
+      <li><h3><span class="no">06 — </span><span data-i18n="s6_h"></span></h3><p class="sub" data-i18n="s6_sub"></p><p data-i18n="s6_p"></p></li>
     </ol>
   </section>
 
@@ -507,7 +508,7 @@ en:{
   bj_p2:"Sharing your photo or story is entirely optional.",
         f_format:"Programme",
   chip_soon:"Date announcing soon · register now to hold a seat",
-  i1:"Hi, I'm *Qiqi.*", i2:"I founded MindYoga to create spaces where people think and connect through philosophical dialogue.",
+  i1:"Hi, I'm *Qiqi.*", i2:"I founded MindYoga to create spaces where people think and connect through *philosophical dialogue.*",
   i3:"This time, a new voice is joining the circle.", i_called:"Introducing…", i4:"Join us in ~Singapore.~", skip:"Skip intro",
   nav_evening:"The evening", nav_join:"Join",
   chip:"Registration closes in", chip_closed:"Registration is closed",
@@ -577,7 +578,7 @@ zh:{
   bj_p2:"分享照片或故事完全自愿。",
         f_format:"形式",
   chip_soon:"日期即将公布 · 现在报名先占座",
-  i1:"你好，我是*齐奇。*", i2:"我创办 MindYoga，是想营造一些空间，让人们通过哲学对话一起思考、彼此连接。",
+  i1:"你好，我是*齐奇。*", i2:"我创办 MindYoga，是想营造一些空间，让人们通过*哲学对话*一起思考、彼此连接。",
   i3:"这一次，圈子里多了一个新的声音。", i_called:"这一次是……", i4:"我们在~新加坡~见。", skip:"跳过开场",
   nav_evening:"活动流程", nav_join:"报名",
   chip:"报名截止还有", chip_closed:"报名已截止",
@@ -647,7 +648,7 @@ ms:{
   bj_p2:"Berkongsi gambar atau cerita anda adalah pilihan sepenuhnya.",
         f_format:"Program",
   chip_soon:"Tarikh akan diumumkan · daftar sekarang untuk tempah tempat",
-  i1:"Hai, saya *Qiqi.*", i2:"Saya mengasaskan MindYoga untuk mewujudkan ruang di mana orang berfikir dan berhubung melalui dialog falsafah.",
+  i1:"Hai, saya *Qiqi.*", i2:"Saya mengasaskan MindYoga untuk mewujudkan ruang di mana orang berfikir dan berhubung melalui *dialog falsafah.*",
   i3:"Kali ini, satu suara baharu menyertai bulatan kami.", i_called:"Memperkenalkan…", i4:"Jumpa kami di ~Singapura.~", skip:"Langkau",
   nav_evening:"Acara", nav_join:"Sertai",
   chip:"Pendaftaran ditutup dalam", chip_closed:"Pendaftaran telah ditutup",
@@ -717,7 +718,7 @@ ta:{
   bj_p2:"உங்கள் புகைப்படத்தையோ கதையையோ பகிர்வது முற்றிலும் உங்கள் விருப்பம்.",
         f_format:"நிகழ்ச்சி",
   chip_soon:"தேதி விரைவில் அறிவிக்கப்படும் · இப்போதே பதிவு செய்யுங்கள்",
-  i1:"வணக்கம், நான் *Qiqi.*", i2:"தத்துவ உரையாடல் வழியாக மக்கள் சிந்திக்கவும் இணையவும் இடங்களை உருவாக்க நான் MindYoga-வைத் தொடங்கினேன்.",
+  i1:"வணக்கம், நான் *Qiqi.*", i2:"*தத்துவ உரையாடல்* வழியாக மக்கள் சிந்திக்கவும் இணையவும் இடங்களை உருவாக்க நான் MindYoga-வைத் தொடங்கினேன்.",
   i3:"இந்த முறை, எங்கள் வட்டத்தில் ஒரு புதிய குரல் இணைகிறது.", i_called:"அறிமுகம்…", i4:"~சிங்கப்பூரில்~ சந்திப்போம்.", skip:"தவிர்",
   nav_evening:"நிகழ்ச்சி", nav_join:"பதிவு",
   chip:"பதிவு முடிய இன்னும்", chip_closed:"பதிவு முடிந்தது",
