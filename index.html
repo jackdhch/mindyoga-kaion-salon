@@ -849,7 +849,7 @@ function fillBand(){
 /* film cover: swap in the player on tap; the link still opens YouTube if that fails */
 $("#film").addEventListener("click", e => {
   const a = e.currentTarget; if (a.querySelector("iframe")) return; e.preventDefault();
-  const f = document.createElement("iframe"); f.src = "https://www.youtube-nocookie.com/embed/izlEtk8zf7w?autoplay=1&rel=0"; f.allow = "autoplay; encrypted-media; picture-in-picture"; f.allowFullscreen = true; f.title = "KAION film";
+  const f = document.createElement("iframe"); f.src = "https://www.youtube-nocookie.com/embed/izlEtk8zf7w?autoplay=1&rel=0&vq=hd1080";   // vq：请 YouTube 先给 1080p，非官方参数，手机上可能被忽略（操作者 10-22 选这条） f.allow = "autoplay; encrypted-media; picture-in-picture"; f.allowFullscreen = true; f.title = "KAION film";
   a.innerHTML = ""; a.append(f); a.removeAttribute("href");
 });
 
