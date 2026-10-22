@@ -86,12 +86,26 @@ a{color:inherit}
 .duo.on{opacity:1;transform:none}
 .duo .m-my{height:clamp(64px,10vw,92px);color:var(--brand)}
 .duo .x{font:500 22px var(--body);color:var(--gold)}
-.duo .ka{position:relative;display:grid;place-items:center;width:clamp(110px,16vw,150px);aspect-ratio:1}
-.duo .ka::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 52%,var(--halo) 60%,transparent 72%);filter:blur(6px)}
-.duo .ka .m-ka{position:relative;width:76%;color:var(--fg)}
+.duo .ka{position:relative;display:grid;place-items:center;width:clamp(124px,18vw,168px);aspect-ratio:1}
+/* 光团照 KAION 官方图（Daniela 10-22 附件）：把白光抠成透明图，浅色、深色底都能用；字标仍用网页自己的，夜间会变浅色 */
+.duo .ka::before{content:"";position:absolute;inset:0;background:url(img/kaion-halo.png) center/contain no-repeat}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .duo .ka::before{opacity:.5}}
+:root[data-theme="dark"] .duo .ka::before{opacity:.5}
+.duo .ka .m-ka{position:relative;width:69%;color:var(--fg)}   /* 字标占官方图宽度的 68% */
 #skip{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));font:500 14px var(--body);
   background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:9px 16px;cursor:pointer}
 #skip:hover{color:var(--fg)}
+/* 「打开邀请函」封面：有背景音乐时才出现，点了音乐和开场一起起步（浏览器只在点按后才允许出声） */
+.gate{position:absolute;inset:0;z-index:2;background:var(--bg);display:grid;place-content:center;justify-items:center;gap:22px;text-align:center;padding:24px;transition:opacity .45s,transform .45s}
+.gate.out{opacity:0;transform:scale(.98);pointer-events:none}
+.gate .duo{margin:0}
+.gate-when{margin:0;font:500 15px var(--body);color:var(--muted);letter-spacing:.02em;max-width:30ch}
+.gate-btn{font:600 17px var(--body);color:var(--bg);background:var(--fg);border:0;border-radius:999px;padding:15px 30px;cursor:pointer;box-shadow:0 10px 26px rgba(28,36,32,.18);transition:transform .2s}
+.gate-btn:hover{transform:translateY(-1px)}
+.gate-btn:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.gate-hint{margin:0;display:flex;align-items:center;gap:6px;font:500 13px var(--body);color:var(--muted)}
+.gate-hint svg{width:16px;height:16px}
+.gate:not([hidden]) ~ #skip{display:none}
 
 /* ---------- nav ---------- */
 .nav{position:sticky;top:calc(12px + env(safe-area-inset-top,0px));z-index:30;display:flex;justify-content:center;pointer-events:none;margin-top:14px}
@@ -211,10 +225,9 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 .stats b{display:block;font-family:var(--display);font-size:26px;font-weight:800;color:#F1E9DC;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .stats span{font-size:12.5px;color:rgba(241,233,220,.7);line-height:1.3;display:block}
 @media (max-width:420px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.host.ka{background:#EFE4DA;color:#1D2233}
-.host.ka .kalogo{position:relative;width:150px;aspect-ratio:1;display:grid;place-items:center;align-self:flex-start;margin:-18px 0 -14px -18px}
-.host.ka .kalogo::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 50%,rgba(255,255,255,.98) 58%,transparent 72%);filter:blur(5px);animation:breathe 6s ease-in-out infinite}
-.host.ka .m-ka{position:relative;width:70%;color:#1D2233}
+.host.ka{background:#D4C8BC;color:#1D2233}  /* 底色照 KAION 官方图（2026-10-22 Daniela 邮件附件） */
+/* logo 直接用 KAION 官方图（2026-10-22 Daniela 邮件附件，缩到 800 像素），四周渐隐进卡片底色；操作者定方案 C */
+.host.ka .kalogo{width:200px;max-width:100%;aspect-ratio:1;align-self:flex-start;margin:-26px 0 -22px -30px;background:url(img/kaion-official.jpg) center/cover;-webkit-mask:radial-gradient(closest-side,#000 72%,transparent 100%);mask:radial-gradient(closest-side,#000 72%,transparent 100%)}
 .host.ka .slogan{font-family:var(--display);font-weight:600;font-size:clamp(21px,2.6vw,26px);line-height:1.2;letter-spacing:-.015em;margin:0}
 .host.ka p{margin:0;color:#4E4A55}
 .stores{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
@@ -230,6 +243,14 @@ h2{font-family:var(--display);font-weight:800;font-stretch:96%;font-size:clamp(2
 /* MindYoga film: one self-hosted clip, plays full-screen in a lightbox with English subtitles */
 .host.my .film .cap{background:rgba(44,62,54,.82)}
 #lb{position:fixed;inset:0;z-index:60;background:rgba(10,12,14,.94);display:none;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px))}
+/* 背景音乐开关：右下角小喇叭 */
+#mus{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+#mus svg{width:20px;height:20px;grid-area:1/1}
+#mus .off,#mus.muted .on{display:none}
+#mus.muted .off{display:block}
+#mus.playing::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--muted);animation:musPulse 2.4s ease-out infinite;pointer-events:none}
+@keyframes musPulse{from{opacity:.7;transform:scale(.9)}to{opacity:0;transform:scale(1.2)}}
+@media (prefers-reduced-motion:reduce){#mus.playing::after{animation:none;opacity:.5}}
 #lb.on{display:flex}
 #lb video{max-width:100%;max-height:100%;border-radius:12px;background:#000;outline:0}
 #lb video::cue{font:500 clamp(11px,1.9vh,14px)/1.3 var(--body);background:rgba(0,0,0,.62);color:#fff}
@@ -304,6 +325,12 @@ footer p{margin:0;max-width:60ch}
 
 <!-- ============ intro ============ -->
 <div id="intro" aria-hidden="true">
+  <div class="gate" id="gate" hidden>
+    <div class="duo on"><span class="ka"><span class="m-ka"></span></span><span class="x">×</span><span class="m-my"></span></div>
+    <p class="gate-when" data-i18n="hero_when"></p>
+    <button class="gate-btn" id="gateBtn" type="button" data-i18n="open_inv"></button>
+    <p class="gate-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18 6.5a8 8 0 0 1 0 11"/></svg><span data-i18n="sound_on"></span></p>
+  </div>
   <div class="say" id="s1"></div>
   <div class="stack" id="stack">
     <div class="pol" style="--r:3deg"><img src="img/qiqi.jpg" alt=""></div>
@@ -338,7 +365,7 @@ footer p{margin:0;max-width:60ch}
     <p class="lede" data-i18n="lede"></p>
     <a class="btn" href="#join"><span data-i18n="cta"></span><span class="arrow">→</span></a>
     <p class="when" data-i18n="hero_when"></p>
-    <div class="live" id="live"><span class="dot"></span><span class="lbl">LIVE</span>·<span><b id="count">0</b> <span data-i18n="joined"></span></span><span id="recentWrap" hidden>· <span data-i18n="just"></span></span><span class="avs" id="avs"></span></div>
+    <div class="live" id="live"><span class="dot"></span><span class="lbl">LIVE</span>·<span><b id="count">0</b> <span id="joinedLbl" data-i18n="joined"></span></span><span id="recentWrap" hidden>· <span data-i18n="just"></span></span><span class="avs" id="avs"></span></div>
     <div class="globe" id="globe"><div class="halo"></div><canvas id="cv" width="1200" height="1200" aria-label="Globe turning to Singapore"></canvas>
       <div class="pin" id="pin"><i><span class="m-bf"></span></i><span id="pinName">Singapore</span></div></div>
   </header>
@@ -374,11 +401,10 @@ footer p{margin:0;max-width:60ch}
     <h2 data-i18n="ho_h"></h2>
     <div class="hosts">
       <article class="host ka">
-        <div class="kalogo"><span class="m-ka" role="img" aria-label="KAION"></span></div>
+        <div class="kalogo" role="img" aria-label="KAION"></div>
         <h3 class="hh" data-i18n="ka_h"></h3>
         <p class="slogan" data-i18n="ka_slogan"></p>
         <p data-i18n="ka_p"></p>
-        <p data-i18n="ka_p2"></p>
         <div class="waves" aria-hidden="true"></div>
         <a class="film" id="film" href="https://www.youtube.com/watch?v=izlEtk8zf7w" target="_blank" rel="noopener"><img src="img/kaion-film.jpg" alt="KAION film" loading="lazy"><span class="play" aria-hidden="true"></span><span class="cap" data-i18n="ka_film"></span></a>
         <div>
@@ -458,19 +484,25 @@ footer p{margin:0;max-width:60ch}
 </main>
 
 <div id="lb" role="dialog" aria-modal="true"><button class="x" type="button" aria-label="Close">×</button></div>
+<button id="mus" class="muted" type="button" aria-label="Play music" hidden><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
 <script>
 /* ================= 活动信息：改这里就行 ================= */
 const CONFIG = {
   endpoint: "https://script.google.com/macros/s/AKfycbzUOwc3JqHQZ4hbY240-cQRuAx-rMDDO6HGUtyAaBhFHyp1ojyrHYblc75EKvDpD8dzSA/exec",          // 谷歌 Apps Script 网址（/exec 结尾）；留空 = 演示模式，报名只存在本机浏览器
   closesAt: "",          // 报名截止，例如 "2026-11-20T23:59:00+08:00"；留空 = 显示「日期即将公布」
-  startAt:  "",          // 活动开始，例如 "2026-11-22T19:00:00+08:00"；填了才出现「加到谷歌日历」按钮
-  endAt:    "",
-  // 以下按 2026-10-20 会议纪要：日期、时间、场地都还没定
-  date:   { en: "Announcing soon", zh: "即将公布", ms: "Akan diumumkan", ta: "விரைவில் அறிவிப்பு" },
-  time:   { en: "To be confirmed", zh: "待定", ms: "Akan disahkan", ta: "உறுதிசெய்யப்படும்" },
-  venue:  { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சிங்கப்பூர்" },
+  startAt:  "2026-11-08T13:00:00+08:00",   // 活动开始；填了才出现「加到谷歌日历」按钮
+  endAt:    "2026-11-08T16:00:00+08:00",
+  // 2026-10-22 KAION（Daniela）邮件确认：11 月 8 日周日 13:00–16:00；场地 10 月 26 日看场后再定
+  date:   { en: "Sunday, 8 November 2026", zh: "2026 年 11 月 8 日（周日）", ms: "Ahad, 8 November 2026", ta: "நவம்பர் 8, 2026 (ஞாயிறு)" },
+  time:   { en: "1:00 – 4:00 pm", zh: "下午 1:00 – 4:00", ms: "1:00 – 4:00 petang", ta: "பிற்பகல் 1:00 – 4:00" },
+  venue:  { en: "Singapore · venue announced 26 October", zh: "新加坡 · 具体场地 10 月 26 日公布", ms: "Singapura · lokasi diumumkan 26 Oktober", ta: "சிங்கப்பூர் · இடம் அக்டோபர் 26 அன்று அறிவிக்கப்படும்" },
+  address: "",           // 场地定了填完整地址，日历邀请里用；留空用「Singapore」
   format: { en: "Live podcast · Philosophical dialogue · KAION", zh: "现场播客 · 哲学对话 · 与 KAION 对话", ms: "Podcast langsung · Dialog falsafah · KAION", ta: "நேரடி பாட்காஸ்ட் · தத்துவ உரையாடல் · KAION" },
-  contact: ""            // 隐私问题联系邮箱；留空则不显示
+  contact: "",           // 隐私问题联系邮箱；留空则不显示
+  music: "https://jackdhch.github.io/mindyoga-kaion-salon/audio/vastness_from17s.mp3",   // 客户 10-22 选定：Mixkit「Vastness」（Andrew Ev），从第 17 秒剪起；上线前要先把 audio/ 推到 GitHub 仓库
+                         // 背景音乐 mp3 的完整网址，放 GitHub Pages（Cloudflare 不支持分段读取，iPhone 播不了）；留空 = 不放音乐、不显示按钮
+  beat: { first: 0.782, every: 1.0169 },   // 剪好的文件实测：第一下重拍 0.782 秒，每 1.0169 秒一下（误差 7 毫秒以内）
+                         // 音乐重拍 { first: 第一下重拍在第几秒, every: 隔几秒一下 }；填了，开场的关键画面会等到重拍再出来
 };
 const PLACE = { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சிங்கப்பூர்" };
 
@@ -478,7 +510,7 @@ const PLACE = { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சி�
 const T = {
 en:{
   h1_topic:"Topic: When are we being ourselves?",
-  hero_when:"Singapore · Date to be announced",
+  hero_when:"Singapore · Sunday 8 November · 1–4 pm",
   s1_h:"Live Podcast",
   s1_sub:"Where Human Thinking Meets AI",
   s1_p:"Qiqi and KAION's technology team explore how AI is changing the way we think, make decisions, and understand ourselves.",
@@ -498,8 +530,7 @@ en:{
   s6_sub:"Leave with a Better Question",
   s6_p:"Following a second dialogue with KAION, we come together to reflect on what has changed in our understanding — and which questions we want to carry forward.",
   ka_h:"Meet KAION",
-  ka_slogan:"An AI companion for curiosity, reflection, and exploration.",
-  ka_p2:"At this event, you'll experience what happens when human curiosity meets AI-assisted thinking.",
+  ka_slogan:"A voice-based AI neurotech app for curiosity, dialogue and exploration.",
   my_h:"Meet MindYoga",
   my_p2:"Through salons, live experiences, and immersive journeys, we create spaces where people can express unfinished thoughts, challenge assumptions, and explore questions without the pressure of finding the right answer.",
   my_p3:"We believe meaningful learning begins not when answers are given, but when people are guided to discover them.",
@@ -509,22 +540,22 @@ en:{
         f_format:"Programme",
   chip_soon:"Date announcing soon · register now to hold a seat",
   i1:"Hi, I'm *Qiqi.*", i2:"I founded MindYoga to create spaces where people think and connect through *philosophical dialogue.*",
-  i3:"This time, a new voice is joining the circle.", i_called:"Introducing…", i4:"Join us in ~Singapore.~", skip:"Skip intro",
-  nav_evening:"The evening", nav_join:"Join",
+  i3:"This time, a new voice is joining the circle.", i_called:"Introducing…", i4:"Join us in ~Singapore.~", skip:"Skip intro", open_inv:"Open the invitation", sound_on:"Best with sound on",
+  nav_evening:"The afternoon", nav_join:"Join",
   chip:"Registration closes in", chip_closed:"Registration is closed",
   h1:"What if understanding ourselves begins with a conversation?", h1_sub:"Discovering who we are. Exploring who we may become.",
-  lede:"An interactive evening of philosophical dialogue, human connection, and AI-assisted reflection.",
-  cta:"Join the Conversation", joined:"seats taken", just:"just joined",
+  lede:"An interactive afternoon of philosophical dialogue, human connection, and AI-assisted reflection.",
+  cta:"Join the Conversation", joined:"seats taken", joined_one:"seat taken", just:"just joined",
   f_date:"Date", f_time:"Time", f_where:"Where", f_seats:"Capacity",
-  ev_eyebrow:"The evening", ev_h:"What to Expect",
+  ev_eyebrow:"The afternoon", ev_h:"What to Expect",
         ho_eyebrow:"The hosts", ho_h:"We train our bodies. What about how we think?",
   my_slogan:"A space to think deeply, question openly, and connect genuinely.",
   my_p:"MindYoga is a philosophical dialogue platform that trains clear thinking, critical awareness, and deep conversation skills.",
   role_qiqi:"Founder of MindYoga · podcast host", role_bz:"Chief Technology Officer, KAION", my_follow:"Follow MindYoga", my_film:"Meet Qiqi · 1:36 · English subtitles", st1:"salons and events", st2:"journeys", st3:"people a salon", st4:"places in 3 countries",
-  ka_p:"KAION brings a new voice into philosophical dialogue, helping participants clarify their ideas, examine assumptions, and explore different perspectives through conversation.",
-  ka_try:"Try KAION before the evening", ka_film:"Watch the film · 1:42", ka_free:"14 days free, full features included", ok_try:"While you wait, start a conversation with KAION.",
+  ka_p:"KAION brings neuroplasticity into philosophical dialogue. It helps you clarify your ideas, tune into yourself and understand your thinking patterns and behaviours, so you can perform at your best. At this event, you'll experience what happens when human curiosity meets AI-assisted thinking.",
+  ka_try:"Try KAION before the event", ka_film:"Watch the film · 1:42", ka_free:"30 days free, full features included", ok_try:"While you wait, start a conversation with KAION.",
   j_eyebrow:"Registration", j_h:"Reserve Your Seat",
-  j_p:"It takes about a minute. We'll confirm by WhatsApp or email before the evening.",
+  j_p:"It takes about a minute. We'll confirm by WhatsApp or email before the event.",
   l_name:"Full name", l_email:"Email", l_phone:"Mobile (WhatsApp)", cc_other:"Other",
   l_seats:"How many seats?", s_1:"Just me", s_2:"Me + 1 friend",
   l_kaion:"Have you used KAION?", k_1:"I use it", k_2:"Tried it once", k_3:"New to it", optional:"(optional)",
@@ -536,8 +567,8 @@ en:{
   e_name:"Please enter your name.", e_email:"Please enter a valid email, like name@example.com.",
   e_phone:"Please enter a Singapore mobile number (8 digits, starting with 8 or 9).", e_phone_int:"Please enter your number with the country code, digits only.",
   e_consent:"Please tick this box so we can hold your seat.", e_net:"We couldn't reach the sign-up sheet. Check your connection and try again.",
-  e_full:"Sorry, the evening is full.",
-  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll send the date, venue and a calendar invite once they're confirmed.",
+  e_full:"Sorry, this event is full.",
+  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll send the venue and a calendar invite once the venue is confirmed.",
   wait_h:"You're on the waitlist, {n}.", wait_p:"All seats are taken right now. We'll message you if one opens.",
   dup_h:"You're already registered.", dup_p:"This email already has a seat. See you there.",
   cal:"Add to Google Calendar", share:"Share on WhatsApp", again:"Register someone else",
@@ -548,7 +579,7 @@ en:{
 },
 zh:{
   h1_topic:"话题：我们什么时候是在做自己？",
-  hero_when:"新加坡 · 日期待公布",
+  hero_when:"新加坡 · 11 月 8 日（周日）下午 1–4 点",
   s1_h:"现场播客",
   s1_sub:"当人的思考遇上 AI",
   s1_p:"齐奇和 KAION 技术团队一起聊：AI 正在怎样改变我们思考、做决定和认识自己的方式。",
@@ -568,8 +599,7 @@ zh:{
   s6_sub:"带着一个更好的问题离开",
   s6_p:"和 KAION 第二次对话之后，大家聚在一起，回顾自己的理解有了哪些变化，以及想把哪些问题继续带下去。",
   ka_h:"认识 KAION",
-  ka_slogan:"陪你好奇、反思和探索的 AI 伙伴。",
-  ka_p2:"这次活动里，你会亲身体验：当人的好奇心遇上 AI 辅助的思考，会发生什么。",
+  ka_slogan:"一款用语音交流的 AI 神经科技应用，为好奇、对话和探索而生。",
   my_h:"认识 MindYoga",
   my_p2:"通过沙龙、现场体验和沉浸式旅程，我们营造这样的空间：人们可以说出还没想完的想法，挑战既有的假设，探索问题，不用急着找到正确答案。",
   my_p3:"我们相信，有意义的学习不从给出答案开始，而从人们被引导着自己发现答案开始。",
@@ -579,20 +609,20 @@ zh:{
         f_format:"形式",
   chip_soon:"日期即将公布 · 现在报名先占座",
   i1:"你好，我是*齐奇。*", i2:"我创办 MindYoga，是想营造一些空间，让人们通过*哲学对话*一起思考、彼此连接。",
-  i3:"这一次，圈子里多了一个新的声音。", i_called:"这一次是……", i4:"我们在~新加坡~见。", skip:"跳过开场",
+  i3:"这一次，圈子里多了一个新的声音。", i_called:"这一次是……", i4:"我们在~新加坡~见。", skip:"跳过开场", open_inv:"打开邀请函", sound_on:"建议打开声音",
   nav_evening:"活动流程", nav_join:"报名",
   chip:"报名截止还有", chip_closed:"报名已截止",
   h1:"如果认识自己，是从一场对话开始的呢？", h1_sub:"发现我们是谁，探索我们可能成为谁。",
-  lede:"一个互动的夜晚：哲学对话、人与人的连接，以及 AI 辅助的反思。",
+  lede:"一个互动的下午：哲学对话、人与人的连接，以及 AI 辅助的反思。",
   cta:"加入这场对话", joined:"个座位已被预订", just:"刚刚报名",
   f_date:"日期", f_time:"时间", f_where:"地点", f_seats:"人数",
-  ev_eyebrow:"活动流程", ev_h:"当晚你会经历什么",
+  ev_eyebrow:"活动流程", ev_h:"当天你会经历什么",
         ho_eyebrow:"主办方", ho_h:"我们都会练身体。那思考呢？",
   my_slogan:"在这里深入思考、坦然提问、真诚连接。",
   my_p:"MindYoga 是一个哲学对话平台，训练清晰思考、批判意识和深度对话的能力。",
   role_qiqi:"MindYoga 创始人 · 播客主持", role_bz:"KAION 首席技术官", my_follow:"关注 MindYoga", my_film:"认识齐奇 · 1:36 · 英文字幕", st1:"场线下活动", st2:"次心灵齐旅", st3:"人 · 每场沙龙", st4:"个地方 · 3 个国家",
-  ka_p:"KAION 给哲学对话带来一个新的声音：通过对话，帮参与者理清想法、检验自己的假设，探索不同的视角。",
-  ka_try:"活动前先试试 KAION", ka_film:"看宣传片 · 1:42", ka_free:"14 天免费，功能不打折", ok_try:"等待期间，先和 KAION 聊一聊。",
+  ka_p:"KAION 把神经可塑性带进哲学对话。它帮你理清想法、倾听自己，看清自己的思维模式和行为习惯，拿出最好的状态。这次活动里，你会亲身体验：当人的好奇心遇上 AI 辅助的思考，会发生什么。",
+  ka_try:"活动前先试试 KAION", ka_film:"看宣传片 · 1:42", ka_free:"30 天免费，功能不打折", ok_try:"等待期间，先和 KAION 聊一聊。",
   j_eyebrow:"报名", j_h:"预留你的座位",
   j_p:"大约一分钟填完。活动前我们会通过 WhatsApp 或邮件和你确认。",
   l_name:"姓名", l_email:"邮箱", l_phone:"手机（WhatsApp）", cc_other:"其他",
@@ -607,7 +637,7 @@ zh:{
   e_phone:"请填写新加坡手机号（8 位，以 8 或 9 开头）。", e_phone_int:"请填写带国家区号的号码，只写数字。",
   e_consent:"请勾选同意，我们才能为你保留座位。", e_net:"没连上报名表，请检查网络后再试一次。",
   e_full:"抱歉，名额已满。",
-  ok_h:"报名成功，{n}。", ok_p:"座位已为你保留。日期和场地确定后，我们会把信息和日历邀请发给你。",
+  ok_h:"报名成功，{n}。", ok_p:"座位已为你保留。场地确定后，我们会把地址和日历邀请发给你。",
   wait_h:"你在候补名单上，{n}。", wait_p:"目前名额已满，有空位时我们会第一时间通知你。",
   dup_h:"你已经报过名了。", dup_p:"这个邮箱已有座位，到时见。",
   cal:"加到谷歌日历", share:"分享到 WhatsApp", again:"再帮别人报名",
@@ -618,7 +648,7 @@ zh:{
 },
 ms:{
   h1_topic:"Topik: Bilakah kita benar-benar menjadi diri sendiri?",
-  hero_when:"Singapura · Tarikh akan diumumkan",
+  hero_when:"Singapura · Ahad, 8 November · 1–4 petang",
   s1_h:"Podcast Langsung",
   s1_sub:"Apabila Pemikiran Manusia Bertemu AI",
   s1_p:"Qiqi dan pasukan teknologi KAION meneroka bagaimana AI mengubah cara kita berfikir, membuat keputusan dan memahami diri sendiri.",
@@ -638,8 +668,7 @@ ms:{
   s6_sub:"Pulang dengan Soalan yang Lebih Baik",
   s6_p:"Selepas dialog kedua dengan KAION, kita berkumpul untuk merenung apa yang telah berubah dalam pemahaman kita — dan soalan mana yang ingin kita bawa ke hadapan.",
   ka_h:"Kenali KAION",
-  ka_slogan:"Rakan AI untuk rasa ingin tahu, refleksi dan penerokaan.",
-  ka_p2:"Dalam acara ini, anda akan merasai apa yang berlaku apabila rasa ingin tahu manusia bertemu pemikiran berbantukan AI.",
+  ka_slogan:"Aplikasi neuroteknologi AI berasaskan suara untuk rasa ingin tahu, dialog dan penerokaan.",
   my_h:"Kenali MindYoga",
   my_p2:"Melalui salon, pengalaman langsung dan perjalanan imersif, kami mewujudkan ruang di mana orang boleh meluahkan fikiran yang belum selesai, mencabar andaian dan meneroka soalan tanpa tekanan untuk mencari jawapan yang betul.",
   my_p3:"Kami percaya pembelajaran yang bermakna bermula bukan apabila jawapan diberikan, tetapi apabila orang dibimbing untuk menemuinya sendiri.",
@@ -649,20 +678,20 @@ ms:{
         f_format:"Program",
   chip_soon:"Tarikh akan diumumkan · daftar sekarang untuk tempah tempat",
   i1:"Hai, saya *Qiqi.*", i2:"Saya mengasaskan MindYoga untuk mewujudkan ruang di mana orang berfikir dan berhubung melalui *dialog falsafah.*",
-  i3:"Kali ini, satu suara baharu menyertai bulatan kami.", i_called:"Memperkenalkan…", i4:"Jumpa kami di ~Singapura.~", skip:"Langkau",
+  i3:"Kali ini, satu suara baharu menyertai bulatan kami.", i_called:"Memperkenalkan…", i4:"Jumpa kami di ~Singapura.~", skip:"Langkau", open_inv:"Buka jemputan", sound_on:"Lebih baik dengan bunyi",
   nav_evening:"Acara", nav_join:"Sertai",
   chip:"Pendaftaran ditutup dalam", chip_closed:"Pendaftaran telah ditutup",
   h1:"Bagaimana jika memahami diri sendiri bermula dengan satu perbualan?", h1_sub:"Mengenali siapa diri kita. Meneroka siapa kita mungkin menjadi.",
-  lede:"Satu malam interaktif dengan dialog falsafah, hubungan sesama manusia, dan refleksi berbantukan AI.",
+  lede:"Satu petang interaktif dengan dialog falsafah, hubungan sesama manusia, dan refleksi berbantukan AI.",
   cta:"Sertai Perbualan", joined:"tempat telah ditempah", just:"baru mendaftar",
   f_date:"Tarikh", f_time:"Masa", f_where:"Lokasi", f_seats:"Kapasiti",
-  ev_eyebrow:"Acara malam", ev_h:"Apa yang Menanti Anda",
+  ev_eyebrow:"Acara petang", ev_h:"Apa yang Menanti Anda",
         ho_eyebrow:"Penganjur", ho_h:"Kita melatih badan. Bagaimana pula cara kita berfikir?",
   my_slogan:"Ruang untuk berfikir secara mendalam, bertanya secara terbuka dan berhubung dengan tulus.",
   my_p:"MindYoga ialah platform dialog falsafah yang melatih pemikiran yang jelas, kesedaran kritis dan kemahiran perbualan yang mendalam.",
   role_qiqi:"Pengasas MindYoga · hos podcast", role_bz:"Ketua Pegawai Teknologi, KAION", my_follow:"Ikuti MindYoga", my_film:"Kenali Qiqi · 1:36 · sari kata Inggeris", st1:"salon dan acara", st2:"perjalanan", st3:"orang setiap salon", st4:"lokasi di 3 negara",
-  ka_p:"KAION membawa suara baharu ke dalam dialog falsafah, membantu peserta menjelaskan idea, menilai andaian dan meneroka pelbagai perspektif melalui perbualan.",
-  ka_try:"Cuba KAION sebelum acara", ka_film:"Tonton filem · 1:42", ka_free:"Percuma 14 hari, semua ciri termasuk", ok_try:"Sementara menunggu, mulakan perbualan dengan KAION.",
+  ka_p:"KAION membawa neuroplastisiti ke dalam dialog falsafah. Ia membantu anda menjelaskan idea, mendengar diri sendiri dan memahami corak pemikiran serta tingkah laku anda, supaya anda dapat memberikan yang terbaik. Dalam acara ini, anda akan merasai apa yang berlaku apabila rasa ingin tahu manusia bertemu pemikiran berbantukan AI.",
+  ka_try:"Cuba KAION sebelum acara", ka_film:"Tonton filem · 1:42", ka_free:"Percuma 30 hari, semua ciri termasuk", ok_try:"Sementara menunggu, mulakan perbualan dengan KAION.",
   j_eyebrow:"Pendaftaran", j_h:"Tempah tempat anda",
   j_p:"Hanya kira-kira seminit. Kami akan mengesahkan melalui WhatsApp atau e-mel sebelum acara.",
   l_name:"Nama penuh", l_email:"E-mel", l_phone:"Telefon bimbit (WhatsApp)", cc_other:"Lain-lain",
@@ -677,7 +706,7 @@ ms:{
   e_phone:"Sila masukkan nombor telefon bimbit Singapura (8 digit, bermula dengan 8 atau 9).", e_phone_int:"Sila masukkan nombor anda dengan kod negara, digit sahaja.",
   e_consent:"Sila tandakan kotak ini supaya kami boleh menyimpan tempat anda.", e_net:"Kami tidak dapat menghubungi helaian pendaftaran. Semak sambungan anda dan cuba lagi.",
   e_full:"Maaf, acara ini sudah penuh.",
-  ok_h:"Anda sudah berdaftar, {n}.", ok_p:"Tempat anda telah disimpan. Kami akan menghantar tarikh, lokasi dan jemputan kalendar sebaik sahaja disahkan.",
+  ok_h:"Anda sudah berdaftar, {n}.", ok_p:"Tempat anda telah disimpan. Kami akan menghantar lokasi dan jemputan kalendar sebaik sahaja lokasi disahkan.",
   wait_h:"Anda dalam senarai menunggu, {n}.", wait_p:"Semua tempat telah penuh buat masa ini. Kami akan menghantar mesej jika ada tempat kosong.",
   dup_h:"Anda sudah berdaftar.", dup_p:"E-mel ini sudah mempunyai tempat. Jumpa di sana.",
   cal:"Tambah ke Kalendar Google", share:"Kongsi di WhatsApp", again:"Daftarkan orang lain",
@@ -688,7 +717,7 @@ ms:{
 },
 ta:{
   h1_topic:"தலைப்பு: நாம் எப்போது நாமாகவே இருக்கிறோம்?",
-  hero_when:"சிங்கப்பூர் · தேதி பின்னர் அறிவிக்கப்படும்",
+  hero_when:"சிங்கப்பூர் · நவம்பர் 8, ஞாயிறு · பிற்பகல் 1–4",
   s1_h:"நேரடி பாட்காஸ்ட்",
   s1_sub:"மனித சிந்தனை AI-ஐச் சந்திக்கும் இடம்",
   s1_p:"AI நம் சிந்தனை, முடிவெடுத்தல், நம்மைப் புரிந்துகொள்ளும் விதத்தை எப்படி மாற்றுகிறது என்பதை Qiqi-யும் KAION தொழில்நுட்பக் குழுவும் ஆராய்கிறார்கள்.",
@@ -708,8 +737,7 @@ ta:{
   s6_sub:"சிறந்த கேள்வியுடன் விடைபெறுங்கள்",
   s6_p:"KAION உடனான இரண்டாவது உரையாடலுக்குப் பிறகு, நம் புரிதலில் என்ன மாறியது, எந்தக் கேள்விகளை முன்னெடுத்துச் செல்ல விரும்புகிறோம் என்பதைப் பற்றி ஒன்றாகச் சிந்திக்கிறோம்.",
   ka_h:"KAION-ஐச் சந்தியுங்கள்",
-  ka_slogan:"ஆர்வம், சுயசிந்தனை, ஆய்வுக்கான ஒரு AI துணை.",
-  ka_p2:"இந்த நிகழ்வில், மனித ஆர்வம் AI உதவியுடனான சிந்தனையைச் சந்திக்கும்போது என்ன நடக்கிறது என்பதை நீங்கள் அனுபவிப்பீர்கள்.",
+  ka_slogan:"ஆர்வம், உரையாடல், ஆய்வுக்கான குரல் அடிப்படையிலான AI நரம்பியல் தொழில்நுட்பச் செயலி.",
   my_h:"MindYoga-வைச் சந்தியுங்கள்",
   my_p2:"அமர்வுகள், நேரடி அனுபவங்கள், ஆழ்ந்த பயணங்கள் மூலம், முழுமையடையாத எண்ணங்களை வெளிப்படுத்தவும், அனுமானங்களைக் கேள்வி கேட்கவும், சரியான பதிலைக் கண்டுபிடிக்க வேண்டிய அழுத்தமின்றி கேள்விகளை ஆராயவும் கூடிய இடங்களை நாங்கள் உருவாக்குகிறோம்.",
   my_p3:"பதில்கள் கொடுக்கப்படும்போது அல்ல, மக்கள் அவற்றைத் தாமே கண்டறிய வழிநடத்தப்படும்போதுதான் அர்த்தமுள்ள கற்றல் தொடங்குகிறது என்று நாங்கள் நம்புகிறோம்.",
@@ -719,20 +747,20 @@ ta:{
         f_format:"நிகழ்ச்சி",
   chip_soon:"தேதி விரைவில் அறிவிக்கப்படும் · இப்போதே பதிவு செய்யுங்கள்",
   i1:"வணக்கம், நான் *Qiqi.*", i2:"*தத்துவ உரையாடல்* வழியாக மக்கள் சிந்திக்கவும் இணையவும் இடங்களை உருவாக்க நான் MindYoga-வைத் தொடங்கினேன்.",
-  i3:"இந்த முறை, எங்கள் வட்டத்தில் ஒரு புதிய குரல் இணைகிறது.", i_called:"அறிமுகம்…", i4:"~சிங்கப்பூரில்~ சந்திப்போம்.", skip:"தவிர்",
+  i3:"இந்த முறை, எங்கள் வட்டத்தில் ஒரு புதிய குரல் இணைகிறது.", i_called:"அறிமுகம்…", i4:"~சிங்கப்பூரில்~ சந்திப்போம்.", skip:"தவிர்", open_inv:"அழைப்பிதழைத் திறக்கவும்", sound_on:"ஒலியுடன் பார்ப்பது சிறந்தது",
   nav_evening:"நிகழ்ச்சி", nav_join:"பதிவு",
   chip:"பதிவு முடிய இன்னும்", chip_closed:"பதிவு முடிந்தது",
   h1:"நம்மைப் புரிந்துகொள்வது ஓர் உரையாடலில் தொடங்கினால்?", h1_sub:"நாம் யார் என்பதைக் கண்டறிதல். நாம் யாராக மாறக்கூடும் என்பதை ஆராய்தல்.",
-  lede:"தத்துவ உரையாடல், மனித இணைப்பு, AI உதவியுடன் சுயபரிசீலனை நிறைந்த ஓர் ஊடாடும் மாலை.",
+  lede:"தத்துவ உரையாடல், மனித இணைப்பு, AI உதவியுடன் சுயபரிசீலனை நிறைந்த ஓர் ஊடாடும் பிற்பகல்.",
   cta:"உரையாடலில் இணையுங்கள்", joined:"இருக்கைகள் முன்பதிவு", just:"இப்போது பதிவு செய்தவர்கள்",
   f_date:"தேதி", f_time:"நேரம்", f_where:"இடம்", f_seats:"இருக்கைகள்",
-  ev_eyebrow:"மாலை நிகழ்ச்சி", ev_h:"என்ன எதிர்பார்க்கலாம்",
+  ev_eyebrow:"பிற்பகல் நிகழ்ச்சி", ev_h:"என்ன எதிர்பார்க்கலாம்",
         ho_eyebrow:"ஏற்பாட்டாளர்கள்", ho_h:"நாம் உடலைப் பயிற்றுவிக்கிறோம். நாம் சிந்திக்கும் விதம் எப்படி?",
   my_slogan:"ஆழமாகச் சிந்திக்க, வெளிப்படையாகக் கேள்வி கேட்க, உண்மையாக இணைய ஓர் இடம்.",
   my_p:"MindYoga என்பது தெளிவான சிந்தனை, விமர்சன விழிப்புணர்வு, ஆழமான உரையாடல் திறன்களைப் பயிற்றுவிக்கும் ஒரு தத்துவ உரையாடல் தளம்.",
   role_qiqi:"MindYoga நிறுவனர் · பாட்காஸ்ட் தொகுப்பாளர்", role_bz:"KAION தலைமைத் தொழில்நுட்ப அதிகாரி", my_follow:"MindYoga-வைப் பின்தொடருங்கள்", my_film:"Qiqi-யைச் சந்திக்க · 1:36 · ஆங்கில வசனம்", st1:"நிகழ்ச்சிகள்", st2:"பயணங்கள்", st3:"பேர் ஒரு அமர்வுக்கு", st4:"இடங்கள், 3 நாடுகள்",
-  ka_p:"KAION தத்துவ உரையாடலுக்கு ஒரு புதிய குரலைக் கொண்டு வருகிறது; பங்கேற்பாளர்கள் தங்கள் எண்ணங்களைத் தெளிவுபடுத்தவும், அனுமானங்களை ஆராயவும், உரையாடல் வழியாக வெவ்வேறு பார்வைகளைக் கண்டறியவும் உதவுகிறது.",
-  ka_try:"நிகழ்ச்சிக்கு முன் KAION-ஐ முயன்று பாருங்கள்", ka_film:"படத்தைப் பாருங்கள் · 1:42", ka_free:"14 நாள் இலவசம், எல்லா அம்சங்களும்", ok_try:"காத்திருக்கும்போது, KAION-உடன் ஒரு உரையாடலைத் தொடங்குங்கள்.",
+  ka_p:"KAION நரம்பியல் நெகிழ்வுத்தன்மையை (neuroplasticity) தத்துவ உரையாடலுக்குள் கொண்டு வருகிறது. உங்கள் எண்ணங்களைத் தெளிவுபடுத்தவும், உங்களுக்குள் கவனம் செலுத்தவும், உங்கள் சிந்தனை முறைகளையும் நடத்தைகளையும் புரிந்துகொள்ளவும் உதவுகிறது; இதனால் நீங்கள் உங்கள் சிறந்த நிலையில் செயல்பட முடியும். இந்த நிகழ்வில், மனித ஆர்வம் AI உதவியுடனான சிந்தனையைச் சந்திக்கும்போது என்ன நடக்கிறது என்பதை நீங்கள் அனுபவிப்பீர்கள்.",
+  ka_try:"நிகழ்ச்சிக்கு முன் KAION-ஐ முயன்று பாருங்கள்", ka_film:"படத்தைப் பாருங்கள் · 1:42", ka_free:"30 நாள் இலவசம், எல்லா அம்சங்களும்", ok_try:"காத்திருக்கும்போது, KAION-உடன் ஒரு உரையாடலைத் தொடங்குங்கள்.",
   j_eyebrow:"பதிவு", j_h:"இருக்கையை முன்பதிவு செய்யுங்கள்",
   j_p:"சுமார் ஒரு நிமிடம் ஆகும். நிகழ்ச்சிக்கு முன் WhatsApp அல்லது மின்னஞ்சல் மூலம் உறுதிப்படுத்துவோம்.",
   l_name:"முழுப் பெயர்", l_email:"மின்னஞ்சல்", l_phone:"கைபேசி (WhatsApp)", cc_other:"மற்றவை",
@@ -747,7 +775,7 @@ ta:{
   e_phone:"சிங்கப்பூர் கைபேசி எண்ணை உள்ளிடுங்கள் (8 இலக்கங்கள், 8 அல்லது 9 இல் தொடங்கும்).", e_phone_int:"நாட்டுக் குறியீட்டுடன் உங்கள் எண்ணை இலக்கங்களாக மட்டும் உள்ளிடுங்கள்.",
   e_consent:"உங்கள் இருக்கையை வைத்திருக்க இந்தப் பெட்டியைத் தேர்வு செய்யுங்கள்.", e_net:"பதிவுத் தாளை அடைய முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயலுங்கள்.",
   e_full:"மன்னிக்கவும், இருக்கைகள் நிரம்பிவிட்டன.",
-  ok_h:"பதிவு உறுதியானது, {n}.", ok_p:"உங்கள் இருக்கை சேமிக்கப்பட்டது. தேதி, இடம் உறுதியானதும் அவற்றையும் காலண்டர் அழைப்பையும் அனுப்புவோம்.",
+  ok_h:"பதிவு உறுதியானது, {n}.", ok_p:"உங்கள் இருக்கை சேமிக்கப்பட்டது. இடம் உறுதியானதும் அதையும் காலண்டர் அழைப்பையும் அனுப்புவோம்.",
   wait_h:"நீங்கள் காத்திருப்புப் பட்டியலில் உள்ளீர்கள், {n}.", wait_p:"தற்போது இருக்கைகள் நிரம்பிவிட்டன. இடம் கிடைத்தால் உங்களுக்குச் செய்தி அனுப்புவோம்.",
   dup_h:"நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்.", dup_p:"இந்த மின்னஞ்சலுக்கு ஏற்கனவே இருக்கை உள்ளது. அங்கே சந்திப்போம்.",
   cal:"Google Calendar-இல் சேர்", share:"WhatsApp-இல் பகிர்", again:"வேறொருவரைப் பதிவு செய்",
@@ -773,7 +801,7 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
   document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
   document.querySelectorAll("[data-cfg]").forEach(el => { const v = CONFIG[el.dataset.cfg]; el.textContent = typeof v === "object" ? (v[L] || v.en) : v; });
-  fillBand();
+  joinedLbl(); fillBand();
   $("#lang").value = L;
   $("#pinName").textContent = PLACE[L];
   $("#privacy").textContent = t("privacy") + (CONFIG.contact ? " " + t("privacy_c").replace("{c}", CONFIG.contact) : "");
@@ -812,7 +840,7 @@ function fillBand(){
     v = document.createElement("video"); v.controls = true; v.playsInline = true; v.preload = "metadata"; v.src = a.href;
     const t = document.createElement("track"); t.kind = "subtitles"; t.srclang = "en"; t.label = "English"; t.src = a.dataset.sub; t.default = true; v.appendChild(t);
     lb.insertBefore(v, close); lb.classList.add("on"); document.body.style.overflow = "hidden";
-    v.addEventListener("loadedmetadata", () => { for (const tt of v.textTracks) tt.mode = "showing"; });
+    v.addEventListener("loadedmetadata", e => { for (const tt of e.target.textTracks) tt.mode = "showing"; });
     v.play().catch(() => {});
   });
   close.addEventListener("click", stop); lb.addEventListener("click", e => { if (e.target === lb) stop(); });
@@ -844,7 +872,19 @@ function words(el, text){
   }
   return out;
 }
-let skipped = false;
+let skipped = false, beatOff = false;   // beatOff：音乐卡住等超时过一次，后面就不再踩拍
+/* 开场踩音乐重拍：时间按音乐实际播到哪一秒算（网速慢、音乐晚响也不会错位）；音乐没在放就照原节奏 */
+async function onBeat(){
+  const B = CONFIG.beat; let now = window.__musicTime && window.__musicTime();
+  if (!B || beatOff || now == null) return;
+  const k = Math.max(0, Math.ceil((now - B.first - 0.12) / B.every));   // 刚过重拍 0.12 秒以内就算踩上了
+  const target = B.first + k * B.every;
+  // 盯着音乐实际播到哪：网速慢时音乐会停在开头缓冲，开场跟着等；卡住超过 4 秒就不等了
+  const giveUp = performance.now() + (target - now) * 1000 + 4000;
+  while ((now = window.__musicTime()) != null && now < target - 0.015 && performance.now() < giveUp)
+    await sleep(Math.min(40, Math.max(5, (target - now) * 1000 - 10)));
+  if (performance.now() >= giveUp) beatOff = true;
+}
 /* 开场每句的节奏按字数算：英/马来/泰米尔按词，中文按字。
    基准是客户 10-20 认可的第二句（「Where I host… 可以多0.5秒」）：逐词出现每词 80 毫秒，出完后停 1.4 秒。
    停留 = 500 毫秒 + 词数 × read；read 按各语言第二句的词数反推，让每种语言的第二句都停 1.4 秒，其余句子按字数同比例。 */
@@ -861,19 +901,21 @@ async function intro(){
   const pols = [...document.querySelectorAll(".pol")];
   const run = async () => {
     await sleep(300);
-    await say("#s1", "i1", 1200); if (skipped) return;
-    for (const p of pols) { if (skipped) return; p.classList.add("in"); await sleep(340); }
-    await sleep(450); $("#stack").classList.add("dock"); await sleep(900); if (skipped) return;
-    await say("#s2", "i2"); if (skipped) return;
-    await say("#s3", "i3"); if (skipped) return;
+    await onBeat(); await say("#s1", "i1", 1200); if (skipped) return;
+    await onBeat(); for (const p of pols) { if (skipped) return; p.classList.add("in"); await sleep(340); }
+    await sleep(450); await onBeat(); $("#stack").classList.add("dock"); await sleep(900); if (skipped) return;
+    await onBeat(); await say("#s2", "i2"); if (skipped) return;
+    await onBeat(); await say("#s3", "i3"); if (skipped) return;
+    await onBeat();
     $("#stack").style.opacity = 0;
     $("#stamp .pre").style.opacity = 1;
     const a = stampLine($("#st1"), "Kaion"), x = stampLine($("#stx"), "×"), b = stampLine($("#st2"), "MindYoga");
     for (const c of [...a, ...x, ...b]) { if (skipped) return; c.classList.add("on"); await sleep(70); }
-    $("#duo").classList.add("on");
+    await onBeat(); $("#duo").classList.add("on");
     await sleep(1500); if (skipped) return;
     $("#stamp").style.opacity = 0; await sleep(380);
-    await say("#s4", "i4");
+    await onBeat(); await say("#s4", "i4");
+    await onBeat();
   };
   await Promise.race([run(), new Promise(r => $("#skip").onclick = () => { skipped = true; r(); })]);
   finishIntro();
@@ -927,8 +969,10 @@ async function startGlobe(){
 /* ================= live count ================= */
 const DEMO = !CONFIG.endpoint;
 function demoRows(){ try { return JSON.parse(store.get("kmy_demo_rows") || "[]"); } catch(e) { return []; } }
+// English needs "1 seat taken"; other languages have one form
+function joinedLbl(){ $("#joinedLbl").textContent = $("#count").textContent === "1" && T[L].joined_one ? T[L].joined_one : t("joined"); }
 function renderLive(count, recent){
-  $("#count").textContent = count;
+  $("#count").textContent = count; joinedLbl();
   const avs = $("#avs"); avs.innerHTML = "";
   (recent || []).slice(-3).forEach(i => { const s = document.createElement("span"); s.className = "av"; s.textContent = i; avs.append(s); });
   $("#recentWrap").hidden = !(recent && recent.length);
@@ -1001,7 +1045,7 @@ async function send(data){
 function calLink(){
   const f = s => new Date(s).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
   const q = new URLSearchParams({ action: "TEMPLATE", text: "KAION × MindYoga", dates: `${f(CONFIG.startAt)}/${f(CONFIG.endAt)}`,
-    details: location.href.split("#")[0], location: CONFIG.venue.en, ctz: "Asia/Singapore" });
+    details: location.href.split("#")[0], location: CONFIG.address || PLACE.en, ctz: "Asia/Singapore" });
   return "https://calendar.google.com/calendar/render?" + q;
 }
 function showDone(r){
@@ -1032,7 +1076,59 @@ $("#demoTag").hidden = !DEMO;
 { const hv = { flyer: "Flyer", ig: "Instagram", instagram: "Instagram" }[SRC.toLowerCase()]; if (hv) $("#heard").value = hv; }
 if (sstore.get("kmy_intro_seen") || matchMedia("(prefers-reduced-motion: reduce)").matches || params.has("nointro")) {
   $("#intro").remove(); startGlobe();
+} else if (CONFIG.music) {
+  // 有背景音乐：先停在「打开邀请函」封面，点了才放音乐、开始开场，两者同时起步才能卡上节奏
+  document.body.classList.add("locked"); $("#intro").removeAttribute("aria-hidden");
+  const g = $("#gate"); g.hidden = false;
+  $("#gateBtn").addEventListener("click", () => {
+    document.dispatchEvent(new Event("kmy:open"));
+    g.classList.add("out"); setTimeout(() => { const kb = g.contains(document.activeElement); g.remove(); if (kb) $("#skip").focus({ preventScroll: true }); }, 500); intro();
+  }, { once: true });
 } else { document.body.classList.add("locked"); intro(); }
+/* 背景音乐：浏览器不许网页自己出声，访客第一次点按页面时淡入；右下角按钮开关，选择记在本机。
+   齐奇短片弹窗打开时停、关掉接着放；KAION 宣传片在卡片里播，没法知道它何时放完，所以停了就不自动再响。
+   iPhone 不让网页调音量，音量要在音频文件里就压好。 */
+(() => {
+  const btn = $("#mus"); if (!CONFIG.music) return;
+  const au = new Audio(CONFIG.music); au.loop = true;
+  au.preload = $("#gate") && !$("#gate").hidden ? "auto" : "none";   // 停在封面时就先下载，点了马上能响
+  const LBL = { en: ["Play music", "Mute music"], zh: ["播放音乐", "关闭音乐"], ms: ["Mainkan muzik", "Matikan muzik"], ta: ["இசையை இயக்கு", "இசையை நிறுத்து"] };
+  let want = store.get("music") !== "off", unlocked = false, hold = false, resume = false, fade = 0;
+  const paint = () => { const on = !au.paused; btn.classList.toggle("muted", !on); btn.classList.toggle("playing", on); btn.setAttribute("aria-label", (LBL[L] || LBL.en)[on ? 1 : 0]); };
+  const ramp = (to, ms, done) => { cancelAnimationFrame(fade); const from = au.volume, t0 = performance.now();
+    const step = now => { const k = Math.min(1, Math.max(0, (now - t0) / ms)); au.volume = Math.min(1, Math.max(0, from + (to - from) * k)); if (k < 1) fade = requestAnimationFrame(step); else if (done) done(); };
+    fade = requestAnimationFrame(step); };
+  const play = (fadeMs = 2500) => { if (hold) return Promise.resolve(false); if (au.paused) au.volume = 0;
+    return au.play().then(() => { unlocked = true; ramp(1, fadeMs); paint(); return true; }).catch(() => { paint(); return false; }); };
+  const pause = () => { if (!au.paused) { cancelAnimationFrame(fade); au.pause(); paint(); } };
+  btn.hidden = false; paint();
+  window.__musicTime = () => au.paused ? null : au.currentTime;   // 给开场踩拍用
+  btn.addEventListener("click", () => {
+    if (!want || au.paused) { want = true; hold = false; play(); } else { want = false; ramp(0, 500, pause); }
+    store.set("music", want ? "on" : "off");
+  });
+  // 手机上只有松手那一下算「用户操作」，所以几种事件都听，哪个先成功就算
+  const EV = ["pointerup", "touchend", "click"];   // 不听按键：读屏用户按 Tab 时别突然出声
+  const first = e => {
+    if (e.target.closest && e.target.closest("#mus,#film,#myfilm,#gateBtn")) return;
+    if (!want || unlocked) return EV.forEach(n => document.removeEventListener(n, first, true));
+    play().then(ok => { if (ok) EV.forEach(n => document.removeEventListener(n, first, true)); });
+  };
+  EV.forEach(n => document.addEventListener(n, first, true));
+  new MutationObserver(() => {
+    if ($("#lb").classList.contains("on")) { hold = true; pause(); }
+    else { hold = false; if (want && unlocked) play(); }
+  }).observe($("#lb"), { attributes: true, attributeFilter: ["class"] });
+  $("#film").addEventListener("click", () => { want = false; pause(); });
+  document.addEventListener("kmy:open", () => { if (want) { hold = false; play(800); } });
+  // 微信内置浏览器允许在这个事件里直接出声，不用等点按（普通浏览器没有这个口子）
+  const wx = () => { if (want && !unlocked) play(); };
+  if (window.WeixinJSBridge) wx(); else document.addEventListener("WeixinJSBridgeReady", wx, false);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { if (!au.paused) { resume = true; pause(); } }
+    else if (resume) { resume = false; if (want) play(); }
+  });
+})();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2c29b07873e44d3781eec2ae62d60144"}'></script><!-- End Cloudflare Web Analytics -->
 
