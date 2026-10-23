@@ -1,0 +1,3 @@
+# 只给 Netlify 旧网址用：整站跳到 Cloudflare 正式网址，?src= 之类的参数会跟着带过去（2026-10-23 操作者定）
+# GitHub Pages 不认这个文件；绝不能放进 Cloudflare 那份（site/），否则正式网址会自己跳自己
+/*  https://kaion-mindyoga-sg.pages.dev/:splat  301!
