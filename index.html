@@ -143,6 +143,7 @@ body.revealed .flyer{animation:flyin 1.6s cubic-bezier(.3,.7,.2,1) .3s both}
 .h1sub{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(22px,3.2vw,30px);line-height:1.2;color:var(--gold);margin:0;text-wrap:balance}
 .lede{color:var(--muted);font-size:clamp(16px,2vw,18px);max-width:54ch;margin:0;text-wrap:pretty}
 .hero .heroeb{margin:0;letter-spacing:.16em}
+.ev-topic{display:grid;gap:8px;margin:0 0 34px}
 .topic{font-family:var(--display);font-weight:600;font-style:italic;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.01em;margin:0;text-wrap:balance}
 .when{font-size:14px;color:var(--muted);margin:-4px 0 0;letter-spacing:.02em}
 .live{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);flex-wrap:wrap;justify-content:center}
@@ -360,8 +361,6 @@ footer p{margin:0;max-width:60ch}
     <div class="chip" id="chip" hidden></div>
     <p class="eyebrow heroeb">KAION × MINDYOGA</p>
     <div class="h1wrap"><h1 data-i18n="h1"></h1><span class="flyer" aria-hidden="true"><span class="m-bf"></span></span></div>
-    <p class="topic" data-i18n="h1_topic"></p>
-    <p class="h1sub" data-i18n="h1_sub"></p>
     <p class="lede" data-i18n="lede"></p>
     <a class="btn" href="#join"><span data-i18n="cta"></span><span class="arrow">→</span></a>
     <p class="when" data-i18n="hero_when"></p>
@@ -380,6 +379,7 @@ footer p{margin:0;max-width:60ch}
   <section class="blk" id="evening">
     <p class="eyebrow" data-i18n="ev_eyebrow"></p>
     <h2 data-i18n="ev_h"></h2>
+    <div class="ev-topic"><p class="topic" data-i18n="h1_topic"></p><p class="h1sub" data-i18n="h1_sub"></p></div>   <!-- 客户 10-22 从首屏挪来 -->
     <ol class="flow">
       <li><h3><span class="no">01 — </span><span data-i18n="s1_h"></span></h3><p class="sub" data-i18n="s1_sub"></p><p data-i18n="s1_p"></p>
         <div class="people">
@@ -490,11 +490,11 @@ footer p{margin:0;max-width:60ch}
 const CONFIG = {
   endpoint: "https://script.google.com/macros/s/AKfycbzUOwc3JqHQZ4hbY240-cQRuAx-rMDDO6HGUtyAaBhFHyp1ojyrHYblc75EKvDpD8dzSA/exec",          // 谷歌 Apps Script 网址（/exec 结尾）；留空 = 演示模式，报名只存在本机浏览器
   closesAt: "",          // 报名截止，例如 "2026-11-20T23:59:00+08:00"；留空 = 显示「日期即将公布」
-  startAt:  "2026-11-08T13:00:00+08:00",   // 活动开始；填了才出现「加到谷歌日历」按钮
+  startAt:  "2026-11-08T13:30:00+08:00",   // 活动开始；填了才出现「加到谷歌日历」按钮
   endAt:    "2026-11-08T16:00:00+08:00",
-  // 2026-10-22 KAION（Daniela）邮件确认：11 月 8 日周日 13:00–16:00；场地 10 月 26 日看场后再定
+  // 2026-10-22 KAION（Daniela）邮件确认 11 月 8 日周日；同日客户改成 13:30–16:00（两个半小时）；场地 10 月 26 日看场后再定
   date:   { en: "Sunday, 8 November 2026", zh: "2026 年 11 月 8 日（周日）", ms: "Ahad, 8 November 2026", ta: "நவம்பர் 8, 2026 (ஞாயிறு)" },
-  time:   { en: "1:00 – 4:00 pm", zh: "下午 1:00 – 4:00", ms: "1:00 – 4:00 petang", ta: "பிற்பகல் 1:00 – 4:00" },
+  time:   { en: "1:30 – 4:00 pm", zh: "下午 1:30 – 4:00", ms: "1:30 – 4:00 petang", ta: "பிற்பகல் 1:30 – 4:00" },
   venue:  { en: "Singapore · venue announced 26 October", zh: "新加坡 · 具体场地 10 月 26 日公布", ms: "Singapura · lokasi diumumkan 26 Oktober", ta: "சிங்கப்பூர் · இடம் அக்டோபர் 26 அன்று அறிவிக்கப்படும்" },
   address: "",           // 场地定了填完整地址，日历邀请里用；留空用「Singapore」
   format: { en: "Live podcast · Philosophical dialogue · KAION", zh: "现场播客 · 哲学对话 · 与 KAION 对话", ms: "Podcast langsung · Dialog falsafah · KAION", ta: "நேரடி பாட்காஸ்ட் · தத்துவ உரையாடல் · KAION" },
@@ -510,7 +510,7 @@ const PLACE = { en: "Singapore", zh: "新加坡", ms: "Singapura", ta: "சி�
 const T = {
 en:{
   h1_topic:"Topic: When are we being ourselves?",
-  hero_when:"Singapore · Sunday 8 November · 1–4 pm",
+  hero_when:"Singapore · Sunday 8 November · 1:30–4 pm",
   s1_h:"Live Podcast",
   s1_sub:"Where Human Thinking Meets AI",
   s1_p:"Qiqi and KAION's technology team explore how AI is changing the way we think, make decisions, and understand ourselves.",
@@ -579,7 +579,7 @@ en:{
 },
 zh:{
   h1_topic:"话题：我们什么时候是在做自己？",
-  hero_when:"新加坡 · 11 月 8 日（周日）下午 1–4 点",
+  hero_when:"新加坡 · 11 月 8 日（周日）下午 1:30–4 点",
   s1_h:"现场播客",
   s1_sub:"当人的思考遇上 AI",
   s1_p:"齐奇和 KAION 技术团队一起聊：AI 正在怎样改变我们思考、做决定和认识自己的方式。",
@@ -648,7 +648,7 @@ zh:{
 },
 ms:{
   h1_topic:"Topik: Bilakah kita benar-benar menjadi diri sendiri?",
-  hero_when:"Singapura · Ahad, 8 November · 1–4 petang",
+  hero_when:"Singapura · Ahad, 8 November · 1:30–4 petang",
   s1_h:"Podcast Langsung",
   s1_sub:"Apabila Pemikiran Manusia Bertemu AI",
   s1_p:"Qiqi dan pasukan teknologi KAION meneroka bagaimana AI mengubah cara kita berfikir, membuat keputusan dan memahami diri sendiri.",
@@ -717,7 +717,7 @@ ms:{
 },
 ta:{
   h1_topic:"தலைப்பு: நாம் எப்போது நாமாகவே இருக்கிறோம்?",
-  hero_when:"சிங்கப்பூர் · நவம்பர் 8, ஞாயிறு · பிற்பகல் 1–4",
+  hero_when:"சிங்கப்பூர் · நவம்பர் 8, ஞாயிறு · பிற்பகல் 1:30–4",
   s1_h:"நேரடி பாட்காஸ்ட்",
   s1_sub:"மனித சிந்தனை AI-ஐச் சந்திக்கும் இடம்",
   s1_p:"AI நம் சிந்தனை, முடிவெடுத்தல், நம்மைப் புரிந்துகொள்ளும் விதத்தை எப்படி மாற்றுகிறது என்பதை Qiqi-யும் KAION தொழில்நுட்பக் குழுவும் ஆராய்கிறார்கள்.",
