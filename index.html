@@ -144,7 +144,8 @@ body.revealed .flyer{animation:flyin 1.6s cubic-bezier(.3,.7,.2,1) .3s both}
 /* 不让最后一行只剩一个词：新浏览器靠 text-wrap，旧浏览器靠 glue() 把最后两个词粘住 */
 p,li,dt,label,h3,.cap{text-wrap:pretty}
 /* 中文短句（标题、副标题、日期）只在标点和空格处换行，不把「看看」「周日」拆成两行；h1 放宽，免得半句放不下 */
-:root[lang="zh-Hans"] :is(h1,h2,h3,.h1sub,.topic,.slogan,.hh,.lede,.when,.gate-when,dd,.flow p.sub){word-break:keep-all;overflow-wrap:anywhere}
+:root[lang="zh-Hans"] :is(h1,h2,h3,.h1sub,.topic,.slogan,.hh,.lede,.when,.gate-when,dd,.flow p.sub,.chk){word-break:keep-all;overflow-wrap:anywhere}
+:root[lang="zh-Hans"] .opt{margin-left:-.3em}   /* 全角括号自带空白，再加空格就太开 */
 :root[lang="zh-Hans"] h1{max-width:12em;font-size:clamp(24px,6.6vw,62px)}   /* 手机上「是从一场对话开始的呢？」要放得下一行 */
 dd{text-wrap:balance}
 .h1sub{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(22px,3.2vw,30px);line-height:1.2;color:var(--gold);margin:0;text-wrap:balance}
@@ -466,10 +467,8 @@ footer p{margin:0;max-width:60ch}
           <div class="f"><label for="phone"><span data-i18n="l_phone"></span></label>
             <div class="tel"><select class="inp" id="cc" name="cc" aria-label="Country code"><option value="+65">🇸🇬 +65</option><option value="+60">🇲🇾 +60</option><option value="+62">🇮🇩 +62</option><option value="+86">🇨🇳 +86</option><option value="+852">🇭🇰 +852</option><option value="+91">🇮🇳 +91</option><option value="other" data-i18n="cc_other"></option></select>
             <input id="phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required maxlength="20" placeholder="8123 4567"></div><div class="err" id="e_phone"></div></div>
-          <div class="f"><span class="lg" data-i18n="l_seats"></span>
-            <div class="seg" role="radiogroup"><label><input type="radio" name="seats" id="seats1" value="1" checked><span data-i18n="s_1"></span></label><label><input type="radio" name="seats" id="seats2" value="2"><span data-i18n="s_2"></span></label></div></div>
-          <div class="f"><span class="lg"><span data-i18n="l_kaion"></span> <span class="opt" data-i18n="optional"></span></span>
-            <div class="seg"><label><input type="radio" name="kaion" id="k1" value="Use it"><span data-i18n="k_1"></span></label><label><input type="radio" name="kaion" id="k2" value="Tried once"><span data-i18n="k_2"></span></label><label><input type="radio" name="kaion" id="k3" value="New to it"><span data-i18n="k_3"></span></label></div></div>
+          <div class="f"><span class="lg" data-i18n="l_kaion"></span>
+            <div class="seg"><label><input type="radio" name="kaion" id="k1" value="Use it"><span data-i18n="k_1"></span></label><label><input type="radio" name="kaion" id="k2" value="Tried once"><span data-i18n="k_2"></span></label><label><input type="radio" name="kaion" id="k3" value="New to it" checked><span data-i18n="k_3"></span></label></div></div>
           <div class="f"><label for="question"><span data-i18n="l_q"></span> <span class="opt" data-i18n="optional"></span></label><textarea id="question" name="question" maxlength="400" data-i18n-ph="q_ph"></textarea></div>
           <div class="f"><label for="heard"><span data-i18n="l_heard"></span> <span class="opt" data-i18n="optional"></span></label>
             <select class="inp" id="heard" name="heard"><option value="" data-i18n="choose"></option><option value="Flyer" data-i18n="h_flyer"></option><option value="Instagram">Instagram</option><option value="Friend" data-i18n="h_friend"></option><option value="MindYoga community" data-i18n="h_my"></option><option value="KAION">KAION</option><option value="Other" data-i18n="h_other"></option></select></div>
@@ -564,7 +563,6 @@ en:{
   j_eyebrow:"Registration", j_h:"Reserve Your Seat",
   j_p:"It takes about a minute. We'll confirm by WhatsApp or email before the event.",
   l_name:"Full name", l_email:"Email", l_phone:"Mobile (WhatsApp)", cc_other:"Other",
-  l_seats:"How many seats?", s_1:"Just me", s_2:"Me + 1 friend",
   l_kaion:"Have you used KAION?", k_1:"I use it", k_2:"Tried it once", k_3:"New to it", optional:"(optional)",
   l_q:"A question you'd like to bring", q_ph:"e.g. When am I really being myself?",
   l_heard:"How did you hear about us?", choose:"Choose one", h_flyer:"Flyer", h_friend:"A friend", h_my:"MindYoga community", h_other:"Other",
@@ -633,7 +631,6 @@ zh:{
   j_eyebrow:"报名", j_h:"预留座位",
   j_p:"大约一分钟填完。活动前我们会通过 WhatsApp 或邮件和你确认。",
   l_name:"姓名", l_email:"邮箱", l_phone:"手机（WhatsApp）", cc_other:"其他",
-  l_seats:"几位参加？", s_1:"只有我", s_2:"我 + 1 位朋友",
   l_kaion:"用过 KAION 吗？", k_1:"在用", k_2:"试过一次", k_3:"还没用过", optional:"（选填）",
   l_q:"你想带着什么问题来？", q_ph:"例如：我什么时候才是真正的自己？",
   l_heard:"从哪里知道这场活动？", choose:"请选择", h_flyer:"宣传单", h_friend:"朋友介绍", h_my:"MindYoga 社群", h_other:"其他",
@@ -891,7 +888,7 @@ form.addEventListener("submit", async e => {
   const data = {
     name: $("#name").value.trim(), email: $("#email").value.trim().toLowerCase(),
     phone: cc === "other" ? ph : cc + " " + (cc === "+65" ? ph.replace(/^\+?65/,"") : ph),
-    seats: form.seats.value, kaion: form.kaion.value || "", question: $("#question").value.trim(),
+    seats: "1",   /* 操作者 10-22 去掉「带一位朋友」，每份报名一个座位 */ kaion: form.kaion.value || "", question: $("#question").value.trim(),
     heard: $("#heard").value, source: SRC, updates: $("#updates").checked ? "Yes" : "No",
     lang: L, consent: "Yes", website: $("#website").value
   };
