@@ -661,7 +661,7 @@ const params = new URLSearchParams(location.search);
 let L = params.get("lang") || sstore.get("kmy_lang") || "en";   // 默认英语；切换的语言只在这次打开期间有效，重新扫码一律英文
 if (!T[L]) L = "en";
 const t = k => (T[L][k] || T.en[k] || "");
-const SRC = params.get("src") || sstore.get("kmy_src") || "";
+const SRC = params.get("src") || sstore.get("kmy_src") || (location.hostname.endsWith("mindyoga.love") ? "c3" : "");   // www.mindyoga.love = 齐奇 IG 主页
 // 来源标记记下后就从地址栏去掉：扫码的人转发出去的是干净网址，朋友打开不会被算成扫码（操作者 10-23 定）
 if (params.has("src")) { sstore.set("kmy_src", SRC); try { const u = new URL(location.href); u.searchParams.delete("src"); history.replaceState(history.state, "", u.pathname + u.search + u.hash); } catch (e) {} }
 
