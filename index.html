@@ -48,6 +48,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body.locked{overflow:hidden}
 a{color:inherit}
+.fact dd a,.done p a{text-decoration:underline;text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
 .wrap{max-width:1080px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 /* brand marks drawn as masks so they follow the theme colour */
@@ -503,8 +504,9 @@ const CONFIG = {
   date:   { en: "Sunday, 8\u00a0November 2026", zh: "2026\u00a0年 11\u00a0月\u00a08\u00a0日（周日）" },
   time:   { en: "1:30–4:00 pm", zh: "下午 1:30–4:00" },
   // 2026-10-28 Daniela 邮件确认场地 Mandala Club；地址按 Time Out、CityNomads、Tagvenue 三处一致
-  venue:  { en: "Mandala\u00a0Club · 31\u00a0Bukit\u00a0Pasoh\u00a0Road, Singapore\u00a0089845", zh: "Mandala\u00a0Club\u00a0· 新加坡武吉巴梭路\u00a031\u00a0号" },
+  venue:  { en: "Mandala\u00a0Club · 31\u00a0Bukit\u00a0Pasoh\u00a0Road, Singapore\u00a0089845", zh: "Mandala\u00a0Club\u00a0· 新加坡武吉巴梭路 31 号" },
   address: "Mandala Club, 31 Bukit Pasoh Road, Singapore 089845",   // 日历邀请里用；留空用「Singapore」
+  venueUrl: "https://www.mandala.club/",   // 10-28 Daniela 给的场地官网；页面上的「Mandala Club」都链到这里
   format: { en: "Live\u00a0podcast\u00a0· Philosophical dialogue\u00a0· KAION", zh: "现场播客\u00a0· 哲学对话\u00a0· 与\u00a0KAION\u00a0对话" },
   contact: "",           // 隐私问题联系邮箱；留空则不显示
   music: "https://jackdhch.github.io/mindyoga-kaion-salon/audio/vastness_from17s.mp3",   // 客户 10-22 选定：Mixkit「Vastness」（Andrew Ev），从第 17 秒剪起；上线前要先把 audio/ 推到 GitHub 仓库
@@ -669,6 +671,17 @@ if (params.has("src")) { sstore.set("kmy_src", SRC); try { const u = new URL(loc
 
 // 最后一行别只剩一个词或一个字：英文最后两个词之间换成不换行空格，中文最后三个字之间加隐形的「不许断开」符
 const NOBR = "h1,h2,dd,.say,.stamp,option,select,button,.lk";   // 这些自己管换行（dd 格子窄，靠 balance），或只有一行
+// 把文字里的「Mandala Club」换成场地官网链接（地点格、报名成功提示）
+function linkVenue(el){
+  if (!CONFIG.venueUrl) return;
+  const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), name = "Mandala\u00a0Club"; let n;
+  while ((n = w.nextNode())) {
+    const i = n.nodeValue.indexOf(name); if (i < 0) continue;
+    const mid = n.splitText(i); mid.splitText(name.length);
+    const a = document.createElement("a"); a.href = CONFIG.venueUrl; a.target = "_blank"; a.rel = "noopener";
+    mid.replaceWith(a); a.append(mid); return;
+  }
+}
 function glue(el){
   if (el.matches(NOBR) || el.closest("select")) return;
   const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last = null, n;
@@ -687,7 +700,7 @@ function applyLang(){
   document.documentElement.lang = L === "zh" ? "zh-Hans" : L;
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); glue(el); });
   document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
-  document.querySelectorAll("[data-cfg]").forEach(el => { const v = CONFIG[el.dataset.cfg]; el.textContent = typeof v === "object" ? (v[L] || v.en) : v; glue(el); });
+  document.querySelectorAll("[data-cfg]").forEach(el => { const v = CONFIG[el.dataset.cfg]; el.textContent = typeof v === "object" ? (v[L] || v.en) : v; glue(el); if (el.dataset.cfg === "venue") linkVenue(el); });
   joinedLbl(); fillBand();
   $("#lang").value = L;
   $("#pinName").textContent = PLACE[L];
@@ -963,7 +976,7 @@ function showDone(r){
     <div class="trykaion"><p></p><span class="free"></span></div>
     <div class="acts"><a class="btn sm" target="_blank" rel="noopener" id="calA"></a><a class="btn sm ghost" target="_blank" rel="noopener" id="shareA"></a><button class="btn sm ghost" type="button" id="again"></button></div></div>`;
   box.querySelector("h3").textContent = t(key + "_h").replace("{n}", r.first);
-  box.querySelector("p").textContent = t(key + "_p");
+  box.querySelector("p").textContent = t(key + "_p"); linkVenue(box.querySelector("p"));
   const dts = box.querySelectorAll("dt"), dds = box.querySelectorAll("dd");
   dts[0].textContent = t("f_date"); dds[0].textContent = v("date"); dts[1].textContent = t("f_time"); dds[1].textContent = v("time");
   $("#calA").href = CONFIG.startAt ? calLink() : "#"; $("#calA").textContent = t("cal"); $("#calA").hidden = !CONFIG.startAt;
