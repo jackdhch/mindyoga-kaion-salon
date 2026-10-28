@@ -501,8 +501,9 @@ const CONFIG = {
   // 2026-10-22 KAION（Daniela）邮件确认 11 月 8 日周日；同日客户改成 13:30–16:00（两个半小时）；场地 10 月 26 日看场后再定
   date:   { en: "Sunday, 8\u00a0November 2026", zh: "2026\u00a0年 11\u00a0月\u00a08\u00a0日（周日）" },
   time:   { en: "1:30–4:00 pm", zh: "下午 1:30–4:00" },
-  venue:  { en: "Singapore\u00a0· venue announced 26\u00a0October", zh: "新加坡 · 具体场地 10 月 26 日公布" },
-  address: "",           // 场地定了填完整地址，日历邀请里用；留空用「Singapore」
+  // 2026-10-28 Daniela 邮件确认场地 Mandala Club；地址按 Time Out、CityNomads、Tagvenue 三处一致
+  venue:  { en: "Mandala\u00a0Club · 31\u00a0Bukit\u00a0Pasoh\u00a0Road, Singapore\u00a0089845", zh: "Mandala\u00a0Club\u00a0· 新加坡武吉巴梭路\u00a031\u00a0号" },
+  address: "Mandala Club, 31 Bukit Pasoh Road, Singapore 089845",   // 日历邀请里用；留空用「Singapore」
   format: { en: "Live\u00a0podcast\u00a0· Philosophical dialogue\u00a0· KAION", zh: "现场播客\u00a0· 哲学对话\u00a0· 与\u00a0KAION\u00a0对话" },
   contact: "",           // 隐私问题联系邮箱；留空则不显示
   music: "https://jackdhch.github.io/mindyoga-kaion-salon/audio/vastness_from17s.mp3",   // 客户 10-22 选定：Mixkit「Vastness」（Andrew Ev），从第 17 秒剪起；上线前要先把 audio/ 推到 GitHub 仓库
@@ -573,7 +574,7 @@ en:{
   e_phone:"Please enter a Singapore mobile number (8 digits, starting with 8 or 9).", e_phone_int:"Please enter your number with the country code, digits only.",
   e_consent:"Please tick this box so we can hold your seat.", e_net:"We couldn't reach the sign-up sheet. Check your connection and try again.",
   e_full:"Sorry, this event is full.",
-  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. We'll send the venue and a calendar invite once the venue is confirmed.",
+  ok_h:"You're in, {n}.", ok_p:"Your seat is saved. See you at Mandala\u00a0Club, 31\u00a0Bukit\u00a0Pasoh\u00a0Road.",
   wait_h:"You're on the waitlist, {n}.", wait_p:"All seats are taken right now. We'll message you if one opens.",
   dup_h:"You're already registered.", dup_p:"This email already has a seat. See you there.",
   cal:"Add to Google Calendar", share:"Share on WhatsApp", again:"Register someone else",
@@ -641,7 +642,7 @@ zh:{
   e_phone:"请填写新加坡手机号（8 位，以 8 或 9 开头）。", e_phone_int:"请填写带国家区号的号码，只写数字。",
   e_consent:"请勾选同意，我们才能为你保留座位。", e_net:"没连上报名表，请检查网络后再试一次。",
   e_full:"抱歉，名额已满。",
-  ok_h:"{n}，报名成功！", ok_p:"座位已为你保留。场地确定后，我们会把地址和日历邀请发给你。",
+  ok_h:"{n}，报名成功！", ok_p:"座位已为你保留。我们在 Mandala\u00a0Club（武吉巴梭路 31\u00a0号）见。",
   wait_h:"{n}，你已进入候补名单。", wait_p:"目前名额已满，有空位时我们会第一时间通知你。",
   dup_h:"你已经报过名了。", dup_p:"这个邮箱已经报过名了，到时见。",
   cal:"加到谷歌日历", share:"分享到 WhatsApp", again:"再帮别人报名",
