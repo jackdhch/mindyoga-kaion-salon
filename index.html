@@ -309,6 +309,7 @@ textarea{min-height:84px;resize:vertical}
 .chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand);flex:0 0 auto}
 .err{color:var(--signal);font-size:13px}
 .err:empty{display:none}
+.err[data-fix]{cursor:pointer;text-decoration:underline}
 .invalid{border-color:var(--signal)!important}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 form .btn{justify-self:start;padding:14px 26px;font-size:16px}
@@ -570,7 +571,7 @@ en:{
   consent:"I agree that MindYoga and KAION may use these details to manage my registration and contact me about this event.",
   updates:"Keep me posted about future MindYoga events.",
   submit:"Reserve my seat", sending:"Saving…",
-  e_name:"Please enter your name.", e_email:"Please enter a valid email, like name@example.com.",
+  e_name:"Please enter your name.", e_email:"Please enter a valid email, like name@example.com.", e_email_typo:"Did you mean {s}? Tap to fix.",
   e_phone:"Please enter a Singapore mobile number (8 digits, starting with 8 or 9).", e_phone_int:"Please enter your number with the country code, digits only.",
   e_consent:"Please tick this box so we can hold your seat.", e_net:"We couldn't reach the sign-up sheet. Check your connection and try again.",
   e_full:"Sorry, this event is full.",
@@ -638,7 +639,7 @@ zh:{
   consent:"我同意 MindYoga 和 KAION 使用以上信息处理我的报名，并就本场活动联系我。",
   updates:"以后有 MindYoga 活动也请通知我。",
   submit:"确认报名", sending:"提交中…",
-  e_name:"请填写姓名。", e_email:"请填写有效邮箱，例如 name@example.com。",
+  e_name:"请填写姓名。", e_email:"请填写有效邮箱，例如 name@example.com。", e_email_typo:"是不是 {s}？点这里改正。",
   e_phone:"请填写新加坡手机号（8 位，以 8 或 9 开头）。", e_phone_int:"请填写带国家区号的号码，只写数字。",
   e_consent:"请勾选同意，我们才能为你保留座位。", e_net:"没连上报名表，请检查网络后再试一次。",
   e_full:"抱歉，名额已满。",
@@ -872,17 +873,35 @@ async function refreshCount(){
 const form = $("#form");
 let lastResult = null;
 function setErr(id, key){ $("#e_"+id).textContent = key ? t(key) : ""; const inp = $("#"+id); if (inp) inp.classList.toggle("invalid", !!key); }
-function validate(){
+// 常见邮箱后缀拼错（10-28 真有人填了 gamil.com，确认邮件发不到）：只认这张表里的，不做模糊猜，免得把真域名当错
+const MAIL_TYPO = { "gmail.com": ["gamil.com","gmial.com","gmai.com","gmal.com","gmaill.com","gnail.com","gmali.com","gmeil.com","gmil.com","gimal.com","gmail.co","gmail.con","gmail.cm","gmail.om","gmail.comm"],
+  "hotmail.com": ["hotmial.com","hotmai.com","hotmal.com","homail.com","hotmail.co","hotmail.con"],
+  "yahoo.com": ["yaho.com","yahooo.com","yhoo.com","yahoo.co","yahoo.con"], "outlook.com": ["outlok.com","outllook.com","outlook.co","outlook.con"],
+  "icloud.com": ["iclould.com","icoud.com","icloud.co","icloud.con"], "qq.com": ["qq.co","qq.con","qq.cm"], "163.com": ["163.co","163.con"], "126.com": ["126.co","126.con"] };
+function mailFix(email){
+  const i = email.lastIndexOf("@"), d = email.slice(i + 1).toLowerCase();
+  for (const [good, bad] of Object.entries(MAIL_TYPO)) if (bad.includes(d)) return email.slice(0, i + 1) + good;
+  return "";
+}
+function validate(only){   // only = 只检查刚离开的那个框（离开输入框时用）；不给 = 提交时整张表检查
   let ok = true;
+  const on = id => !only || only === id;
   const name = $("#name").value.trim(), email = $("#email").value.trim(), cc = $("#cc").value, ph = $("#phone").value.replace(/[\s()-]/g,"");
-  setErr("name", name.length >= 2 ? "" : (ok = false, "e_name"));
-  setErr("email", /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "" : (ok = false, "e_email"));
+  if (on("name")) setErr("name", name.length >= 2 ? "" : (ok = false, "e_name"));
+  if (on("email")) {
+    const sug = mailFix(email);
+    setErr("email", /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? (sug ? (ok = false, "e_email_typo") : "") : (ok = false, "e_email"));
+    const e = $("#e_email"); if (sug && e.textContent) { e.textContent = e.textContent.replace("{s}", sug); e.dataset.fix = sug; } else delete e.dataset.fix;
+  }
   const phOK = cc === "+65" ? /^[89]\d{7}$/.test(ph.replace(/^\+?65/,"")) : /^\+?\d{6,15}$/.test(ph);
-  setErr("phone", phOK ? "" : (ok = false, cc === "+65" ? "e_phone" : "e_phone_int"));
-  $("#e_consent").textContent = $("#consent").checked ? "" : (ok = false, t("e_consent"));
+  if (on("phone")) setErr("phone", phOK ? "" : (ok = false, cc === "+65" ? "e_phone" : "e_phone_int"));
+  if (!only) $("#e_consent").textContent = $("#consent").checked ? "" : (ok = false, t("e_consent"));
   return ok;
 }
-["name","email","phone"].forEach(id => $("#"+id).addEventListener("blur", () => { if ($("#"+id).value) validate(); }));
+// 2026-10-28 改：以前离开一个框就整张表检查，还没填到的邮箱、手机、同意框也先冒红字，勾上同意框红字也不消
+["name","email","phone"].forEach(id => $("#"+id).addEventListener("blur", () => { if ($("#"+id).value) validate(id); }));
+$("#e_email").addEventListener("click", () => { const f = $("#e_email").dataset.fix; if (f) { $("#email").value = f; validate("email"); } });
+$("#consent").addEventListener("change", () => { if ($("#consent").checked) $("#e_consent").textContent = ""; });
 
 form.addEventListener("submit", async e => {
   e.preventDefault(); $("#e_form").textContent = "";
