@@ -161,6 +161,8 @@ dd{text-wrap:balance}
 .when{font-size:14px;color:var(--muted);margin:-4px 0 0;letter-spacing:.02em}
 .live{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);flex-wrap:wrap;justify-content:center}
 .live b{color:var(--fg);font-variant-numeric:tabular-nums}
+.capnote{margin:0;font-size:14px;font-weight:600;color:var(--fg);text-wrap:balance}
+.hero .capnote{margin-top:-6px;text-align:center}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:ping 1.8s infinite}
 @keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 55%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
 .lbl{font-weight:700;color:var(--fg);letter-spacing:.04em;font-size:12.5px}
@@ -379,6 +381,7 @@ footer p{margin:0;max-width:60ch}
     <a class="btn" href="#join"><span data-i18n="cta"></span><span class="arrow">→</span></a>
     <p class="when" data-i18n="hero_when"></p>
     <div class="live" id="live"><span class="dot"></span><span class="lbl">LIVE</span>·<span><b id="count">0</b> <span id="joinedLbl" data-i18n="joined"></span></span><span id="recentWrap" hidden>· <span data-i18n="just"></span></span><span class="avs" id="avs"></span></div>
+    <p class="capnote" id="capTop" hidden></p>
     <div class="globe" id="globe"><div class="halo"></div><canvas id="cv" width="1200" height="1200" aria-label="Globe turning to Singapore"></canvas>
       <div class="pin" id="pin"><i><span class="m-bf"></span></i><span id="pinName">Singapore</span></div></div>
   </header>
@@ -483,6 +486,7 @@ footer p{margin:0;max-width:60ch}
           <div class="f"><label class="chk"><input type="checkbox" id="consent" name="consent" required><span data-i18n="consent"></span></label><div class="err" id="e_consent"></div>
             <label class="chk"><input type="checkbox" id="updates" name="updates"><span data-i18n="updates"></span></label></div>
           <div class="err" id="e_form"></div>
+          <p class="capnote" id="capForm" hidden></p>
           <button class="btn" id="submit" type="submit"><span data-i18n="submit"></span><span class="arrow">→</span></button>
           <p class="demo" id="demoTag" hidden></p>
         </form>
@@ -505,6 +509,7 @@ const CONFIG = {
   closesAt: "",          // 报名截止，例如 "2026-11-20T23:59:00+08:00"；留空 = 显示「日期即将公布」
   startAt:  "2026-11-08T13:30:00+08:00",   // 活动开始；填了才出现「加到谷歌日历」按钮
   endAt:    "2026-11-08T16:00:00+08:00",
+  capacity: 23,          // 座位上限，要和 apps-script/Code.gs 的 CAPACITY 一致；网页显示「19 / 23」和「只剩几个，满了进候补」；0 = 不显示上限
   // 2026-10-22 KAION（Daniela）邮件确认 11 月 8 日周日；同日客户改成 13:30–16:00（两个半小时）；场地 10 月 26 日看场后再定
   date:   { en: "Sunday, 8\u00a0November 2026", zh: "2026\u00a0年 11\u00a0月\u00a08\u00a0日（周日）" },
   time:   { en: "1:30–4:00 pm", zh: "下午 1:30–4:00" },
@@ -562,6 +567,9 @@ en:{
   h1:"What if understanding ourselves begins with a conversation?", h1_sub:"Discovering who we are. Exploring who we may become.",
   lede:"An interactive afternoon of philosophical dialogue, human connection, and AI-assisted reflection.",
   cta:"Join the Conversation", joined:"seats taken", joined_one:"seat taken", just:"just joined",
+  joined_cap:"of {cap} seats taken", cap_total:"{cap} seats in total. Once they're taken, new sign-ups join the waitlist.",
+  cap_left:"Only {left} seats left. After that, new sign-ups join the waitlist.", cap_left_one:"Only 1 seat left. After that, new sign-ups join the waitlist.",
+  cap_full:"All {cap} seats are taken. You can still sign up for the waitlist.", submit_wait:"Join the waitlist",
   f_date:"Date", f_time:"Time", f_where:"Where", f_seats:"Capacity",
   ev_eyebrow:"The afternoon", ev_h:"What to Expect",
         ho_eyebrow:"The hosts", ho_h:"We train our bodies. What about how we think?",
@@ -630,6 +638,9 @@ zh:{
   h1:"如果认识自己，是从一场对话开始的呢？", h1_sub:"发现我们是谁，也看看我们还能成为谁。",
   lede:"这个下午，我们一起哲学对话、面对面交流，也借助 AI 反思自己。",
   cta:"加入这场对话", joined:"个座位已订出", just:"刚刚报名",
+  joined_cap:"/ {cap} 个座位已订出", cap_total:"一共 {cap} 个座位，订满后报名的人会进入候补名单。",
+  cap_left:"只剩 {left} 个座位，订满后报名的人会进入候补名单。", cap_left_one:"只剩最后 1 个座位，订满后报名的人会进入候补名单。",
+  cap_full:"{cap} 个座位已全部订满，现在报名会进入候补名单。", submit_wait:"加入候补名单",
   f_date:"日期", f_time:"时间", f_where:"地点", f_seats:"人数",
   ev_eyebrow:"活动流程", ev_h:"当天会有什么",
         ho_eyebrow:"主办方", ho_h:"我们都会锻炼身体，那锻炼大脑呢？",
@@ -713,7 +724,7 @@ function applyLang(){
   $("#lang").value = L;
   $("#pinName").textContent = PLACE[L];
   $("#privacy").textContent = t("privacy") + (CONFIG.contact ? " " + t("privacy_c").replace("{c}", CONFIG.contact) : ""); glue($("#privacy"));
-  $("#demoTag").textContent = t("demo");
+  { const d = $("#demoTag"); if (d) d.textContent = t("demo"); }   // 报名成功后表单被换掉，这行字就不在了
   tick();
   if (lastResult) showDone(lastResult);
 }
@@ -878,9 +889,22 @@ async function startGlobe(){
 const DEMO = !CONFIG.endpoint;
 function demoRows(){ try { return JSON.parse(store.get("kmy_demo_rows") || "[]"); } catch(e) { return []; } }
 // English needs "1 seat taken"; other languages have one form
-function joinedLbl(){ $("#joinedLbl").textContent = $("#count").textContent === "1" && T[L].joined_one ? T[L].joined_one : t("joined"); }
+// 有上限时写「19 of 23 seats taken」，并提示还剩几个、满了进候补；人数没读到之前不出提示
+let liveCount = null;
+// 先存住元素：报名成功后表单会被成功卡片换掉，到时候再查就找不到了
+const capEls = [$("#capTop"), $("#capForm")], submitBtn = $("#submit");
+const isFull = () => CONFIG.capacity > 0 && liveCount !== null && liveCount >= CONFIG.capacity;
+const submitLbl = () => t(isFull() ? "submit_wait" : "submit");
+function joinedLbl(){
+  const cap = CONFIG.capacity, n = +$("#count").textContent;
+  $("#joinedLbl").textContent = cap > 0 && liveCount !== null ? t("joined_cap").replace("{cap}", cap) : n === 1 && T[L].joined_one ? T[L].joined_one : t("joined");
+  const left = cap - liveCount;
+  const msg = !(cap > 0) || liveCount === null ? "" : left <= 0 ? t("cap_full") : left === 1 ? t("cap_left_one") : left <= 10 ? t("cap_left") : t("cap_total");
+  capEls.forEach(el => { el.textContent = msg.replace("{cap}", cap).replace("{left}", left); el.hidden = !msg; glue(el); });
+  if (!submitBtn.disabled) submitBtn.firstElementChild.textContent = submitLbl();
+}
 function renderLive(count, recent){
-  $("#count").textContent = count; joinedLbl();
+  liveCount = +count || 0; $("#count").textContent = CONFIG.capacity > 0 ? Math.min(liveCount, CONFIG.capacity) : liveCount; joinedLbl();
   const avs = $("#avs"); avs.innerHTML = "";
   (recent || []).slice(-3).forEach(i => { const s = document.createElement("span"); s.className = "av"; s.textContent = i; avs.append(s); });
   $("#recentWrap").hidden = !(recent && recent.length);
@@ -943,7 +967,7 @@ form.addEventListener("submit", async e => {
     $("#join").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (err) {
     $("#e_form").textContent = err.message === "full" ? t("e_full") : t("e_net");
-  } finally { btn.disabled = false; btn.firstElementChild.textContent = t("submit"); }
+  } finally { btn.disabled = false; btn.firstElementChild.textContent = submitLbl(); }
 });
 
 async function send(data){
